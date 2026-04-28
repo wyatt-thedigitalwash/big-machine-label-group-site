@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    formats: ["image/webp"],
+    deviceSizes: [640, 1080, 1920, 2400],
+    imageSizes: [320, 640, 960],
+  },
   async headers() {
     return [
       {

@@ -1,17 +1,26 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
-      <h1 className="text-4xl font-bold mb-4">Page not found</h1>
-      <p className="text-lg text-gray-600 mb-8">
-        The page you are looking for does not exist.
-      </p>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-black text-center px-6">
+      <h1
+        className="font-[family-name:var(--font-display)] text-[120px] md:text-[200px] leading-none"
+        style={{ color: "#CA2125" }}
+      >
+        404
+      </h1>
+      <h2
+        className="font-[family-name:var(--font-display)] text-[48px] uppercase text-white leading-none"
+        style={{ marginTop: -16 }}
+      >
+        Page Not Found
+      </h2>
       <Link
         href="/"
-        className="inline-block rounded bg-black px-6 py-3 text-white hover:bg-gray-800 transition-colors"
+        className="font-[family-name:var(--font-body)] text-[14px] mt-8 no-underline transition-colors duration-300 ease-out hover:text-white"
+        style={{ color: "#717171" }}
       >
-        Go Home
+        Return Home
       </Link>
     </main>
   );

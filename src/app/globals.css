@@ -1,33 +1,173 @@
 @import "tailwindcss";
 
+@custom-variant short (@media (max-height: 600px));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #000000;
+  --color-red: #CA2125;
+  --color-white: #FFFFFF;
+  --color-gray-light: #C8C7C8;
+  --color-gray-dark: #717171;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-white);
+  --color-red: var(--color-red);
+  --color-gray-light: var(--color-gray-light);
+  --color-gray-dark: var(--color-gray-dark);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #000000;
+  color: #F2EDE8;
+  font-family: var(--font-body), sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hero responsive layout */
+.hero-logo {
+  width: min(320px, 85vw);
+}
+.hero-rule-spacing {
+  width: 100vw;
+  margin-bottom: clamp(12px, 2vh, 24px);
+  margin-top: clamp(12px, 2vh, 24px);
+}
+.hero-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  width: 100%;
+  padding: 0 32px;
+  text-align: center;
+  margin-bottom: clamp(8px, 1.5vh, 16px);
+}
+.hero-nav-link {
+  font-size: 40px;
+}
+.hero-nav-link-last {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .hero-logo {
+    width: min(680px, 80vw);
+  }
+  .hero-rule-spacing {
+    margin-bottom: clamp(16px, 3vh, 40px);
+    margin-top: clamp(16px, 3vh, 40px);
+  }
+  .hero-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: clamp(24px, 5vw, 80px);
+    width: auto;
+    padding: 0;
+    margin-bottom: clamp(12px, 2vh, 24px);
+  }
+  .hero-nav-link {
+    font-size: clamp(36px, 5vw, 72px);
+  }
+  .hero-nav-link-last {
+    grid-column: auto;
+  }
+}
+
+/* Ensure all focused inputs remove browser outline */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
 }
 
 /* Section spacing: remove top padding when consecutive sections share the same background */
-section[data-bg="light"] + section[data-bg="light"],
 section[data-bg="dark"] + section[data-bg="dark"],
-section[data-bg="accent"] + section[data-bg="accent"] {
+section[data-bg="alt"] + section[data-bg="alt"] {
   padding-top: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes heroRuleDraw {
+  from {
+    width: 0;
+  }
+  to {
+    width: 120px;
+  }
+}
+
+@keyframes heroLogoIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroRuleFullDraw {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100vw;
+  }
+}
+
+@keyframes heroNavIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rosterSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
