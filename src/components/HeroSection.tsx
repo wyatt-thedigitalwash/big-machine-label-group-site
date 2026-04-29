@@ -84,7 +84,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative w-full overflow-hidden flex items-center justify-center"
-      style={{ height: "100vh", background: "#000000" }}
+      style={{ height: "100dvh", background: "#000000" }}
     >
       {/* LAYER 1 — Red text behind image */}
       <div
@@ -133,7 +133,7 @@ export default function HeroSection() {
       <div
         className="absolute z-[4] left-1/2 flex flex-col items-center md:hidden"
         style={{
-          bottom: "calc(24px + env(safe-area-inset-bottom, 0px))",
+          bottom: "calc(16px + env(safe-area-inset-bottom, 0px))",
           transform: mounted ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(12px)",
           opacity: mounted ? 1 : 0,
           transition: "opacity 500ms ease-out 900ms, transform 500ms ease-out 900ms",
