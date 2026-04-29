@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { artists } from "@/lib/data/artists";
@@ -18,6 +19,8 @@ export default function Header() {
   const [hoveredArtist, setHoveredArtist] = useState<string | null>(null);
   const [pastHero, setPastHero] = useState(false);
 
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const closeNav = useCallback(() => setNavOpen(false), []);
 
   useEffect(() => {
@@ -58,6 +61,10 @@ export default function Header() {
             href="/"
             aria-label="Big Machine Records home"
             className="transition-opacity duration-300 ease-out"
+            style={{
+              opacity: isHome && !pastHero ? 0 : 1,
+              pointerEvents: isHome && !pastHero ? "none" : "auto",
+            }}
           >
             <Image
               src="/logos/big-machine-records-nav-logo-new.png"
