@@ -15,31 +15,57 @@ export default function AboutPage() {
       <AboutHero />
 
       {/* LABEL STORY */}
-      <section className="w-full bg-black px-6 py-16 md:py-[120px] md:pl-[10%] md:pr-10">
-        <div className="max-w-[720px]">
-          <SectionHeader title="Our Story" />
+      <section id="our-story" className="w-full bg-black px-8 py-16 md:py-[120px] md:px-20">
+        <SectionHeader title="Our Story" />
 
-          <p
-            className="font-[family-name:var(--font-body)] text-[18px]"
-            style={{ color: "#C8C7C8", lineHeight: 1.8 }}
-          >
+        <div
+          className="font-[family-name:var(--font-body)] text-[18px] space-y-6"
+          style={{ color: "#C8C7C8", lineHeight: 1.8 }}
+        >
+          <p>
             Big Machine Records was founded in Nashville, Tennessee in 2005 by
-            Scott Borchetta. What started as an independent label built on
-            instinct and belief in artists became one of the most significant
-            forces in American music. Placeholder copy -- client to provide full
-            label history.
+            Scott Borchetta with a single conviction: that the right artist,
+            given the right support, could change the culture. What started as
+            an independent label built on instinct and belief became one of the
+            most significant forces in American music.
           </p>
-
-          <h2
-            className="font-[family-name:var(--font-display)] text-[40px] md:text-[72px] uppercase text-white mt-16 leading-[1.05] max-w-[700px]"
-          >
-            Independent. Uncompromising.
-          </h2>
+          <p>
+            From the beginning, Big Machine operated differently. While major
+            labels chased trends, Big Machine chased truth -- signing artists
+            whose voices had something real to say and giving them the room to
+            say it. The results spoke for themselves. Chart-topping records.
+            Grammy nominations. Sold-out arenas. Artists who didn't just have
+            hits, but careers.
+          </p>
+          <p>
+            Over two decades, the roster has grown to include some of the most
+            enduring names in country, rock, and Americana. Artists who have
+            sold hundreds of millions of records worldwide. Artists who have
+            headlined the biggest stages on earth. Artists who are just getting
+            started.
+          </p>
+          <p>
+            The label has never lost sight of what it was built on.
+            Independence means making decisions for the right reasons.
+            Uncompromising means never letting commerce outrun conviction.
+            Nashville means understanding that great music comes from a place
+            -- a culture, a community, a way of seeing the world.
+          </p>
+          <p>
+            Big Machine Records is not just a label. It is a belief system. And
+            it is just getting started.
+          </p>
         </div>
+
+        <h2
+          className="font-[family-name:var(--font-display)] text-[40px] md:text-[72px] uppercase text-white mt-16 leading-[1.05] max-w-[700px]"
+        >
+          Independent. Uncompromising.
+        </h2>
       </section>
 
       {/* ROSTER TEASER */}
-      <section className="w-full bg-black px-6 py-20 md:px-10">
+      <section className="w-full bg-black px-8 py-20 md:px-20">
         <SectionHeader title="The Roster" />
 
         <h2 className="font-[family-name:var(--font-display)] text-[48px] uppercase text-white leading-none">

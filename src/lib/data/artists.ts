@@ -66,7 +66,7 @@ export const artists: Artist[] = [
     xUrl: "https://x.com/rascalflatts",
     bandsintownId: "rascal-flatts",
     heroImage: "/images/hero/big-machine-rascal-flatts-hero.webp",
-    rosterImage: "",
+    rosterImage: "/images/hero/big-machine-rascal-flatts-hero.webp",
     bio: "Hailed as one of the most influential groups in modern country history, Rascal Flatts are a chart-topping trio created by vocalist Gary LeVox, multi-instrumentalist Jay DeMarcus and guitarist Joe Don Rooney. Since their founding in 2000, they've cemented their place in music history with genre-crossing hits like 'Prayin' for Daylight,' 'Bless The Broken Road,' 'What Hurts the Most,' and 'Life Is a Highway.' Together the Grand Ole Opry members have racked up 17 Number One hits, over 23.4 million albums sold, 35 million digital downloads, and over 12 billion total lifetime streams. Now emerging from hiatus with renewed passion, the trio is reuniting on their Life Is A Highway Tour in 2025, celebrating 25 years of hits.",
     nextShow: { date: "May 15, 2025", venue: "Bridgestone Arena", city: "Nashville, TN", ticketUrl: "#" },
   },

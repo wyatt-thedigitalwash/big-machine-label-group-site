@@ -1,139 +1,194 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+const photos = [
+  { src: "/images/hero/big-machine-riley-green-hero.webp", alt: "Riley Green" },
+  {
+    src: "/images/hero/big-machine-rascal-flatts-hero.webp",
+    alt: "Rascal Flatts",
+  },
+  {
+    src: "/images/hero/big-machine-mackenzie-carpenter-hero.webp",
+    alt: "Mackenzie Carpenter",
+  },
+  {
+    src: "/images/hero/big-machine-greyland-james-hero.webp",
+    alt: "Greyland James",
+  },
+  {
+    src: "/images/hero/big-machine-caroline-jones-hero.webp",
+    alt: "Caroline Jones",
+  },
+  {
+    src: "/images/hero/big-machine-cole-goodwin-hero.webp",
+    alt: "Cole Goodwin",
+  },
+  {
+    src: "/images/hero/big-machine-jack-wharff-band-hero.webp",
+    alt: "The Jack Wharff Band",
+  },
+  { src: "/images/hero/big-machine-shaylen-hero.webp", alt: "Shaylen" },
+];
+
 const navLinks = [
-  {
-    label: "Roster",
-    href: "/artists",
-    bg: "/images/hero/big-machine-riley-green-hero.webp",
-  },
-  {
-    label: "About",
-    href: "/about",
-    bg: "/images/hero/big-machine-rascal-flatts-hero.webp",
-  },
-  {
-    label: "News",
-    href: "/news",
-    bg: "/images/hero/big-machine-greyland-james-hero.webp",
-  },
-  {
-    label: "Sync",
-    href: "/sync",
-    bg: "/images/hero/big-machine-caroline-jones-hero.webp",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-    bg: "/images/hero/big-machine-mackenzie-carpenter-hero.webp",
-  },
+  { label: "Roster", href: "/artists" },
+  { label: "About", href: "/about" },
+  { label: "News", href: "/news" },
+  { label: "Sync", href: "/sync" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function HeroSection() {
-  const [hoveredBg, setHoveredBg] = useState<string | null>(null);
-  const [activeBg, setActiveBg] = useState<string | null>(null);
-  const fadeOutTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  const handleMouseEnter = (bg: string) => {
-    if (fadeOutTimer.current) {
-      clearTimeout(fadeOutTimer.current);
-      fadeOutTimer.current = null;
-    }
-    setActiveBg(bg);
-    setHoveredBg(bg);
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const handleMouseLeave = () => {
-    setHoveredBg(null);
-    fadeOutTimer.current = setTimeout(() => {
-      setActiveBg(null);
-    }, 600);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % photos.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const textLines = (color: string) => (
+    <>
+      <span
+        className="font-[family-name:var(--font-display)] uppercase leading-[1] whitespace-nowrap"
+        style={{
+          fontSize: "clamp(72px, 24vw, 320px)",
+          color,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        Big Machine
+      </span>
+      <span
+        className="font-[family-name:var(--font-display)] uppercase leading-[1] whitespace-nowrap"
+        style={{
+          fontSize: "clamp(72px, 24vw, 320px)",
+          color,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        Records
+      </span>
+    </>
+  );
 
   return (
-    <section className="relative h-screen bg-black overflow-hidden flex flex-col items-center justify-center">
-      {/* Background image on hover */}
-      {activeBg && (
-        <Image
-          src={activeBg}
-          alt=""
-          fill
-          className="object-cover object-center transition-opacity ease-out z-0"
-          style={{
-            opacity: hoveredBg ? 0.15 : 0,
-            transitionDuration: hoveredBg ? "400ms" : "600ms",
-          }}
-          sizes="100vw"
-          priority
-        />
-      )}
+    <section
+      className="relative w-full overflow-hidden flex items-center justify-center"
+      style={{ height: "100vh", background: "#000000" }}
+    >
+      {/* LAYER 1 — Red text behind image */}
+      <div
+        className="absolute inset-0 z-[1] flex flex-col items-center justify-center"
+        style={{
+          gap: 0,
+          opacity: mounted ? 1 : 0,
+          transition: "opacity 800ms ease-out",
+        }}
+      >
+        {textLines("#FFFFFF")}
+      </div>
 
-      {/* Content wrapper */}
-      <div className="relative z-[1]" style={{ display: "contents" }}>
-        {/* Logo */}
+      {/* LAYER 2 — Rotating photo */}
+      <div
+        className="absolute z-[2] w-[260px] h-[340px] md:w-[580px] md:h-[680px] overflow-hidden"
+        style={{
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          opacity: mounted ? 1 : 0,
+          transition: "opacity 800ms ease-out 300ms",
+        }}
+      >
+        {photos.map((photo, i) => (
+          <Image
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+            fill
+            className="object-cover object-center"
+            style={{
+              filter: "grayscale(100%)",
+              opacity: i === activeIndex ? 1 : 0,
+              transition: "opacity 800ms ease-in-out",
+              animation:
+                i === activeIndex ? "heroKenBurns 4000ms ease-out forwards" : "none",
+            }}
+            sizes="(max-width: 768px) 260px, 580px"
+            priority={i === 0}
+          />
+        ))}
+      </div>
+
+      {/* LAYER 3 — Black text mask above image */}
+      <div
+        className="absolute z-[3] w-[260px] h-[340px] md:w-[580px] md:h-[680px] overflow-hidden pointer-events-none"
+        style={{
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "transparent",
+          opacity: mounted ? 1 : 0,
+          transition: "opacity 800ms ease-out 300ms",
+        }}
+      >
         <div
+          className="absolute flex flex-col items-center justify-center"
           style={{
-            animation: "heroLogoIn 700ms ease-out both",
+            width: "100vw",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
           }}
         >
-          <Image
-            src="/logos/big-machine-records-logo.png"
-            alt="Big Machine Records"
-            width={780}
-            height={390}
-            className="h-auto object-contain hero-logo"
-            priority
-          />
+          {textLines("#000000")}
         </div>
+      </div>
 
-        {/* Red divider */}
-        <div className="flex-shrink-0 hero-rule-spacing">
-          <div
-            style={{
-              height: 1,
-              width: 0,
-              backgroundColor: "#CA2125",
-              animation: "heroRuleFullDraw 500ms ease-out 500ms both",
-            }}
-          />
-        </div>
+      {/* BOTTOM ELEMENTS */}
+      <div
+        className="absolute z-[4] bottom-6 md:bottom-10 left-1/2 flex flex-col items-center"
+        style={{
+          transform: mounted ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(12px)",
+          opacity: mounted ? 1 : 0,
+          transition: "opacity 500ms ease-out 900ms, transform 500ms ease-out 900ms",
+        }}
+      >
+        <span
+          className="font-[family-name:var(--font-body)] uppercase"
+          style={{
+            fontSize: 12,
+            color: "#717171",
+            letterSpacing: "0.2em",
+          }}
+        >
+          Nashville, Tennessee
+        </span>
 
-        {/* Nav links */}
-        <nav className="hero-nav">
-          {navLinks.map((link, i) => (
+        <nav
+          className="flex items-center mt-4"
+          style={{ gap: "clamp(20px, 4vw, 40px)" }}
+        >
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`font-[family-name:var(--font-display)] uppercase text-white no-underline transition-colors duration-[250ms] ease-out hover:text-[#CA2125] text-center hero-nav-link ${
-                i === navLinks.length - 1 ? "hero-nav-link-last" : ""
-              }`}
-              style={{
-                letterSpacing: "0.06em",
-                animation: `heroNavIn 400ms ease-out ${800 + i * 60}ms both`,
-              }}
-              onMouseEnter={() => handleMouseEnter(link.bg)}
-              onMouseLeave={handleMouseLeave}
+              className="font-[family-name:var(--font-display)] uppercase text-white no-underline transition-colors duration-[250ms] ease-out hover:text-[#CA2125]"
+              style={{ fontSize: "clamp(22px, 3vw, 28px)" }}
             >
               {link.label}
             </Link>
           ))}
         </nav>
-
-        {/* Nashville, Tennessee */}
-        <p
-          className="font-[family-name:var(--font-body)] uppercase"
-          style={{
-            fontSize: 13,
-            letterSpacing: "0.2em",
-            color: "#717171",
-            animation: "heroFadeIn 400ms ease-out 1200ms both",
-          }}
-        >
-          Nashville, Tennessee
-        </p>
       </div>
     </section>
   );

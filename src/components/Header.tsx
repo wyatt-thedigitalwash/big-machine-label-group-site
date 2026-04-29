@@ -6,6 +6,7 @@ import Link from "next/link";
 import { artists } from "@/lib/data/artists";
 
 const navLinks = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "News", href: "/news" },
   { label: "Sync", href: "/sync" },
@@ -57,10 +58,6 @@ export default function Header() {
             href="/"
             aria-label="Big Machine Records home"
             className="transition-opacity duration-300 ease-out"
-            style={{
-              opacity: pastHero ? 1 : 0,
-              pointerEvents: pastHero ? "auto" : "none",
-            }}
           >
             <Image
               src="/logos/big-machine-records-nav-logo.png"

@@ -161,6 +161,35 @@ section[data-bg="alt"] + section[data-bg="alt"] {
   }
 }
 
+@keyframes aboutHeroLeftIn {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aboutHeroRightIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes heroKenBurns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
 @keyframes rosterSlideUp {
   from {
     opacity: 0;
