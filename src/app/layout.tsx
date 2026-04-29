@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, Syne } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -15,6 +15,10 @@ const syne = Syne({
   subsets: ["latin"],
   weight: ["400", "600"],
 });
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: {

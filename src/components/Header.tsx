@@ -60,11 +60,11 @@ export default function Header() {
             className="transition-opacity duration-300 ease-out"
           >
             <Image
-              src="/logos/big-machine-records-nav-logo.png"
+              src="/logos/big-machine-records-nav-logo-new.png"
               alt="Big Machine Records"
-              width={133}
-              height={40}
-              className="h-8 w-auto md:h-10"
+              width={166}
+              height={50}
+              className="h-10 w-auto md:h-12"
               priority
             />
           </Link>
