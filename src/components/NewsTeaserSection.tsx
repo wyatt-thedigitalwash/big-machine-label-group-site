@@ -6,21 +6,24 @@ const articles = allArticles.slice(0, 3);
 
 export default function NewsTeaserSection() {
   return (
-    <section className="w-full bg-black px-8 py-20 md:px-20 md:py-20">
-      <SectionHeader title="Latest News" />
+    <section className="w-full bg-black py-20">
+      <div className="px-8 md:px-20">
+        <SectionHeader title="Latest News" />
+      </div>
 
       <div>
         {articles.map((article) => (
           <Link
             key={article.slug}
             href={`/news/${article.slug}`}
-            className="group block no-underline cursor-pointer transition-colors duration-200 ease-out hover:bg-[#0D0D0D]"
+            className="group block no-underline cursor-pointer transition-colors duration-200 ease-out hover:bg-[#0D0D0D] px-8 md:px-20"
             style={{
               borderTop: "1px solid #111111",
-              padding: "24px 0",
+              paddingTop: 24,
+              paddingBottom: 24,
             }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-[160px_1fr_200px] md:gap-8 md:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-[160px_1fr_200px] md:gap-8">
               {/* Left column */}
               <div className="mb-2 md:mb-0 md:pt-1">
                 <span
@@ -97,7 +100,7 @@ export default function NewsTeaserSection() {
         <div style={{ borderTop: "1px solid #111111" }} />
       </div>
 
-      <div className="text-center mt-8">
+      <div className="text-center mt-8 px-8 md:px-20">
         <Link
           href="/news"
           className="font-[family-name:var(--font-body)] uppercase no-underline transition-colors duration-200 ease-out hover:text-white"

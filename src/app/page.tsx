@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import HeroSection from "@/components/HeroSection";
 import RosterSection from "@/components/RosterSection";
 import OnTourSection from "@/components/OnTourSection";
@@ -11,9 +10,7 @@ export default function Home() {
     <>
       <HeroSection />
       <RosterSection />
-      <Suspense fallback={null}>
-        <OnTourSection />
-      </Suspense>
+      <OnTourSection />
       <WatchCarousel />
       <LabelStatementSection />
       <NewsTeaserSection />
