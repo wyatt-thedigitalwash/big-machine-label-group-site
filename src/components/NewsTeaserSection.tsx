@@ -1,65 +1,114 @@
 import Link from "next/link";
-import Image from "next/image";
 import SectionHeader from "@/components/SectionHeader";
+import { articles as allArticles } from "@/lib/data/news";
 
-const articles = [
-  {
-    headline: "Riley Green Announces Fall Tour Dates",
-    date: "October 2025",
-    image: "/images/news/big-machine-riley-green-news.webp",
-  },
-  {
-    headline: "Motley Crue Returns to the Stage",
-    date: "September 2025",
-    image: "/images/news/big-machine-motley-crue-news.webp",
-  },
-  {
-    headline: "Big Machine Signs Savana Santos",
-    date: "August 2025",
-    image: "/images/news/big-machine-savana-santos-news.webp",
-  },
-];
+const articles = allArticles.slice(0, 3);
 
 export default function NewsTeaserSection() {
   return (
-    <section className="w-full bg-black px-6 py-20 md:px-10 md:py-20">
+    <section className="w-full bg-black px-8 py-20 md:px-20 md:py-20">
       <SectionHeader title="Latest News" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+      <div>
         {articles.map((article) => (
           <Link
-            key={article.headline}
-            href="/news"
-            className="group block no-underline"
+            key={article.slug}
+            href={`/news/${article.slug}`}
+            className="group block no-underline cursor-pointer transition-colors duration-200 ease-out hover:bg-[#0D0D0D]"
+            style={{
+              borderTop: "1px solid #111111",
+              padding: "24px 0",
+            }}
           >
-            <div
-              className="relative w-full overflow-hidden"
-              style={{ height: 240, backgroundColor: "#111111" }}
-            >
-              <Image
-                src={article.image}
-                alt={article.headline}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-[160px_1fr_200px] md:gap-8 md:px-12">
+              {/* Left column */}
+              <div className="mb-2 md:mb-0 md:pt-1">
+                <span
+                  className="block font-[family-name:var(--font-body)]"
+                  style={{ fontSize: 12, color: "#717171", marginBottom: 8 }}
+                >
+                  {article.date}
+                </span>
+                <span
+                  className="block font-[family-name:var(--font-body)] uppercase"
+                  style={{
+                    fontSize: 12,
+                    color: "#CA2125",
+                    letterSpacing: "0.2em",
+                  }}
+                >
+                  {article.category}
+                </span>
+              </div>
+
+              {/* Center column */}
+              <div>
+                <h3
+                  className="font-[family-name:var(--font-display)] text-white uppercase transition-colors duration-200 ease-out group-hover:text-[#CA2125]"
+                  style={{
+                    fontSize: 40,
+                    lineHeight: 1.05,
+                    marginBottom: 10,
+                  }}
+                >
+                  {article.headline}
+                </h3>
+                <p
+                  className="font-[family-name:var(--font-body)]"
+                  style={{
+                    fontSize: 15,
+                    color: "#C8C7C8",
+                    lineHeight: 1.6,
+                    maxWidth: 680,
+                  }}
+                >
+                  {article.excerpt}
+                </p>
+              </div>
+
+              {/* Right column -- desktop only */}
+              <div className="hidden md:flex flex-col items-end justify-center">
+                {article.artist && (
+                  <span
+                    className="font-[family-name:var(--font-body)] uppercase"
+                    style={{
+                      fontSize: 12,
+                      color: "#717171",
+                      letterSpacing: "0.15em",
+                      marginBottom: 8,
+                    }}
+                  >
+                    {article.artist}
+                  </span>
+                )}
+                <span
+                  className="font-[family-name:var(--font-body)] uppercase text-white transition-colors duration-200 ease-out group-hover:text-[#CA2125]"
+                  style={{
+                    fontSize: 13,
+                    letterSpacing: "0.15em",
+                  }}
+                >
+                  Read &rarr;
+                </span>
+              </div>
             </div>
-
-            <p
-              className="font-[family-name:var(--font-body)] text-[12px] mt-4"
-              style={{ color: "#717171" }}
-            >
-              {article.date}
-            </p>
-
-            <h3
-              className="font-[family-name:var(--font-display)] text-[28px] uppercase text-white mt-2 transition-colors duration-300 ease-out group-hover:text-[#CA2125]"
-              style={{ lineHeight: 1.1 }}
-            >
-              {article.headline}
-            </h3>
           </Link>
         ))}
+        <div style={{ borderTop: "1px solid #111111" }} />
+      </div>
+
+      <div className="text-center mt-8">
+        <Link
+          href="/news"
+          className="font-[family-name:var(--font-body)] uppercase no-underline transition-colors duration-200 ease-out hover:text-white"
+          style={{
+            fontSize: 13,
+            color: "#CA2125",
+            letterSpacing: "0.15em",
+          }}
+        >
+          All News &rarr;
+        </Link>
       </div>
     </section>
   );

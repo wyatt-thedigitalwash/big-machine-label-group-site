@@ -1,6 +1,6 @@
 export default function LabelStatementSection() {
   return (
-    <section className="w-full bg-black px-6 py-20 md:px-10 md:py-[120px]">
+    <section className="w-full bg-black px-8 py-20 md:px-20 md:py-[120px]">
       <div className="max-w-3xl mx-auto text-center">
         <div
           className="mx-auto mb-12"

@@ -1,0 +1,25 @@
+export const article = {
+  slug: "jack-wharff-band-grand-ole-opry-debut",
+  headline: "Photos: The Jack Wharff Band Makes Grand Ole Opry Debut",
+  excerpt: "The rising Country/Americana four-piece earned a standing ovation for their inspiring performance of fan-favorite track Washed at the legendary Grand Ole Opry.",
+  date: "February 11, 2026",
+  category: "News",
+  artist: "The Jack Wharff Band",
+  paragraphs: [
+    "Rising Country/Americana group The Jack Wharff Band reached an exciting career milestone on February 10, making their anticipated Grand Ole Opry debut. The debut followed a surprise of a lifetime from Grand Ole Opry member and Ole Crow Medicine Show's Ketch Secor who broke the invitation news to the four-piece in December.",
+    "The Jack Wharff Band opened their set with the high-energy \"Burnin' It Down,\" a fiery ode to small town shenanigans and the first song that the group ever wrote together. With friends and family of all four band members packed into the audience, Jack expressed what the moment meant to him:",
+    "\"I'm trying to think of what a man can even say when he's standing in the fulfillment of a vision he's had since he was 13 years old. From the bottom of my heart, to everybody at the Opry, everybody who came out to see us tonight, and everybody up here on this stage -- thank you.\"",
+    "They closed their set with their breakout track and streaming juggernaut \"Washed,\" an introspective tale of struggle, forgiveness and redemption.",
+    "\"This is a song about hope because Lord knows the world needs it right now,\" said Jack. \"You don't have to look too far to see the names that rule this world -- names like anxiety, like war, like fear -- but tonight, we're going to lift up the name that's more powerful than every other name.\"",
+    "The bluegrass-tinged, hope-forward song has resonated deeply with listeners since its release last year, now boasting more than 19 million streams to date. It connected with the Opry audience as well, earning the band a rousing standing ovation.",
+    "The Jack Wharff Band's Grand Ole Opry debut follows the band's breakout year in 2025 that found them experiencing a taste of viral success with their fan-favorite track \"Washed\" and landing their track \"No Way Out\" in an episode of the critically acclaimed Paramount+ series \"Landman.\" Recently named to a slew of prestigious artist to watch lists including Holler's \"20 Best New Country and Americana Artists for 2026,\" Shazam Fast Forward 2026 and Absolute Radio Country's Class of 2026, it's clear that they're quickly cementing their place as one of the most prominent and promising rising acts in the genre.",
+    "The band is currently rounding out the U.S. leg of their headlining From The Hills To The Holler Tour before they travel to Europe in March, performing at C2C festivals in Berlin, Rotterdam and London in addition to playing headline shows in Dublin, Manchester and Glasgow. Their sophomore EP Strange is slated for release March 13.",
+  ],
+  pullQuotes: [
+    "I'm trying to think of what a man can even say when he's standing in the fulfillment of a vision he's had since he was 13 years old.",
+    "This is a song about hope because Lord knows the world needs it right now.",
+  ],
+  pressQuotes: [],
+  tourDates: [],
+  trackList: [],
+};

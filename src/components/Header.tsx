@@ -10,8 +10,10 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "News", href: "/news" },
+  { label: "Videos", href: "/videos" },
   { label: "Sync", href: "/sync" },
   { label: "Contact", href: "/contact" },
+  { label: "Careers", href: "/careers" },
 ];
 
 export default function Header() {

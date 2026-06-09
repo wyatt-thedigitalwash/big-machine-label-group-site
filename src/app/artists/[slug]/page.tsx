@@ -1,10 +1,14 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { artists } from "@/lib/data/artists";
+import { articles as allArticles } from "@/lib/data/news";
 import ArtistStreamingSocial from "@/components/ArtistStreamingSocial";
 import ArtistTourDates from "@/components/ArtistTourDates";
+import ArtistWatchSection from "@/components/ArtistWatchSection";
+import ArticleRow from "@/components/ArticleRow";
 import SectionHeader from "@/components/SectionHeader";
 
 interface PageProps {
@@ -30,22 +34,7 @@ export default async function ArtistPage({ params }: PageProps) {
   const artist = artists.find((a) => a.slug === slug);
   if (!artist) notFound();
 
-  const showVideo = !artist.youtubeVideoId.startsWith("PLACEHOLDER");
-
-  const placeholderNews = [
-    {
-      headline: `${artist.name} Headline Placeholder One`,
-      date: "October 2025",
-    },
-    {
-      headline: `${artist.name} Headline Placeholder Two`,
-      date: "September 2025",
-    },
-    {
-      headline: `${artist.name} Headline Placeholder Three`,
-      date: "August 2025",
-    },
-  ];
+  const newsForArtist = allArticles.filter((a) => a.artist === artist.name);
 
   return (
     <>
@@ -107,38 +96,28 @@ export default async function ArtistPage({ params }: PageProps) {
       <ArtistStreamingSocial artist={artist} />
 
       {/* BIO */}
-      <section className="w-full bg-black px-6 py-12 md:px-10 md:py-20" style={{ borderTop: "1px solid #1a1a1a" }}>
+      <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">
         <SectionHeader title="About" />
         <p
-          className="font-[family-name:var(--font-body)] text-[18px]"
+          className="font-[family-name:var(--font-body)] text-[16px]"
           style={{ color: "#C8C7C8", lineHeight: 1.8 }}
         >
           {artist.bio || `Placeholder bio for ${artist.name}. Client to provide.`}
         </p>
       </section>
 
-      {/* MUSIC VIDEO */}
-      {showVideo && (
-        <section className="w-full bg-black px-6 py-12 md:px-10 md:py-20" style={{ borderTop: "1px solid #1a1a1a" }}>
-          <SectionHeader title="Watch" />
-          <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${artist.youtubeVideoId}`}
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute inset-0 w-full h-full border-0"
-              title={`${artist.name} music video`}
-              loading="lazy"
-            />
-          </div>
-        </section>
-      )}
+      {/* WATCH */}
+      <ArtistWatchSection videos={artist.videos} />
 
       {/* TOUR DATES */}
-      <ArtistTourDates bandsintownId={artist.bandsintownId} nextShow={artist.nextShow} />
+      <div id="tour">
+        <Suspense fallback={null}>
+          <ArtistTourDates artist={artist} />
+        </Suspense>
+      </div>
 
       {/* PRESS QUOTE */}
-      <section className="w-full bg-black px-6 py-12 md:px-10 md:py-20" style={{ borderTop: "1px solid #1a1a1a" }}>
+      <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">
         <SectionHeader title="Press" />
         <div className="max-w-[700px] mx-auto text-center">
           <span
@@ -164,35 +143,19 @@ export default async function ArtistPage({ params }: PageProps) {
       </section>
 
       {/* RELATED NEWS */}
-      <section className="w-full bg-black px-6 py-12 md:px-10 md:py-20" style={{ borderTop: "1px solid #1a1a1a" }}>
-        <SectionHeader title="News" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {placeholderNews.map((article) => (
-            <Link
-              key={article.headline}
-              href="/news"
-              className="group block no-underline"
-            >
-              <div
-                className="w-full"
-                style={{ height: 240, backgroundColor: "#1a1a1a" }}
-              />
-              <p
-                className="font-[family-name:var(--font-body)] text-[12px] mt-4"
-                style={{ color: "#717171" }}
-              >
-                {article.date}
-              </p>
-              <h3
-                className="font-[family-name:var(--font-display)] text-[28px] uppercase text-white mt-2 transition-colors duration-300 ease-out group-hover:text-[#CA2125]"
-                style={{ lineHeight: 1.1 }}
-              >
-                {article.headline}
-              </h3>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {newsForArtist.length > 0 && (
+        <section className="w-full bg-black py-12 md:py-20">
+          <div className="px-8 md:px-20">
+            <SectionHeader title="News" />
+          </div>
+          <div>
+            {newsForArtist.map((article) => (
+              <ArticleRow key={article.slug} article={article} />
+            ))}
+            <div style={{ borderTop: "1px solid #111111" }} />
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -28,54 +28,47 @@ body {
   padding: 0;
 }
 
-/* Hero responsive layout */
-.hero-logo {
-  width: min(320px, 85vw);
+/* ===== Hero Animations ===== */
+
+@keyframes heroLogoFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-.hero-rule-spacing {
-  width: 100vw;
-  margin-bottom: clamp(12px, 2vh, 24px);
-  margin-top: clamp(12px, 2vh, 24px);
+
+@keyframes heroRuleGrow {
+  from { width: 0; }
+  to { width: 120px; }
 }
+
+@keyframes heroNavFade {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero nav -- desktop only single-line flex row (hidden on mobile via Tailwind) */
 .hero-nav {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 16px 24px;
   width: 100%;
-  padding: 0 32px;
-  text-align: center;
-  margin-bottom: clamp(8px, 1.5vh, 16px);
-}
-.hero-nav-link {
-  font-size: 40px;
-}
-.hero-nav-link-last {
-  grid-column: 1 / -1;
+  padding: 0 24px;
+  font-size: 24px;
 }
 
 @media (min-width: 768px) {
-  .hero-logo {
-    width: min(680px, 80vw);
-  }
-  .hero-rule-spacing {
-    margin-bottom: clamp(16px, 3vh, 40px);
-    margin-top: clamp(16px, 3vh, 40px);
-  }
   .hero-nav {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
-    gap: clamp(24px, 5vw, 80px);
+    gap: clamp(32px, 5vw, 72px);
     width: auto;
     padding: 0;
-    margin-bottom: clamp(12px, 2vh, 24px);
-  }
-  .hero-nav-link {
-    font-size: clamp(36px, 5vw, 72px);
-  }
-  .hero-nav-link-last {
-    grid-column: auto;
+    font-size: clamp(28px, 3.5vw, 48px);
+    bottom: 48px;
   }
 }
 
@@ -112,55 +105,6 @@ section[data-bg="alt"] + section[data-bg="alt"] {
   }
 }
 
-@keyframes heroFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes heroRuleDraw {
-  from {
-    width: 0;
-  }
-  to {
-    width: 120px;
-  }
-}
-
-@keyframes heroLogoIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heroRuleFullDraw {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100vw;
-  }
-}
-
-@keyframes heroNavIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes aboutHeroLeftIn {
   from {
     opacity: 0;
@@ -181,15 +125,6 @@ section[data-bg="alt"] + section[data-bg="alt"] {
   }
 }
 
-@keyframes heroKenBurns {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.06);
-  }
-}
-
 @keyframes rosterSlideUp {
   from {
     opacity: 0;
@@ -199,4 +134,30 @@ section[data-bg="alt"] + section[data-bg="alt"] {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightboxFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Hide scrollbars on video strips and carousels */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

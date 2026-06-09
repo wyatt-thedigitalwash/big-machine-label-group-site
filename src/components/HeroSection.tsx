@@ -1,119 +1,112 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const navLinks = [
-  { label: "Roster", href: "/artists" },
-  { label: "About", href: "/about" },
-  { label: "News", href: "/news" },
-  { label: "Sync", href: "/sync" },
-  { label: "Contact", href: "/contact" },
+const desktopLinks = [
+  { label: "ROSTER", href: "/artists" },
+  { label: "ABOUT", href: "/about" },
+  { label: "NEWS", href: "/news" },
+  { label: "VIDEOS", href: "/videos" },
+  { label: "SYNC", href: "/sync" },
+  { label: "CONTACT", href: "/contact" },
+  { label: "CAREERS", href: "/careers" },
+];
+
+const mobileRow1 = [
+  { label: "ROSTER", href: "/artists" },
+  { label: "NEWS", href: "/news" },
+  { label: "VIDEOS", href: "/videos" },
+];
+
+const mobileRow2 = [
+  { label: "ABOUT", href: "/about" },
+  { label: "SYNC", href: "/sync" },
+  { label: "CONTACT", href: "/contact" },
+  { label: "CAREERS", href: "/careers" },
 ];
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <section
-      className="relative w-full overflow-hidden flex items-center justify-center"
-      style={{ height: "100dvh", background: "#000000" }}
+      className="relative w-full overflow-hidden flex flex-col items-center justify-center"
+      style={{ height: "100vh", backgroundColor: "#000000" }}
     >
-      {/* LOGO — centered */}
-      <div
-        className="relative z-[1] flex flex-col items-center"
+      {/* Logo */}
+      <Image
+        src="/logos/big-machine-records-logo.png"
+        alt="Big Machine Records"
+        width={560}
+        height={280}
+        className="w-[85vw] md:w-[min(800px,65vw)] h-auto object-contain"
         style={{
-          opacity: mounted ? 1 : 0,
-          transition: "opacity 800ms ease-out",
+          animation: "heroLogoFade 700ms ease-out both",
         }}
-      >
-        <Image
-          src="/logos/big-machine-records-logo.png"
-          alt="Big Machine Records"
-          width={900}
-          height={450}
-          className="w-[85vw] md:w-[min(700px,60vw)] h-auto object-contain"
-          priority
-        />
-      </div>
+        priority
+      />
 
-      {/* MOBILE — Bottom elements (absolute) */}
-      <div
-        className="absolute z-[4] left-1/2 flex flex-col items-center md:hidden"
+      {/* Desktop nav */}
+      <nav
+        className="hero-nav absolute left-1/2 hidden md:flex"
         style={{
-          bottom: "calc(16px + env(safe-area-inset-bottom, 0px))",
-          transform: mounted ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(12px)",
-          opacity: mounted ? 1 : 0,
-          transition: "opacity 500ms ease-out 900ms, transform 500ms ease-out 900ms",
+          bottom: 48,
+          transform: "translateX(-50%)",
         }}
       >
-        <span
-          className="font-[family-name:var(--font-body)] uppercase"
-          style={{
-            fontSize: 12,
-            color: "#717171",
-            letterSpacing: "0.2em",
-          }}
-        >
-          Nashville, Tennessee
-        </span>
-        <nav
-          className="flex items-center mt-4"
-          style={{ gap: 20 }}
-        >
-          {navLinks.map((link) => (
+        {desktopLinks.map((link, i) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="font-[family-name:var(--font-display)] uppercase text-white no-underline whitespace-nowrap transition-colors duration-250 ease-out hover:text-[#CA2125]"
+            style={{
+              letterSpacing: "0.15em",
+              animation: `heroNavFade 400ms ease-out ${800 + i * 60}ms both`,
+            }}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+
+      {/* Mobile nav */}
+      <div
+        className="absolute left-1/2 flex flex-col items-center md:hidden"
+        style={{
+          bottom: 32,
+          transform: "translateX(-50%)",
+          gap: 16,
+        }}
+      >
+        <div className="flex items-center justify-center" style={{ gap: 20 }}>
+          {mobileRow1.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
-              className="font-[family-name:var(--font-display)] uppercase text-white no-underline transition-colors duration-[250ms] ease-out hover:text-[#CA2125]"
-              style={{ fontSize: 22 }}
+              className="font-[family-name:var(--font-display)] uppercase text-white no-underline whitespace-nowrap transition-colors duration-250 ease-out hover:text-[#CA2125]"
+              style={{
+                fontSize: 22,
+                letterSpacing: "0.15em",
+                animation: `heroNavFade 400ms ease-out ${800 + i * 60}ms both`,
+              }}
             >
               {link.label}
             </Link>
           ))}
-        </nav>
-      </div>
-
-      {/* DESKTOP — Bottom elements */}
-      <div
-        className="absolute z-[4] left-1/2 hidden md:flex flex-col items-center"
-        style={{
-          bottom: 40,
-          transform: mounted ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(12px)",
-          opacity: mounted ? 1 : 0,
-          transition: "opacity 500ms ease-out 900ms, transform 500ms ease-out 900ms",
-        }}
-      >
-        <span
-          className="font-[family-name:var(--font-body)] uppercase"
-          style={{
-            fontSize: 12,
-            color: "#717171",
-            letterSpacing: "0.2em",
-          }}
-        >
-          Nashville, Tennessee
-        </span>
-        <nav
-          className="flex items-center mt-4"
-          style={{ gap: 40 }}
-        >
-          {navLinks.map((link) => (
+        </div>
+        <div className="flex items-center justify-center" style={{ gap: 20 }}>
+          {mobileRow2.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
-              className="font-[family-name:var(--font-display)] uppercase text-white no-underline transition-colors duration-[250ms] ease-out hover:text-[#CA2125]"
-              style={{ fontSize: 28 }}
+              className="font-[family-name:var(--font-display)] uppercase text-white no-underline whitespace-nowrap transition-colors duration-250 ease-out hover:text-[#CA2125]"
+              style={{
+                fontSize: 22,
+                letterSpacing: "0.15em",
+                animation: `heroNavFade 400ms ease-out ${1040 + i * 60}ms both`,
+              }}
             >
               {link.label}
             </Link>
           ))}
-        </nav>
+        </div>
       </div>
     </section>
   );

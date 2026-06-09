@@ -31,7 +31,7 @@ export default function SyncPage() {
     <div style={{ backgroundColor: "#0D0D0D" }}>
       {/* HERO */}
       <section
-        className="w-full px-8 pt-[100px] pb-10 md:px-20 md:pt-[140px] md:pb-[60px]"
+        className="w-full px-8 pt-[100px] pb-10 md:px-20 md:pt-[120px] md:pb-[60px]"
         style={{ backgroundColor: "#0D0D0D" }}
       >
         <span
@@ -40,7 +40,7 @@ export default function SyncPage() {
         >
           Sync &amp; Licensing
         </span>
-        <h1 className="font-[family-name:var(--font-display)] text-[56px] md:text-[120px] uppercase text-white leading-[1]">
+        <h1 className="font-[family-name:var(--font-display)] text-[56px] md:text-[96px] uppercase text-white leading-[1]">
           The Catalog.
         </h1>
       </section>
@@ -63,7 +63,7 @@ export default function SyncPage() {
           <SectionHeader title="The Music" />
 
           <p
-            className="font-[family-name:var(--font-body)] text-[17px]"
+            className="font-[family-name:var(--font-body)] text-[16px]"
             style={{ color: "#C8C7C8", lineHeight: 1.8 }}
           >
             Big Machine Records represents one of the most storied catalogs in

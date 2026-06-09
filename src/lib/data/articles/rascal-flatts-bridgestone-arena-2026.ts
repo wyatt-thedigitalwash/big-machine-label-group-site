@@ -1,0 +1,38 @@
+export const article = {
+  slug: "rascal-flatts-bridgestone-arena-2026",
+  headline: "Rascal Flatts Bring \"Full Celebration of Country Music\" to Nashville's Bridgestone Arena on Life Is a Highway Tour",
+  excerpt: "Country Music icons Rascal Flatts returned to Nashville's Bridgestone Arena for the first time in over a decade, receiving a plaque celebrating over 10 million album equivalents with Big Machine Records.",
+  date: "February 7, 2026",
+  category: "Tour",
+  artist: "Rascal Flatts",
+  paragraphs: [
+    "Marking their headlining return to Music City for the first time in over a decade, Country Music icons Rascal Flatts brought their Life Is a Highway Tour to Nashville's Bridgestone Arena on February 5. Halfway through the second leg of the tour, the band has delivered \"explosive vocals, electrifying guitar solos\" and \"years of country-pop hits\" (St Louis Post-Dispatch) to arenas nationwide, as \"fans have greeted them with the same passion that made Rascal Flatts one of country music's most consistent hitmakers\" (The Tennessean).",
+    "\"A full celebration of country music drawing a crowd that blended longtime fans with newer listeners\" (Broadway World), the tour continues through this weekend in Chicago, IL and Indianapolis, IN, with openers Lauren Alaina and Chris Lane.",
+    "To honor their achievements in a storied 26-year career, Big Machine Label Group Founder, Chairman and CEO Scott Borchetta presented Rascal Flatts with a plaque to commemorate over 10 million album equivalents. Continuing their mark on Country Music history, three of the trio's songs have earned new RIAA certifications, with \"I Won't Let Go\" and \"I Like The Sound Of That\" now certified 2X Platinum, and \"Yours If You Want It\" is certified Platinum.",
+    "\"The band's recent reunion has been everything fans wanted and more\" (Parade), with their return to the spotlight last year garnering a \"full-fledged second chapter, proving the trio still has plenty of music -- and memories -- left to share\" (American Songwriter).",
+    "Continuing through the rest of this month, tickets for the remaining tour dates are available for purchase at rascalflatts.com. The tour also features a variety of VIP packages and experiences, with select offerings still available, including premium tickets, access to the Rascal Flatts VIP Lounge, autographed tour posters, exclusive VIP gift items, and more.",
+  ],
+  pullQuotes: [
+    "The band's recent reunion has been everything fans wanted and more.",
+    "A full celebration of country music drawing a crowd that blended longtime fans with newer listeners.",
+  ],
+  pressQuotes: [
+    { quote: "Explosive vocals, electrifying guitar solos and years of country-pop hits.", source: "St Louis Post-Dispatch" },
+    { quote: "Fans have greeted them with the same passion that made Rascal Flatts one of country music's most consistent hitmakers.", source: "The Tennessean" },
+    { quote: "Full-fledged second chapter, proving the trio still has plenty of music and memories left to share.", source: "American Songwriter" },
+  ],
+  tourDates: [
+    { date: "February 6, 2026", venue: "United Center", city: "Chicago, IL" },
+    { date: "February 7, 2026", venue: "Gainbridge Fieldhouse", city: "Indianapolis, IN" },
+    { date: "February 12, 2026", venue: "Gas South Arena", city: "Duluth, GA" },
+    { date: "February 13, 2026", venue: "Benchmark International Arena", city: "Tampa, FL" },
+    { date: "February 14, 2026", venue: "Hard Rock Live", city: "Hollywood, FL" },
+    { date: "February 19, 2026", venue: "Mississippi Coast Coliseum", city: "Biloxi, MS" },
+    { date: "February 20, 2026", venue: "Brookshire Grocery Arena", city: "Bossier City, LA" },
+    { date: "February 21, 2026", venue: "Paycom Center", city: "Oklahoma City, OK" },
+    { date: "February 26, 2026", venue: "Rupp Arena at Central Bank Center", city: "Lexington, KY" },
+    { date: "February 27, 2026", venue: "PPG Paints Arena", city: "Pittsburgh, PA" },
+    { date: "February 28, 2026", venue: "KeyBank Center", city: "Buffalo, NY" },
+  ],
+  trackList: [],
+};
