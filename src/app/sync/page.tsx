@@ -18,17 +18,17 @@ const syncCategories = [
   {
     title: "Film & Television",
     description:
-      "From country anthems to rock classics, our catalog spans genre and generation.",
+      "Place chart-topping country, rock, and Americana recordings in your next project. Our catalog includes hits that audiences already know and emerging tracks that set the tone.",
   },
   {
     title: "Advertising & Brand",
     description:
-      "Iconic songs that carry cultural weight and immediate recognition.",
+      "Songs that carry cultural weight and immediate recognition. License music that connects with your audience and elevates your brand story.",
   },
   {
     title: "Gaming & Digital",
     description:
-      "A growing library of music built for modern media and interactive experiences.",
+      "A deep library of recordings built for interactive and digital-first experiences. From high-energy anthems to atmospheric instrumentals.",
   },
 ];
 
@@ -51,10 +51,13 @@ export default function SyncPage() {
             className="font-[family-name:var(--font-body)] text-[16px]"
             style={{ color: "#C8C7C8", lineHeight: 1.8 }}
           >
-            Big Machine Records represents one of the most storied catalogs in
-            American music. From country radio staples to rock anthems, our
-            roster spans genre and generation. Placeholder -- client to provide
-            catalog description.
+            Big Machine Records and its affiliated labels represent one of
+            the most recognized catalogs in American music. With over two
+            decades of chart-topping recordings spanning country, rock, and
+            Americana, our library offers songs that audiences already know
+            and love alongside a growing roster of new voices. We work with
+            music supervisors, agencies, and brands to find the right
+            placement for every project.
           </p>
 
           <div className="mt-8">

@@ -63,7 +63,7 @@ export default function AboutHero() {
   const { cells, fadingCell } = useGridState();
 
   return (
-    <section className="w-full bg-black md:grid md:grid-cols-2 md:overflow-hidden" style={{ minHeight: "100svh" }}>
+    <section className="w-full bg-black md:grid md:grid-cols-2 md:overflow-hidden" style={{ minHeight: "100dvh" }}>
       {/* LEFT COLUMN */}
       <div
         className="flex flex-col justify-center px-8 pt-[100px] pb-10 md:py-20 md:px-[60px] md:pl-20"

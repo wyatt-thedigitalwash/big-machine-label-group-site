@@ -76,7 +76,7 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: "Big Machine Records <noreply@bigmachinerecords.com>",
-      to: "sync@bigmachinerecords.com",
+      to: "info@bigmachinerecords.com",
       subject: `Sync Inquiry: ${projectType} -- ${company}`,
       text: [
         `Name: ${name}`,
