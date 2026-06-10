@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { OrganizationJsonLd } from "@/components/JsonLd";
+import SubscribeBar from "@/components/SubscribeBar";
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-display",
@@ -76,6 +77,7 @@ export default function RootLayout({
         <PageTransition>
           <main id="main-content" className="flex-1">{children}</main>
         </PageTransition>
+        <SubscribeBar />
         <Footer />
       </body>
     </html>
