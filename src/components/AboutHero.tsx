@@ -10,7 +10,7 @@ const artistPhotos = [
   { src: "/images/grid/big-machine-jack-wharff-band-roster.webp", alt: "The Jack Wharff Band" },
   { src: "/images/grid/big-machine-cole-goodwin-roster.webp", alt: "Cole Goodwin" },
   { src: "/images/grid/big-machine-caroline-jones-roster.webp", alt: "Caroline Jones" },
-  { src: "/images/grid/big-machine-greyland-james-roster.webp", alt: "Greyland James" },
+  { src: "/images/grid/big-machine-greyland-james-roster.webp", alt: "Greylan James" },
   { src: "/images/grid/Marfa_AboutBanner_Mobile.jpg", alt: "Marfa" },
   { src: "/images/grid/TheBandsPerryHero_Mobile.jpg", alt: "The Band Perry" },
   { src: "/images/grid/big-machine-savana-santos-roster.webp", alt: "Savana Santos" },

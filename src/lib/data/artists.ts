@@ -267,8 +267,8 @@ export const artists: Artist[] = [
     nextShow: { date: "April 30, 2025", venue: "Cafe Du Nord", city: "San Francisco, CA", ticketUrl: "#" },
   },
   {
-    slug: "greyland-james",
-    name: "Greyland James",
+    slug: "greylan-james",
+    name: "Greylan James",
     genre: "Country",
     pressQuote: "Raw storytelling with an old soul and a modern edge.",
     pressQuoteSource: "MusicRow",

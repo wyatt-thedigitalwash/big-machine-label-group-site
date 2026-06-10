@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms & Conditions",
   description:
-    "Terms and Conditions governing use of the Big Machine Records website.",
+    "Terms and Conditions governing use of the Big Machine Records website. Review our policies on content, trademarks, and user information.",
 };
 
 const sections = [

@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Privacy Policy and Cookies Policy for Big Machine Records and affiliated companies.",
+    "Privacy Policy and Cookies Policy for Big Machine Records, Nashville Harbor Records, and Borchetta Entertainment Group. How we collect and use your data.",
   openGraph: {
     title: "Privacy Policy | Big Machine Records",
     description:
-      "Privacy Policy and Cookies Policy for Big Machine Records and affiliated companies.",
+      "Privacy Policy and Cookies Policy for Big Machine Records, Nashville Harbor Records, and Borchetta Entertainment Group. How we collect and use your data.",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
