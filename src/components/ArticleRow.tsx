@@ -10,10 +10,11 @@ export default function ArticleRow({ article, showArtist = false }: ArticleRowPr
   return (
     <Link
       href={`/news/${article.slug}`}
-      className="group block no-underline cursor-pointer transition-colors duration-200 ease-out hover:bg-[#0D0D0D]"
+      className="group block no-underline cursor-pointer transition-colors duration-200 ease-out hover:bg-[#0D0D0D] px-8 md:px-20"
       style={{
         borderTop: "1px solid #111111",
-        padding: "24px 32px",
+        paddingTop: 24,
+        paddingBottom: 24,
       }}
     >
       <div className="grid grid-cols-1 md:grid-cols-[160px_1fr_200px] md:gap-8">
@@ -21,14 +22,14 @@ export default function ArticleRow({ article, showArtist = false }: ArticleRowPr
         <div className="mb-2 md:mb-0 md:pt-1">
           <span
             className="block font-[family-name:var(--font-body)]"
-            style={{ fontSize: 12, color: "#717171", marginBottom: 8 }}
+            style={{ fontSize: 13, color: "#717171", marginBottom: 8 }}
           >
             {article.date}
           </span>
           <span
             className="block font-[family-name:var(--font-body)] uppercase"
             style={{
-              fontSize: 12,
+              fontSize: 13,
               color: "#CA2125",
               letterSpacing: "0.2em",
             }}
@@ -42,7 +43,7 @@ export default function ArticleRow({ article, showArtist = false }: ArticleRowPr
           <h3
             className="font-[family-name:var(--font-display)] text-white uppercase transition-colors duration-200 ease-out group-hover:text-[#CA2125]"
             style={{
-              fontSize: 40,
+              fontSize: 28,
               lineHeight: 1.05,
               marginBottom: 10,
             }}
@@ -68,7 +69,7 @@ export default function ArticleRow({ article, showArtist = false }: ArticleRowPr
             <span
               className="font-[family-name:var(--font-body)] uppercase"
               style={{
-                fontSize: 12,
+                fontSize: 13,
                 color: "#717171",
                 letterSpacing: "0.15em",
                 marginBottom: 8,

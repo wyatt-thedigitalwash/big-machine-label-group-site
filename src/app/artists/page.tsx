@@ -2,27 +2,31 @@ import Link from "next/link";
 import Image from "next/image";
 import { artists } from "@/lib/data/artists";
 import type { Metadata } from "next";
+import SectionHeader from "@/components/SectionHeader";
 
 export const metadata: Metadata = {
   title: "Artists",
   description:
-    "The Big Machine Records roster. Riley Green, Rascal Flatts, Aaron Lewis, Motley Crue, and more.",
+    "The Big Machine Records roster. Riley Green, The Band Perry, Rascal Flatts, Aaron Lewis, Mackenzie Carpenter, and more.",
+  openGraph: {
+    title: "Artists | Big Machine Records",
+    description:
+      "The Big Machine Records roster. Riley Green, The Band Perry, Rascal Flatts, Aaron Lewis, Mackenzie Carpenter, and more.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
 };
 
 export default function ArtistsPage() {
   return (
-    <section className="w-full bg-black px-8 pt-32 pb-20 md:px-20 md:pt-40 md:pb-24">
-      <div className="mb-16">
-        <span
-          className="block font-[family-name:var(--font-body)] text-[13px] uppercase mb-4"
-          style={{ letterSpacing: "0.2em", color: "#CA2125" }}
-        >
-          Artists
-        </span>
-        <h1 className="font-[family-name:var(--font-display)] text-[56px] md:text-[120px] uppercase text-white leading-[1]">
-          The Roster.
-        </h1>
+    <section
+      className="w-full min-h-screen pt-[100px] md:pt-[120px]"
+      style={{ backgroundColor: "#000000" }}
+    >
+      <div className="px-8 md:px-20">
+        <SectionHeader title="The Roster" as="h1" />
       </div>
+
+      <div className="px-8 pb-20 md:px-20 md:pb-24">
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-14">
         {artists.map((artist) => (
@@ -47,13 +51,14 @@ export default function ArtistsPage() {
               {artist.name}
             </h2>
             <p
-              className="font-[family-name:var(--font-body)] text-[12px] uppercase mt-1"
+              className="font-[family-name:var(--font-body)] text-[13px] uppercase mt-1"
               style={{ letterSpacing: "0.1em", color: "#717171" }}
             >
               {artist.genre}
             </p>
           </Link>
         ))}
+      </div>
       </div>
     </section>
   );

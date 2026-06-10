@@ -36,7 +36,7 @@ export default function NewsPage() {
       style={{ backgroundColor: "#000000" }}
     >
       <div className="px-8 md:px-20">
-        <SectionHeader title="News" />
+        <SectionHeader title="News" as="h1" />
       </div>
 
       <div>
@@ -62,14 +62,14 @@ export default function NewsPage() {
               <div className="mb-2 md:mb-0 md:pt-1">
                 <span
                   className="block font-[family-name:var(--font-body)]"
-                  style={{ fontSize: 12, color: "#717171", marginBottom: 8 }}
+                  style={{ fontSize: 13, color: "#717171", marginBottom: 8 }}
                 >
                   {article.date}
                 </span>
                 <span
                   className="block font-[family-name:var(--font-body)] uppercase"
                   style={{
-                    fontSize: 12,
+                    fontSize: 13,
                     color: "#CA2125",
                     letterSpacing: "0.2em",
                   }}
@@ -83,7 +83,7 @@ export default function NewsPage() {
                 <h2
                   className="font-[family-name:var(--font-display)] text-white uppercase transition-colors duration-200 ease-out group-hover:text-[#CA2125]"
                   style={{
-                    fontSize: 40,
+                    fontSize: 28,
                     lineHeight: 1.05,
                     marginBottom: 10,
                   }}
@@ -109,7 +109,7 @@ export default function NewsPage() {
                   <span
                     className="font-[family-name:var(--font-body)] uppercase"
                     style={{
-                      fontSize: 12,
+                      fontSize: 13,
                       color: "#717171",
                       letterSpacing: "0.15em",
                       marginBottom: 8,

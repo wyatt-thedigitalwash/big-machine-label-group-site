@@ -19,6 +19,7 @@ export default function SyncForm() {
         .value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement)
         .value,
+      website: (form.elements.namedItem("website") as HTMLInputElement).value,
     };
 
     try {
@@ -40,6 +41,11 @@ export default function SyncForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+      {/* Honeypot */}
+      <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div>
         <label
           htmlFor="name"
@@ -124,6 +130,8 @@ export default function SyncForm() {
 
       {status === "sent" && (
         <p
+          role="alert"
+          aria-live="polite"
           className="font-[family-name:var(--font-body)] text-[14px] text-center"
           style={{ color: "#CA2125" }}
         >
@@ -133,6 +141,8 @@ export default function SyncForm() {
 
       {status === "error" && (
         <p
+          role="alert"
+          aria-live="polite"
           className="font-[family-name:var(--font-body)] text-[14px] text-center"
           style={{ color: "#CA2125" }}
         >

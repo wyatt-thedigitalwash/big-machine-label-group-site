@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { articles } from "@/lib/data/news";
 import { artists } from "@/lib/data/artists";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -17,8 +18,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const article = articles.find((a) => a.slug === slug);
   if (!article) return {};
   return {
-    title: `${article.headline} | Big Machine Records`,
+    title: article.headline,
     description: article.excerpt,
+    openGraph: {
+      title: `${article.headline} | Big Machine Records`,
+      description: article.excerpt,
+      type: "article",
+      images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    },
   };
 }
 
@@ -38,6 +45,13 @@ export default async function ArticlePage({ params }: PageProps) {
       className="min-h-screen pt-[100px] md:pt-[120px] pb-20"
       style={{ backgroundColor: "#000000" }}
     >
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "News", href: "/news" },
+          { name: article.headline, href: `/news/${article.slug}` },
+        ]}
+      />
       <div
         className="mx-auto px-8 md:px-20"
         style={{ maxWidth: 860 }}
@@ -47,19 +61,19 @@ export default async function ArticlePage({ params }: PageProps) {
           <Link
             href="/news"
             className="font-[family-name:var(--font-body)] no-underline transition-colors duration-200 ease-out hover:text-[#CA2125]"
-            style={{ fontSize: 12, color: "#717171" }}
+            style={{ fontSize: 13, color: "#717171" }}
           >
             News
           </Link>
           <span
             className="font-[family-name:var(--font-body)]"
-            style={{ fontSize: 12, color: "#333333" }}
+            style={{ fontSize: 13, color: "#333333" }}
           >
             /
           </span>
           <span
             className="font-[family-name:var(--font-body)] truncate"
-            style={{ fontSize: 12, color: "#717171", maxWidth: "40ch" }}
+            style={{ fontSize: 13, color: "#717171", maxWidth: "40ch" }}
           >
             {article.headline.length > 40
               ? article.headline.slice(0, 40) + "..."
@@ -71,7 +85,7 @@ export default async function ArticlePage({ params }: PageProps) {
         <span
           className="block font-[family-name:var(--font-body)] uppercase"
           style={{
-            fontSize: 12,
+            fontSize: 13,
             color: "#CA2125",
             letterSpacing: "0.2em",
             marginBottom: 8,
@@ -81,7 +95,7 @@ export default async function ArticlePage({ params }: PageProps) {
         </span>
         <span
           className="block font-[family-name:var(--font-body)]"
-          style={{ fontSize: 12, color: "#717171", marginBottom: 32 }}
+          style={{ fontSize: 13, color: "#717171", marginBottom: 32 }}
         >
           {article.date}
         </span>
@@ -199,7 +213,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 <span
                   className="font-[family-name:var(--font-body)] uppercase"
                   style={{
-                    fontSize: 12,
+                    fontSize: 13,
                     color: "#717171",
                     letterSpacing: "0.15em",
                   }}

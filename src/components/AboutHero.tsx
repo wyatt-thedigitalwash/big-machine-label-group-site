@@ -1,105 +1,67 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
-const allPhotos = [
-  { src: "/images/hero/big-machine-riley-green-hero.webp", alt: "Riley Green" },
-  { src: "/images/hero/big-machine-rascal-flatts-hero.webp", alt: "Rascal Flatts" },
-  { src: "/images/hero/big-machine-mackenzie-carpenter-hero.webp", alt: "Mackenzie Carpenter" },
-  { src: "/images/hero/big-machine-greyland-james-hero.webp", alt: "Greyland James" },
-  { src: "/images/hero/big-machine-caroline-jones-hero.webp", alt: "Caroline Jones" },
-  { src: "/images/hero/big-machine-jack-wharff-band-hero.webp", alt: "The Jack Wharff Band" },
-  { src: "/images/hero/big-machine-cole-goodwin-hero.webp", alt: "Cole Goodwin" },
-  { src: "/images/hero/big-machine-shaylen-hero.webp", alt: "Shaylen" },
+const artistPhotos = [
+  { src: "/images/grid/big-machine-riley-green-roster.webp", alt: "Riley Green" },
+  { src: "/images/grid/big-machine-aaron-lewis-roster.webp", alt: "Aaron Lewis" },
+  { src: "/images/grid/big-machine-mackenzie-carpenter-roster.webp", alt: "Mackenzie Carpenter" },
+  { src: "/images/grid/big-machine-jack-wharff-band-roster.webp", alt: "The Jack Wharff Band" },
+  { src: "/images/grid/big-machine-cole-goodwin-roster.webp", alt: "Cole Goodwin" },
+  { src: "/images/grid/big-machine-caroline-jones-roster.webp", alt: "Caroline Jones" },
+  { src: "/images/grid/big-machine-greyland-james-roster.webp", alt: "Greyland James" },
+  { src: "/images/grid/Marfa_AboutBanner_Mobile.jpg", alt: "Marfa" },
+  { src: "/images/grid/TheBandsPerryHero_Mobile.jpg", alt: "The Band Perry" },
+  { src: "/images/grid/big-machine-savana-santos-roster.webp", alt: "Savana Santos" },
 ];
 
-const cellIntervals = [5000, 8000, 11000, 7000, 13000, 9500];
+const CELL_COUNT = 6;
 
-// Each cell gets a unique sequence so no two cells ever show the same photo
-// at the same cycle position. Shifted by 1 each row, offset by 2 each step.
-const cellSequences = [
-  [0, 6, 4, 2, 7, 1, 5, 3],
-  [1, 7, 5, 3, 0, 2, 6, 4],
-  [2, 0, 6, 4, 1, 3, 7, 5],
-  [3, 1, 7, 5, 2, 4, 0, 6],
-  [4, 2, 0, 6, 3, 5, 1, 7],
-  [5, 3, 1, 7, 4, 6, 2, 0],
-];
-
-function GridCell({
-  sequence,
-  interval,
-}: {
-  sequence: number[];
-  interval: number;
-}) {
-  const [step, setStep] = useState(0);
-  const [prevStep, setPrevStep] = useState<number | null>(null);
-  const [fading, setFading] = useState(false);
-  const pausedRef = useRef(false);
-
-  const currentPhoto = allPhotos[sequence[step % sequence.length]];
-  const prevPhoto =
-    prevStep !== null ? allPhotos[sequence[prevStep % sequence.length]] : null;
+// One cell swaps at a time, cycling through cells 0-5 in order.
+// The "reserve" pool holds the 3 photos not currently displayed.
+// When a cell swaps, it puts its old photo back in reserve and takes one out.
+function useGridState() {
+  // Initial: cells 0-5 get photos 0-5, reserve is [6,7,8]
+  const [cells, setCells] = useState(() =>
+    Array.from({ length: CELL_COUNT }, (_, i) => i)
+  );
+  const [fadingCell, setFadingCell] = useState<number | null>(null);
+  const reserveRef = useRef([6, 7, 8, 9]);
+  const nextCellRef = useRef(0);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      if (pausedRef.current) return;
-      setFading(true);
-      setTimeout(() => {
-        setStep((prev) => {
-          setPrevStep(prev);
-          return prev + 1;
-        });
-        setTimeout(() => {
-          setFading(false);
-          setPrevStep(null);
-        }, 1000);
-      }, 0);
-    }, interval);
-    return () => clearInterval(id);
-  }, [interval]);
+    const swap = () => {
+      const cellIdx = nextCellRef.current;
+      nextCellRef.current = (nextCellRef.current + 1) % CELL_COUNT;
 
-  return (
-    <div
-      className="relative overflow-hidden"
-      style={{ background: "#111111" }}
-      onMouseEnter={() => (pausedRef.current = true)}
-      onMouseLeave={() => (pausedRef.current = false)}
-    >
-      {prevPhoto && (
-        <Image
-          src={prevPhoto.src}
-          alt={prevPhoto.alt}
-          fill
-          className="object-cover object-center"
-          style={{
-            filter: "grayscale(100%)",
-            opacity: fading ? 0 : 1,
-            transition: "opacity 1000ms ease-out",
-          }}
-          sizes="(max-width: 767px) 33vw, 17vw"
-        />
-      )}
-      <Image
-        src={currentPhoto.src}
-        alt={currentPhoto.alt}
-        fill
-        className="object-cover object-center"
-        style={{
-          filter: "grayscale(100%)",
-          opacity: fading && prevPhoto ? 0 : 1,
-          transition: "opacity 1000ms ease-out",
-        }}
-        sizes="(max-width: 767px) 33vw, 17vw"
-      />
-    </div>
-  );
+      // Fade out
+      setFadingCell(cellIdx);
+
+      setTimeout(() => {
+        setCells((prev) => {
+          const next = [...prev];
+          const oldPhotoIdx = next[cellIdx];
+          const newPhotoIdx = reserveRef.current.shift()!;
+          reserveRef.current.push(oldPhotoIdx);
+          next[cellIdx] = newPhotoIdx;
+          return next;
+        });
+        // Brief delay then fade back in
+        setTimeout(() => setFadingCell(null), 80);
+      }, 700);
+    };
+
+    const id = setInterval(swap, 2800);
+    return () => clearInterval(id);
+  }, []);
+
+  return { cells, fadingCell };
 }
 
 export default function AboutHero() {
+  const { cells, fadingCell } = useGridState();
+
   return (
     <section className="w-full bg-black min-h-screen md:h-screen md:grid md:grid-cols-2 md:overflow-hidden">
       {/* LEFT COLUMN */}
@@ -109,47 +71,20 @@ export default function AboutHero() {
           animation: "aboutHeroLeftIn 700ms ease-out both",
         }}
       >
-        <span
-          className="font-[family-name:var(--font-body)] uppercase"
-          style={{
-            fontSize: 13,
-            color: "#CA2125",
-            letterSpacing: "0.2em",
-            marginBottom: 24,
-          }}
-        >
-          Since 2005.
-        </span>
-
         <h1
           className="font-[family-name:var(--font-display)] uppercase text-white text-left"
           style={{ lineHeight: 0.95 }}
         >
-          <span
-            className="block text-[72px] md:text-[130px]"
-          >
+          <span className="block text-[72px] md:text-[130px]">
             Independent.
           </span>
-          <span
-            className="block text-[72px] md:text-[130px]"
-          >
+          <span className="block text-[72px] md:text-[130px]">
             Uncompromising.
           </span>
-          <span
-            className="block text-[72px] md:text-[130px]"
-          >
+          <span className="block text-[72px] md:text-[130px]">
             Nashville.
           </span>
         </h1>
-
-        <div
-          style={{
-            width: 80,
-            height: 1,
-            background: "#333333",
-            margin: "32px 0",
-          }}
-        />
 
         <p
           className="font-[family-name:var(--font-body)]"
@@ -158,45 +93,50 @@ export default function AboutHero() {
             color: "#C8C7C8",
             lineHeight: 1.7,
             maxWidth: 400,
+            marginTop: 32,
           }}
         >
           Big Machine Records has been home to some of the most enduring artists
           in American music since 2005. Independent by design. Uncompromising by
           nature.
         </p>
-
-        <Link
-          href="#our-story"
-          className="font-[family-name:var(--font-body)] uppercase no-underline transition-opacity duration-200 ease-out hover:opacity-70"
-          style={{
-            fontSize: 13,
-            color: "#CA2125",
-            letterSpacing: "0.12em",
-            marginTop: 24,
-          }}
-        >
-          Our Story
-        </Link>
       </div>
 
-      {/* RIGHT COLUMN — Photo Grid */}
+      {/* RIGHT COLUMN -- Photo Grid */}
       <div
-        className="h-[320px] md:h-full"
+        className="h-[400px] md:h-full"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
           gridTemplateRows: "repeat(2, 1fr)",
-          gap: 2,
+          gap: 3,
           animation: "aboutHeroRightIn 900ms ease-out 200ms both",
         }}
       >
-        {cellSequences.map((sequence, i) => (
-          <GridCell
-            key={i}
-            sequence={sequence}
-            interval={cellIntervals[i]}
-          />
-        ))}
+        {cells.map((photoIdx, cellIdx) => {
+          const photo = artistPhotos[photoIdx];
+          return (
+            <div
+              key={cellIdx}
+              className="relative overflow-hidden"
+              style={{ background: "#0a0a0a" }}
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                className="object-cover"
+                style={{
+                  objectPosition: "center 20%",
+                  filter: "grayscale(100%)",
+                  opacity: fadingCell === cellIdx ? 0 : 1,
+                  transition: "opacity 700ms ease-in-out",
+                }}
+                sizes="(max-width: 767px) 33vw, 17vw"
+              />
+            </div>
+          );
+        })}
       </div>
     </section>
   );

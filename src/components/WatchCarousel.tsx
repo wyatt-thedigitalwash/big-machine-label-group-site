@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import SectionHeader from "@/components/SectionHeader";
 import VideoLightbox from "@/components/VideoLightbox";
 import { artists } from "@/lib/data/artists";
@@ -78,17 +79,19 @@ export default function WatchCarousel() {
                   className="relative w-full overflow-hidden"
                   style={{ aspectRatio: "16 / 9" }}
                 >
-                  <img
+                  <Image
                     src={`https://img.youtube.com/vi/${item.video.id}/maxresdefault.jpg`}
                     alt={item.video.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 85vw, min(520px, 40vw)"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/50 transition-all duration-250 ease-out">
                     <div
                       className="w-[52px] h-[52px] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-250 ease-out"
                       style={{ backgroundColor: "#CA2125" }}
                     >
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path d="M6 4L16 10L6 16V4Z" fill="white" />
                       </svg>
                     </div>
@@ -96,7 +99,7 @@ export default function WatchCarousel() {
                 </div>
                 <p
                   className="font-[family-name:var(--font-body)] mt-4"
-                  style={{ fontSize: 12, color: "#CA2125" }}
+                  style={{ fontSize: 13, color: "#CA2125" }}
                 >
                   {item.artistName}
                 </p>
@@ -108,7 +111,7 @@ export default function WatchCarousel() {
                 </span>
                 <p
                   className="font-[family-name:var(--font-body)] mt-2"
-                  style={{ fontSize: 12, color: "#717171" }}
+                  style={{ fontSize: 13, color: "#717171" }}
                 >
                   {item.video.year}
                 </p>
@@ -128,7 +131,7 @@ export default function WatchCarousel() {
                 border: "1px solid #333333",
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none">
                 <path d="M12 4L6 10L12 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
@@ -146,7 +149,7 @@ export default function WatchCarousel() {
                 border: "1px solid #333333",
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none">
                 <path d="M8 4L14 10L8 16" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>

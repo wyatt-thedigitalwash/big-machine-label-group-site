@@ -10,6 +10,7 @@ import ArtistTourDates from "@/components/ArtistTourDates";
 import ArtistWatchSection from "@/components/ArtistWatchSection";
 import ArticleRow from "@/components/ArticleRow";
 import SectionHeader from "@/components/SectionHeader";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -25,7 +26,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!artist) return {};
   return {
     title: artist.name,
-    description: artist.pressQuote,
+    description: artist.pressQuote || `${artist.name} on Big Machine Records. ${artist.genre} artist from Nashville.`,
+    openGraph: {
+      title: `${artist.name} | Big Machine Records`,
+      description: artist.pressQuote || `${artist.name} on Big Machine Records.`,
+      images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    },
   };
 }
 
@@ -38,6 +44,13 @@ export default async function ArtistPage({ params }: PageProps) {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Artists", href: "/artists" },
+          { name: artist.name, href: `/artists/${artist.slug}` },
+        ]}
+      />
       {/* HERO */}
       <section className="relative flex items-end h-screen w-full bg-black">
         {/* Mobile: roster/grid image */}
@@ -115,32 +128,6 @@ export default async function ArtistPage({ params }: PageProps) {
           <ArtistTourDates artist={artist} />
         </Suspense>
       </div>
-
-      {/* PRESS QUOTE */}
-      <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">
-        <SectionHeader title="Press" />
-        <div className="max-w-[700px] mx-auto text-center">
-          <span
-            className="block font-[family-name:var(--font-display)] text-[120px] leading-none select-none"
-            style={{ color: "#CA2125", marginBottom: -40 }}
-            aria-hidden="true"
-          >
-            &ldquo;
-          </span>
-          <p
-            className="font-[family-name:var(--font-body)] text-[20px] md:text-[28px] italic"
-            style={{ color: "#F2EDE8", lineHeight: 1.5 }}
-          >
-            {artist.pressQuote}
-          </p>
-          <span
-            className="block font-[family-name:var(--font-body)] text-[13px] uppercase mt-6"
-            style={{ letterSpacing: "0.15em", color: "#717171" }}
-          >
-            -- {artist.pressQuoteSource}
-          </span>
-        </div>
-      </section>
 
       {/* RELATED NEWS */}
       {newsForArtist.length > 0 && (

@@ -72,11 +72,49 @@ body {
   }
 }
 
-/* Ensure all focused inputs remove browser outline */
+/* Focus-visible styles for all interactive elements */
+*:focus-visible {
+  outline: 2px solid #CA2125;
+  outline-offset: 2px;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #CA2125;
+  outline-offset: 2px;
+}
+
+/* Skip navigation link */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 99999;
+}
+.skip-to-main:focus {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  width: auto;
+  height: auto;
+  padding: 12px 24px;
+  background: #000000;
+  color: #FFFFFF;
+  border: 2px solid #CA2125;
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  z-index: 99999;
 }
 
 /* Section spacing: remove top padding when consecutive sections share the same background */
@@ -151,6 +189,17 @@ section[data-bg="alt"] + section[data-bg="alt"] {
   }
   to {
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

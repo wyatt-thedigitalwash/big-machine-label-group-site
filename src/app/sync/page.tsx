@@ -5,7 +5,13 @@ import SectionHeader from "@/components/SectionHeader";
 export const metadata: Metadata = {
   title: "Sync & Licensing",
   description:
-    "Submit sync and licensing inquiries for the Big Machine Records catalog. Music for film, television, advertising, and beyond.",
+    "License music from the Big Machine Records catalog for film, television, advertising, and gaming. Submit sync inquiries.",
+  openGraph: {
+    title: "Sync & Licensing | Big Machine Records",
+    description:
+      "License music from the Big Machine Records catalog for film, television, advertising, and gaming. Submit sync inquiries.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
 };
 
 const syncCategories = [
@@ -28,38 +34,17 @@ const syncCategories = [
 
 export default function SyncPage() {
   return (
-    <div style={{ backgroundColor: "#0D0D0D" }}>
-      {/* HERO */}
-      <section
-        className="w-full px-8 pt-[100px] pb-10 md:px-20 md:pt-[120px] md:pb-[60px]"
-        style={{ backgroundColor: "#0D0D0D" }}
-      >
-        <span
-          className="block font-[family-name:var(--font-body)] text-[13px] uppercase mb-4"
-          style={{ letterSpacing: "0.2em", color: "#CA2125" }}
-        >
-          Sync &amp; Licensing
-        </span>
-        <h1 className="font-[family-name:var(--font-display)] text-[56px] md:text-[96px] uppercase text-white leading-[1]">
-          The Catalog.
-        </h1>
-      </section>
-
+    <div style={{ backgroundColor: "#000000" }}>
       {/* TWO-COLUMN: INFO + FORM */}
       <section
-        className="w-full grid grid-cols-1 md:grid-cols-2 items-start px-8 pb-20 md:px-20 md:pb-20"
+        className="w-full grid grid-cols-1 md:grid-cols-2 items-start px-8 pt-[100px] pb-20 md:px-20 md:pt-[120px] md:pb-20"
         style={{
-          backgroundColor: "#0D0D0D",
+          backgroundColor: "#000000",
           columnGap: 80,
         }}
       >
         {/* LEFT — Catalog Info */}
-        <div
-          style={{
-            borderTop: "1px solid #1a1a1a",
-            paddingTop: 40,
-          }}
-        >
+        <div>
           <SectionHeader title="The Music" />
 
           <p
@@ -85,7 +70,7 @@ export default function SyncPage() {
                   padding: "32px 0",
                 }}
               >
-                <h3 className="font-[family-name:var(--font-display)] text-[36px] uppercase text-white leading-none mb-2">
+                <h3 className="font-[family-name:var(--font-display)] text-[28px] md:text-[36px] uppercase text-white leading-none mb-2">
                   {cat.title}
                 </h3>
                 <p
@@ -100,13 +85,7 @@ export default function SyncPage() {
         </div>
 
         {/* RIGHT — Inquiry Form */}
-        <div
-          className="mt-12 md:mt-0"
-          style={{
-            borderTop: "1px solid #1a1a1a",
-            paddingTop: 40,
-          }}
-        >
+        <div className="mt-12 md:mt-0">
           <SectionHeader title="Submit an Inquiry" />
           <SyncForm />
         </div>

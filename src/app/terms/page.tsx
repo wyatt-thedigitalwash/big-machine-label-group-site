@@ -90,7 +90,7 @@ export default function TermsPage() {
         </h1>
         <p
           className="font-[family-name:var(--font-body)] mt-3"
-          style={{ fontSize: 12, color: "#717171" }}
+          style={{ fontSize: 13, color: "#717171" }}
         >
           Last Updated March 16, 2021
         </p>
@@ -101,7 +101,7 @@ export default function TermsPage() {
       </div>
 
       {/* Body */}
-      <div className="px-8 md:px-20" style={{ maxWidth: 860 }}>
+      <div className="px-8 md:px-20">
         <p
           className="font-[family-name:var(--font-body)]"
           style={{

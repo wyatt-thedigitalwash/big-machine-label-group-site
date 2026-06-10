@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Big Machine Records is an independent Nashville label founded in 2005. Home to some of the most enduring artists in American music.",
+  openGraph: {
+    title: "About | Big Machine Records",
+    description:
+      "Big Machine Records is an independent Nashville label founded in 2005. Home to some of the most enduring artists in American music.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
 };
 
 export default function AboutPage() {
@@ -19,7 +25,7 @@ export default function AboutPage() {
         <SectionHeader title="Our Story" />
 
         <div
-          className="font-[family-name:var(--font-body)] text-[18px] space-y-6"
+          className="font-[family-name:var(--font-body)] text-[16px] space-y-6"
           style={{ color: "#C8C7C8", lineHeight: 1.8 }}
         >
           <p>
@@ -57,11 +63,6 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <h2
-          className="font-[family-name:var(--font-display)] text-[40px] md:text-[72px] uppercase text-white mt-16 leading-[1.05] max-w-[700px]"
-        >
-          Independent. Uncompromising.
-        </h2>
       </section>
 
       {/* ROSTER TEASER */}

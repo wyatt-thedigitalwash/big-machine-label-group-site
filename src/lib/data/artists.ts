@@ -19,16 +19,10 @@ export interface Artist {
   youtubeUrl: string;
   tiktokUrl: string;
   xUrl: string;
-  bandsintownId: string;
   heroImage: string;
   rosterImage: string;
   bio: string;
   videos: Video[];
-  tourSource: {
-    platform: "bandsintown" | "seated" | "none";
-    artistId: string;
-    appId?: string;
-  };
   nextShow: {
     date: string;
     venue: string;
@@ -54,8 +48,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@RileyGreenMusic",
     tiktokUrl: "https://www.tiktok.com/@rileygreen",
     xUrl: "https://x.com/RileyGreenMusic",
-    bandsintownId: "riley-green",
-    tourSource: { platform: "seated", artistId: "55cc54ab-d6b9-49e5-9ea0-6339171a5aa8" },
     heroImage: "/images/hero/big-machine-riley-green-hero.webp",
     rosterImage: "/images/grid/big-machine-riley-green-roster.webp",
     bio: "Riley Green has been compelling Country music fans to raise a drink, shed a tear, and, above all, celebrate where they are from, since first releasing his self-titled EP in 2018 with Big Machine Label Group. His songs like the No. 1 PLATINUM hit 'There Was This Girl,' the 3X-PLATINUM-certified 'I Wish Grandpas Never Died,' and his chart-topping collab with Thomas Rhett, 'Half of Me,' have made Riley synonymous with what Country music does best. An avid sports fan, former athlete and outdoorsman, Riley was named the Academy of Country Music's 2020 New Male Artist of the Year. In 2023 he served as direct support for Morgan Wallen and Luke Combs, playing to an average of 65,000 fans each night. His third studio album Don't Mind If I Do, produced by Dann Huff, arrived October 18 with 18 tracks including standouts 'Jesus Saves,' 'Worst Way,' and the title track.",
@@ -85,8 +77,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@TheBandPerry",
     tiktokUrl: "https://www.tiktok.com/@thebandperry",
     xUrl: "https://x.com/thebandperry",
-    bandsintownId: "the-band-perry",
-    tourSource: { platform: "bandsintown", artistId: "The Band Perry", appId: "squarespace-the-band-perry" },
     heroImage: "/images/hero/TheBandPerryHero_Desktop.jpg",
     rosterImage: "/images/grid/TheBandsPerryHero_Mobile.jpg",
     bio: "The Band Perry is a GRAMMY, CMA, and ACM Award-winning duo known for their genre-defying sound and bold artistic reinvention. Since bursting onto the scene with their 9x Platinum smash hit 'If I Die Young,' the Band, led by the artistic eye and creative direction of lead singer / songwriter, Kimberly, have captivated audiences worldwide. The band's 2025 return marks the end of hiatus and the start of the band's next era.\n\nSpanning a decade-plus of music and two albums, The Band Perry has sold two and a half million albums, 12 million singles, and racked up over 1 billion streams. Their success story continues to grow both domestically and globally, a talent powerhouse touting sold-out world tours, six #1 singles, multiple RIAA Platinum and Gold certifications, and pioneering chart success. Their Appalachian gothic sound is amplified by heartfelt, original storytelling, dynamic musicianship, and high-energy performance. Known for pushing creative boundaries while staying rooted in Southern tradition, the duo continues to evolve, both artistically and as individuals.",
@@ -118,8 +108,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@RascalFlattsVEVO",
     tiktokUrl: "https://www.tiktok.com/@rascalflattsofficial",
     xUrl: "https://x.com/rascalflatts",
-    bandsintownId: "rascal-flatts",
-    tourSource: { platform: "none", artistId: "" },
     heroImage: "/images/hero/big-machine-rascal-flatts-hero.webp",
     rosterImage: "/images/hero/big-machine-rascal-flatts-hero.webp",
     bio: "Hailed as one of the most influential groups in modern country history, Rascal Flatts are a chart-topping trio created by vocalist Gary LeVox, multi-instrumentalist Jay DeMarcus and guitarist Joe Don Rooney. Since their founding in 2000, they've cemented their place in music history with genre-crossing hits like 'Prayin' for Daylight,' 'Bless The Broken Road,' 'What Hurts the Most,' and 'Life Is a Highway.' Together the Grand Ole Opry members have racked up 17 Number One hits, over 23.4 million albums sold, 35 million digital downloads, and over 12 billion total lifetime streams. Now emerging from hiatus with renewed passion, the trio is reuniting on their Life Is A Highway Tour in 2025, celebrating 25 years of hits.",
@@ -149,8 +137,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@AaronLewisVEVO",
     tiktokUrl: "https://www.tiktok.com/@aaronlewisofficial",
     xUrl: "https://x.com/aaronlewismusic",
-    bandsintownId: "aaron-lewis",
-    tourSource: { platform: "none", artistId: "" },
     heroImage: "/images/hero/big-machine-aaron-lewis-hero.webp",
     rosterImage: "/images/grid/big-machine-aaron-lewis-roster.webp",
     bio: "",
@@ -179,8 +165,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@mackenziecarpenter",
     tiktokUrl: "https://www.tiktok.com/@mackenziebcarpenter",
     xUrl: "https://x.com/mackenziebcarp",
-    bandsintownId: "mackenzie-carpenter",
-    tourSource: { platform: "bandsintown", artistId: "mackenzie-carpenter", appId: "umg_bigmachinelabelgroup_mackenziecarpenter" },
     heroImage: "/images/hero/big-machine-mackenzie-carpenter-hero.webp",
     rosterImage: "/images/grid/big-machine-mackenzie-carpenter-roster.webp",
     bio: "Raised in the small town of Hull, Georgia, Mackenzie Carpenter grew up writing songs with her brothers and singing in church, shaping a voice that felt honest before it ever felt polished. Her debut album Hey Country Queen blended humor, heartbreak, and sharp storytelling, earning more than 85 million streams and recognition as one of Holler's Best Country Albums of 2025. Beyond her own artistry, Mackenzie is a trusted co-writer behind Megan Moroney's 'I'm Not Pretty,' 'Indifferent,' and the CMA-nominated 'You Had To Be There' with Kenny Chesney. Named to MusicRow's Next Big Thing Artists Class, Spotify's Hot Country Artists to Watch, and CMT's Next Women of Country, she continues into 2026 on select dates of Riley Green's Cowboy As It Gets Tour.",
@@ -212,8 +196,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@jackwharffband",
     tiktokUrl: "https://www.tiktok.com/@jackwharffband",
     xUrl: "https://x.com/jackwharffband",
-    bandsintownId: "jack-wharff-band",
-    tourSource: { platform: "bandsintown", artistId: "the-jack-wharff-band", appId: "umg_bigmachinelabelgroup_thejackwharffband" },
     heroImage: "/images/hero/big-machine-jack-wharff-band-hero.webp",
     rosterImage: "/images/grid/big-machine-jack-wharff-band-roster.webp",
     bio: "Hailing from Richmond, Virginia, The Jack Wharff Band play a strikingly unique blend of bluegrass, Country and rock. Known for their electric live performances, masterful instrumentation, and their ability to make music that consistently defies the confines of genre, the young band burst onto the scene with jaw-dropping original songs that went viral on TikTok and Reels. Comprised of vocalist Jack Wharff, drummer Garrett Howell, bassist Ryan Atchison and guitarist Evan Novoa, the four-piece have quickly captivated audiences with their infectious energy and unrelenting passion for the craft. A record deal with Big Machine Records and a move to Music City later, it's clear this is just the beginning.",
@@ -244,8 +226,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@colegoodwin",
     tiktokUrl: "https://www.tiktok.com/@colegoodwin",
     xUrl: "https://x.com/colegoodwin",
-    bandsintownId: "cole-goodwin",
-    tourSource: { platform: "bandsintown", artistId: "cole-goodwin", appId: "umg_bigmachinelabelgroup_colegoodwin" },
     heroImage: "/images/hero/big-machine-cole-goodwin-hero.webp",
     rosterImage: "/images/grid/big-machine-cole-goodwin-roster.webp",
     bio: "24-year-old singer/songwriter Cole Goodwin has garnered attention for his strong, textured voice paired with meaningful writing and a return to old-school Country sound. The Pooler, Georgia native burst on the scene in 2023 with his original self-produced EP Soon Enough. Cole has toured the Southeast playing honky tonks, clubs and festivals, opening shows for Zach Top and Billy Currington. He was voted Savannah's Best Country Artist of 2023 and 2024. Recently signed to Big Machine Records, he is currently opening on select dates of Luke Bryan's Country Song Came On Tour.",
@@ -273,8 +253,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@CarolineJonesMusic",
     tiktokUrl: "https://www.tiktok.com/@carolinejonesmusic",
     xUrl: "https://x.com/carolinejones",
-    bandsintownId: "caroline-jones",
-    tourSource: { platform: "none", artistId: "" },
     heroImage: "/images/hero/big-machine-caroline-jones-hero.webp",
     rosterImage: "/images/grid/big-machine-caroline-jones-roster.webp",
     bio: "Lauded by Rolling Stone as 'an ambitious, entrepreneurial guitar heroine primed to bring back the pop-country glory of the Nineties,' Caroline Jones is a singer-songwriter and multi-instrumentalist whose musicianship has led her to becoming a full-time band member of Zac Brown Band. Her album Good Omen, her first release with Nashville Harbor Records, marks the most personal chapter of her career to date. Caroline's earlier releases include Homesite (2023), featuring Zac Brown Band and Vince Gill, and Antipodes (2021), which spawned her first Top 30 Country radio hit. She has collaborated with and toured alongside Jimmy Buffett, Kenny Chesney, the Eagles, Carrie Underwood, Faith Hill, and Tim McGraw.",
@@ -303,8 +281,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@greylandjames",
     tiktokUrl: "https://www.tiktok.com/@greylandjames",
     xUrl: "https://x.com/greylandjames",
-    bandsintownId: "greyland-james",
-    tourSource: { platform: "none", artistId: "" },
     heroImage: "/images/hero/big-machine-greyland-james-hero.webp",
     rosterImage: "/images/grid/big-machine-greyland-james-roster.webp",
     bio: "From the moment his Papaw gifted him his first guitar at the age of five, Greylan James knew he was meant to be a musician. The Knoxville-raised artist has become a celebrated songwriter earning cuts from Kenny Chesney, Chris Young, Cole Swindell, Darius Rucker, Bailey Zimmerman, and more. He recently earned his first No. 1 and ACM Award for Song Of The Year co-writing Jordan Davis' smash hit 'Next Thing You Know,' along with his first CMA Award nomination. To date, Greylan's songbook has amassed more than 650 million streams. Now stepping into the spotlight himself, his debut single 'Young Man' is his most personal song yet, dedicated to his late grandfather.",
@@ -332,8 +308,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@marfamusic",
     tiktokUrl: "https://www.tiktok.com/@marfamusic",
     xUrl: "https://x.com/marfamusic",
-    bandsintownId: "marfa",
-    tourSource: { platform: "bandsintown", artistId: "marfa", appId: "umg_bigmachinelabelgroup_marfa" },
     heroImage: "/images/hero/marfa-banner.jpg",
     rosterImage: "/images/grid/Marfa_AboutBanner_Mobile.jpg",
     bio: "Born and raised to a Texas country soundtrack, forged in Colorado from a shared love of rock icons past and present, and ignited by the spirit of California's Laurel Canyon sound, Marfa has arrived with a sound as familiar as your favorite pair of Wranglers while as fresh as the morning Rocky Mountain air. Their debut single '66' was produced by Grammy Award winning producer Nick Waterhouse and recorded at LA's EastWest Studios -- the same four walls that gave life to The Beach Boys' Pet Sounds and The Mamas and the Papas' California Dreamin'. Their follow-up 'Daisy,' produced by Grammy nominated Josh Block, channels CSNY and the Eagles on a harmony-driven acoustic journey.",
@@ -360,8 +334,6 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@savanasantosmusic",
     tiktokUrl: "https://www.tiktok.com/@savanasantos",
     xUrl: "https://x.com/savanasantos",
-    bandsintownId: "savana-santos",
-    tourSource: { platform: "none", artistId: "" },
     heroImage: "/images/hero/big-machine-savana-santos-hero.webp",
     rosterImage: "/images/grid/big-machine-savana-santos-roster.webp",
     bio: "",

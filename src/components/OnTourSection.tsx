@@ -7,14 +7,16 @@ export default function OnTourSection() {
   if (artists.length === 0) return null;
 
   return (
-    <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">
-      <SectionHeader title="On Tour" />
+    <section className="w-full bg-black py-12 md:py-20">
+      <div className="px-8 md:px-20">
+        <SectionHeader title="On Tour" />
+      </div>
 
       <OnTourAnimator>
         {artists.map((artist, i) => (
           <div
             key={artist.slug}
-            className="flex items-center justify-between py-5 transition-colors duration-200 ease-out hover:bg-[#0D0D0D]"
+            className="flex items-center justify-between py-5 px-8 md:px-20 transition-colors duration-200 ease-out hover:bg-[#0D0D0D]"
             style={{
               borderTop: "1px solid #1a1a1a",
               borderBottom:
@@ -40,6 +42,20 @@ export default function OnTourSection() {
           </div>
         ))}
       </OnTourAnimator>
+
+      <div className="text-center mt-10 px-8 md:px-20">
+        <Link
+          href="/tour"
+          className="font-[family-name:var(--font-body)] uppercase no-underline transition-colors duration-200 ease-out hover:text-white"
+          style={{
+            fontSize: 13,
+            color: "#CA2125",
+            letterSpacing: "0.15em",
+          }}
+        >
+          All Tour Dates &rarr;
+        </Link>
+      </div>
     </section>
   );
 }

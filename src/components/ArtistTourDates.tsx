@@ -1,5 +1,6 @@
+import Link from "next/link";
 import SectionHeader from "@/components/SectionHeader";
-import { fetchTourDates, formatDateDisplay } from "@/lib/tourDates";
+import { fetchArtistTourDates, formatDateDisplay } from "@/lib/tourDates";
 import type { Artist } from "@/lib/data/artists";
 
 export default async function ArtistTourDates({
@@ -7,9 +8,7 @@ export default async function ArtistTourDates({
 }: {
   artist: Artist;
 }) {
-  if (artist.tourSource.platform === "none") return null;
-
-  const dates = await fetchTourDates(artist);
+  const dates = await fetchArtistTourDates(artist.name);
 
   return (
     <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">
@@ -23,68 +22,94 @@ export default async function ArtistTourDates({
           No upcoming shows at this time.
         </p>
       ) : (
-        <ul className="list-none p-0 m-0">
-          {dates.map((d, i) => (
-            <li
-              key={`${d.date}-${d.venue}`}
-              className="flex flex-col md:flex-row md:items-center md:justify-between"
+        <>
+          <ul className="list-none p-0 m-0">
+            {dates.map((d, i) => {
+              const locationLine =
+                d.country !== "US"
+                  ? `${d.city}, ${d.country}`
+                  : `${d.city}${d.region ? `, ${d.region}` : ""}`;
+
+              return (
+                <li
+                  key={`${d.date}-${d.venue}-${i}`}
+                  className="flex flex-col md:flex-row md:items-center md:justify-between"
+                  style={{
+                    borderTop: "1px solid #1a1a1a",
+                    borderBottom:
+                      i === dates.length - 1 ? "1px solid #1a1a1a" : undefined,
+                    padding: "20px 0",
+                  }}
+                >
+                  <span
+                    className="font-[family-name:var(--font-body)] text-[14px] flex-shrink-0"
+                    style={{ color: "#C8C7C8", minWidth: 140 }}
+                  >
+                    {formatDateDisplay(d.date)}
+                  </span>
+
+                  <div
+                    className="flex-1 mt-1 md:mt-0"
+                    style={{ padding: "0 24px" }}
+                  >
+                    <span className="block font-[family-name:var(--font-body)] text-[14px] text-white">
+                      {d.venue}
+                    </span>
+                    <span
+                      className="block font-[family-name:var(--font-body)] text-[13px]"
+                      style={{ color: "#717171" }}
+                    >
+                      {locationLine}
+                    </span>
+                  </div>
+
+                  {d.ticketUrl && (
+                    <a
+                      href={d.ticketUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline mt-2 md:mt-0 flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70"
+                      style={{ letterSpacing: "0.12em", color: "#CA2125" }}
+                    >
+                      Tickets
+                    </a>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="flex gap-6" style={{ marginTop: 24 }}>
+            <Link
+              href="/tour"
+              className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline transition-opacity duration-200 ease-out hover:opacity-60"
               style={{
-                borderTop: "1px solid #1a1a1a",
-                borderBottom:
-                  i === dates.length - 1 ? "1px solid #1a1a1a" : undefined,
-                padding: "20px 0",
+                color: "#717171",
+                letterSpacing: "0.12em",
+                borderBottom: "1px solid #717171",
+                paddingBottom: 2,
               }}
             >
-              {/* Date */}
-              <span
-                className="font-[family-name:var(--font-body)] text-[14px] md:w-[140px] md:flex-shrink-0"
-                style={{ color: "#C8C7C8" }}
+              View All Dates
+            </Link>
+            {dates[0]?.ticketUrl && (
+              <a
+                href={dates[0].ticketUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline transition-opacity duration-200 ease-out hover:opacity-60"
+                style={{
+                  color: "#717171",
+                  letterSpacing: "0.12em",
+                  borderBottom: "1px solid #717171",
+                  paddingBottom: 2,
+                }}
               >
-                {formatDateDisplay(d.date)}
-              </span>
-
-              {/* Venue + City */}
-              <div className="flex-1 mt-1 md:mt-0 md:px-6">
-                <span className="block font-[family-name:var(--font-body)] text-[14px] text-white">
-                  {d.venue}
-                </span>
-                <span
-                  className="block font-[family-name:var(--font-body)] text-[13px]"
-                  style={{ color: "#717171" }}
-                >
-                  {d.city}
-                  {d.region ? `, ${d.region}` : ""}
-                </span>
-              </div>
-
-              {/* Tickets + RSVP */}
-              <div className="flex gap-4 mt-2 md:mt-0 flex-shrink-0">
-                {d.ticketUrl && (
-                  <a
-                    href={d.ticketUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-[family-name:var(--font-body)] text-[12px] uppercase no-underline transition-opacity duration-200 ease-out hover:opacity-70"
-                    style={{ letterSpacing: "0.15em", color: "#CA2125" }}
-                  >
-                    Tickets
-                  </a>
-                )}
-                {d.rsvpUrl && d.rsvpUrl !== d.ticketUrl && (
-                  <a
-                    href={d.rsvpUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-[family-name:var(--font-body)] text-[12px] uppercase no-underline transition-colors duration-200 ease-out hover:text-[#C8C7C8]"
-                    style={{ letterSpacing: "0.15em", color: "#717171" }}
-                  >
-                    RSVP
-                  </a>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+                Get Tickets
+              </a>
+            )}
+          </div>
+        </>
       )}
     </section>
   );

@@ -3,7 +3,7 @@ import type { Artist } from "@/lib/data/artists";
 
 function SpotifyIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 168 168" fill="#FFFFFF">
+    <svg aria-hidden="true" width="48" height="48" viewBox="0 0 168 168" fill="#FFFFFF">
       <path d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741C167.74 37.77 130.25.277 83.996.277zm38.404 120.78a5.217 5.217 0 01-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 01-6.249-3.93 5.213 5.213 0 013.926-6.25c31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 014.354-8.143c30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219a7.835 7.835 0 015.221-9.771c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 012.74 10.733 7.822 7.822 0 01-10.734 2.74z" />
     </svg>
   );
@@ -11,7 +11,7 @@ function SpotifyIcon() {
 
 function AppleMusicIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 20 20" fill="#FFFFFF">
+    <svg aria-hidden="true" width="48" height="48" viewBox="0 0 20 20" fill="#FFFFFF">
       <path d="M15.5 1.38l-7.5 1.9c-.3.07-.5.33-.5.64v9.93c-.4-.2-.87-.35-1.4-.35C4.73 13.5 3.5 14.4 3.5 15.5S4.73 17.5 6.1 17.5c1.37 0 2.4-.9 2.4-2V7.84l5.5-1.4v5.91c-.4-.2-.87-.35-1.4-.35-1.37 0-2.6.9-2.6 2s1.23 2 2.6 2c1.37 0 2.4-.9 2.4-2V2.02c0-.4-.3-.73-.7-.64h.2z" />
     </svg>
   );
@@ -31,7 +31,7 @@ function AmazonMusicIcon() {
 
 function InstagramIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
+    <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
       <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
     </svg>
   );
@@ -39,7 +39,7 @@ function InstagramIcon() {
 
 function FacebookIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
+    <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
       <path d="M24 12c0-6.627-5.373-12-12-12S0 5.373 0 12c0 5.99 4.388 10.954 10.125 11.854V15.47H7.078V12h3.047V9.356c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.875V12h3.328l-.532 3.47h-2.796v8.385C19.612 22.954 24 17.99 24 12z" />
     </svg>
   );
@@ -47,7 +47,7 @@ function FacebookIcon() {
 
 function YouTubeIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
+    <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
       <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
     </svg>
   );
@@ -55,7 +55,7 @@ function YouTubeIcon() {
 
 function TikTokIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
+    <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
       <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
     </svg>
   );
@@ -63,7 +63,7 @@ function TikTokIcon() {
 
 function XIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
+    <svg aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="#FFFFFF">
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
@@ -99,14 +99,9 @@ export default function ArtistStreamingSocial({ artist }: { artist: Artist }) {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-2.5 transition-transform duration-200 ease-out hover:scale-[1.08]"
+            aria-label={link.label}
+            className="transition-transform duration-200 ease-out hover:scale-[1.08]"
           >
-            <span
-              className="font-[family-name:var(--font-body)] text-[10px] uppercase"
-              style={{ letterSpacing: "0.15em", color: "#717171" }}
-            >
-              {link.label}
-            </span>
             {link.icon}
           </a>
         ))}
@@ -122,14 +117,9 @@ export default function ArtistStreamingSocial({ artist }: { artist: Artist }) {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-2.5 transition-transform duration-200 ease-out hover:scale-[1.08]"
+            aria-label={link.label}
+            className="transition-transform duration-200 ease-out hover:scale-[1.08]"
           >
-            <span
-              className="font-[family-name:var(--font-body)] text-[10px] uppercase"
-              style={{ letterSpacing: "0.15em", color: "#717171" }}
-            >
-              {link.label}
-            </span>
             {link.icon}
           </a>
         ))}
