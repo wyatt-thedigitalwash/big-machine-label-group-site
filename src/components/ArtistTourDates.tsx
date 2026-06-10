@@ -41,16 +41,29 @@ export default async function ArtistTourDates({
                     padding: "20px 0",
                   }}
                 >
-                  <span
-                    className="font-[family-name:var(--font-body)] text-[14px] flex-shrink-0"
-                    style={{ color: "#C8C7C8", minWidth: 140 }}
-                  >
-                    {formatDateDisplay(d.date)}
-                  </span>
+                  <div className="flex items-baseline gap-4 md:contents">
+                    <span
+                      className="font-[family-name:var(--font-body)] text-[14px] flex-shrink-0"
+                      style={{ color: "#C8C7C8", minWidth: 140 }}
+                    >
+                      {formatDateDisplay(d.date)}
+                    </span>
+
+                    {d.ticketUrl && (
+                      <a
+                        href={d.ticketUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70 md:hidden ml-auto"
+                        style={{ letterSpacing: "0.12em", color: "#CA2125" }}
+                      >
+                        Tickets
+                      </a>
+                    )}
+                  </div>
 
                   <div
-                    className="flex-1 mt-1 md:mt-0"
-                    style={{ padding: "0 24px" }}
+                    className="flex-1 mt-1 md:mt-0 md:px-6"
                   >
                     <span className="block font-[family-name:var(--font-body)] text-[14px] text-white">
                       {d.venue}
@@ -68,7 +81,7 @@ export default async function ArtistTourDates({
                       href={d.ticketUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline mt-2 md:mt-0 flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70"
+                      className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70 hidden md:block"
                       style={{ letterSpacing: "0.12em", color: "#CA2125" }}
                     >
                       Tickets

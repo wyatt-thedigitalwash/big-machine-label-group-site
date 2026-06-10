@@ -52,7 +52,7 @@ export default async function ArtistPage({ params }: PageProps) {
         ]}
       />
       {/* HERO */}
-      <section className="relative flex items-end h-screen w-full bg-black">
+      <section className="relative flex items-end w-full bg-black" style={{ height: "100svh" }}>
         {/* Mobile: roster/grid image */}
         {artist.rosterImage && (
           <Image

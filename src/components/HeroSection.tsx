@@ -28,7 +28,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative w-full overflow-hidden flex flex-col items-center justify-center"
-      style={{ height: "100vh", backgroundColor: "#000000" }}
+      style={{ height: "100svh", backgroundColor: "#000000" }}
     >
       {/* Logo */}
       <Image
