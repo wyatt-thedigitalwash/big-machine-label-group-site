@@ -57,7 +57,6 @@ export default function HeroSection() {
             href={link.href}
             className="font-[family-name:var(--font-display)] uppercase text-white no-underline whitespace-nowrap transition-colors duration-250 ease-out hover:text-[#CA2125]"
             style={{
-              letterSpacing: "0.15em",
               animation: `heroNavFade 400ms ease-out ${800 + i * 60}ms both`,
             }}
           >
@@ -83,7 +82,6 @@ export default function HeroSection() {
               className="font-[family-name:var(--font-display)] uppercase text-white no-underline whitespace-nowrap transition-colors duration-250 ease-out hover:text-[#CA2125]"
               style={{
                 fontSize: 22,
-                letterSpacing: "0.15em",
                 animation: `heroNavFade 400ms ease-out ${800 + i * 60}ms both`,
               }}
             >
@@ -99,7 +97,6 @@ export default function HeroSection() {
               className="font-[family-name:var(--font-display)] uppercase text-white no-underline whitespace-nowrap transition-colors duration-250 ease-out hover:text-[#CA2125]"
               style={{
                 fontSize: 22,
-                letterSpacing: "0.15em",
                 animation: `heroNavFade 400ms ease-out ${1040 + i * 60}ms both`,
               }}
             >

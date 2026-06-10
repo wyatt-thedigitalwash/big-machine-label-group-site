@@ -48,14 +48,28 @@ function renderDateRow(
         padding: "20px 0",
       }}
     >
-      <span
-        className="font-[family-name:var(--font-body)] text-[14px] flex-shrink-0"
-        style={{ color: "#C8C7C8", minWidth: 140 }}
-      >
-        {formatDateDisplay(d.date)}
-      </span>
+      <div className="flex items-baseline gap-4 md:contents">
+        <span
+          className="font-[family-name:var(--font-body)] text-[14px] flex-shrink-0"
+          style={{ color: "#C8C7C8", minWidth: 140 }}
+        >
+          {formatDateDisplay(d.date)}
+        </span>
 
-      <div className="flex-1 mt-1 md:mt-0" style={{ padding: "0 24px" }}>
+        {d.ticketUrl && (
+          <a
+            href={d.ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70 md:hidden ml-auto"
+            style={{ letterSpacing: "0.12em", color: "#CA2125" }}
+          >
+            Tickets
+          </a>
+        )}
+      </div>
+
+      <div className="flex-1 mt-1 md:mt-0 md:px-6">
         {showArtist && d.artistSlug ? (
           <Link
             href={`/artists/${d.artistSlug}`}
@@ -65,15 +79,21 @@ function renderDateRow(
           </Link>
         ) : null}
         <span
-          className={`block font-[family-name:var(--font-body)] text-[${showArtist ? "13" : "14"}px] ${showArtist ? "" : "text-white"}`}
+          className={`block font-[family-name:var(--font-body)] text-[14px] ${showArtist ? "" : "text-white"}`}
           style={showArtist ? { color: "#717171" } : undefined}
         >
           {d.venue}
         </span>
+        <span
+          className="block font-[family-name:var(--font-body)] text-[13px] md:hidden"
+          style={{ color: "#717171" }}
+        >
+          {locationLine}
+        </span>
       </div>
 
       <span
-        className="font-[family-name:var(--font-body)] text-[13px] mt-1 md:mt-0 flex-shrink-0 md:text-right"
+        className="font-[family-name:var(--font-body)] text-[13px] flex-shrink-0 md:text-right hidden md:block"
         style={{ color: "#717171", minWidth: 120 }}
       >
         {locationLine}
@@ -84,7 +104,7 @@ function renderDateRow(
           href={d.ticketUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline mt-2 md:mt-0 md:ml-6 flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70"
+          className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline md:ml-6 flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70 hidden md:block"
           style={{ letterSpacing: "0.12em", color: "#CA2125" }}
         >
           Tickets

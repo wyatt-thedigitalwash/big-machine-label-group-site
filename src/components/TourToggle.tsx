@@ -23,7 +23,6 @@ export default function TourToggle({
           onClick={() => setView("date")}
           className={buttonClass}
           style={{
-            letterSpacing: "0.15em",
             color: view === "date" ? "#FFFFFF" : "#717171",
           }}
         >
@@ -35,7 +34,6 @@ export default function TourToggle({
           onClick={() => setView("artist")}
           className={buttonClass}
           style={{
-            letterSpacing: "0.15em",
             color: view === "artist" ? "#FFFFFF" : "#717171",
           }}
         >

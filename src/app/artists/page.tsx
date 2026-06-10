@@ -52,7 +52,7 @@ export default function ArtistsPage() {
             </h2>
             <p
               className="font-[family-name:var(--font-body)] text-[13px] uppercase mt-1"
-              style={{ letterSpacing: "0.1em", color: "#717171" }}
+              style={{ color: "#717171" }}
             >
               {artist.genre}
             </p>

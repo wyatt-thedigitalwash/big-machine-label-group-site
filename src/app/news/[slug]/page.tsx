@@ -116,7 +116,6 @@ export default async function ArticlePage({ params }: PageProps) {
             style={{
               fontSize: 15,
               color: "#C8C7C8",
-              letterSpacing: "0.15em",
               marginBottom: 48,
             }}
           >
@@ -215,7 +214,6 @@ export default async function ArticlePage({ params }: PageProps) {
                   style={{
                     fontSize: 13,
                     color: "#717171",
-                    letterSpacing: "0.15em",
                   }}
                 >
                   -- {pq.source}
@@ -325,7 +323,7 @@ export default async function ArticlePage({ params }: PageProps) {
           <Link
             href="/news"
             className="font-[family-name:var(--font-body)] uppercase text-white no-underline transition-colors duration-200 ease-out hover:text-[#CA2125]"
-            style={{ fontSize: 13, letterSpacing: "0.15em" }}
+            style={{ fontSize: 13 }}
           >
             &larr; Back to News
           </Link>
@@ -333,7 +331,7 @@ export default async function ArticlePage({ params }: PageProps) {
             <Link
               href={`/artists/${artistSlug}`}
               className="font-[family-name:var(--font-body)] uppercase text-white no-underline transition-colors duration-200 ease-out hover:text-[#CA2125]"
-              style={{ fontSize: 13, letterSpacing: "0.15em" }}
+              style={{ fontSize: 13 }}
             >
               More from {article.artist} &rarr;
             </Link>

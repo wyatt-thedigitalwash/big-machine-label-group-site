@@ -4,13 +4,14 @@ import { artists } from "@/lib/data/artists";
 
 const navLinks = [
   { label: "Home", href: "/" },
+  { label: "Roster", href: "/artists" },
   { label: "About", href: "/about" },
   { label: "News", href: "/news" },
   { label: "Videos", href: "/videos" },
+  { label: "Tour", href: "/tour" },
   { label: "Sync", href: "/sync" },
   { label: "Contact", href: "/contact" },
   { label: "Careers", href: "/careers" },
-  { label: "Terms & Conditions", href: "/terms" },
 ];
 
 const leftArtists = artists.slice(0, 7);

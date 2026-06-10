@@ -77,7 +77,6 @@ export default function NewsTeaserSection() {
                     style={{
                       fontSize: 13,
                       color: "#717171",
-                      letterSpacing: "0.15em",
                       marginBottom: 8,
                     }}
                   >
@@ -88,7 +87,6 @@ export default function NewsTeaserSection() {
                   className="font-[family-name:var(--font-body)] uppercase text-white transition-colors duration-200 ease-out group-hover:text-[#CA2125]"
                   style={{
                     fontSize: 13,
-                    letterSpacing: "0.15em",
                   }}
                 >
                   Read &rarr;
@@ -107,7 +105,7 @@ export default function NewsTeaserSection() {
           style={{
             fontSize: 13,
             color: "#CA2125",
-            letterSpacing: "0.15em",
+                    letterSpacing: "0.2em",
           }}
         >
           All News &rarr;

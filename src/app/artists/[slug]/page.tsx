@@ -98,7 +98,7 @@ export default async function ArtistPage({ params }: PageProps) {
           </h1>
           <p
             className="font-[family-name:var(--font-body)] text-[14px] uppercase mt-3"
-            style={{ letterSpacing: "0.15em", color: "#717171" }}
+            style={{ color: "#717171" }}
           >
             {artist.genre}
           </p>

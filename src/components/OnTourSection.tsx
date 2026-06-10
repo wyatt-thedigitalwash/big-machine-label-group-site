@@ -35,7 +35,7 @@ export default function OnTourSection() {
             <Link
               href={`/artists/${artist.slug}#tour`}
               className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70"
-              style={{ letterSpacing: "0.1em", color: "#CA2125" }}
+              style={{ color: "#CA2125" }}
             >
               View Shows
             </Link>
@@ -50,7 +50,6 @@ export default function OnTourSection() {
           style={{
             fontSize: 13,
             color: "#CA2125",
-            letterSpacing: "0.15em",
           }}
         >
           All Tour Dates &rarr;

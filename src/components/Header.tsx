@@ -215,7 +215,7 @@ export default function Header() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="font-[family-name:var(--font-body)] text-[14px] uppercase tracking-[0.15em] text-white no-underline transition-colors duration-300 ease-out hover:text-[#CA2125]"
+                      className="font-[family-name:var(--font-body)] text-[14px] font-semibold uppercase text-white no-underline transition-colors duration-300 ease-out hover:text-[#CA2125]"
                       onClick={handleNavLinkClick}
                     >
                       {link.label}
@@ -294,7 +294,7 @@ export default function Header() {
                 )}
                 {!hoveredArtist && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="font-[family-name:var(--font-body)] text-[14px] text-[#717171] uppercase tracking-[0.15em]">
+                    <span className="font-[family-name:var(--font-body)] text-[14px] text-[#717171] uppercase">
                       Hover an artist
                     </span>
                   </div>

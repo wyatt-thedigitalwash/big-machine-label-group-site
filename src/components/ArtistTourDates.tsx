@@ -82,7 +82,7 @@ export default async function ArtistTourDates({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline flex-shrink-0 transition-opacity duration-200 ease-out hover:opacity-70 hidden md:block"
-                      style={{ letterSpacing: "0.12em", color: "#CA2125" }}
+                      style={{ color: "#CA2125" }}
                     >
                       Tickets
                     </a>
@@ -98,7 +98,6 @@ export default async function ArtistTourDates({
               className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline transition-opacity duration-200 ease-out hover:opacity-60"
               style={{
                 color: "#717171",
-                letterSpacing: "0.12em",
                 borderBottom: "1px solid #717171",
                 paddingBottom: 2,
               }}
@@ -113,7 +112,6 @@ export default async function ArtistTourDates({
                 className="font-[family-name:var(--font-body)] text-[13px] uppercase no-underline transition-opacity duration-200 ease-out hover:opacity-60"
                 style={{
                   color: "#717171",
-                  letterSpacing: "0.12em",
                   borderBottom: "1px solid #717171",
                   paddingBottom: 2,
                 }}

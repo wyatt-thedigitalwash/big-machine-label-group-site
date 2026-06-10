@@ -111,7 +111,6 @@ export default function NewsPage() {
                     style={{
                       fontSize: 13,
                       color: "#717171",
-                      letterSpacing: "0.15em",
                       marginBottom: 8,
                     }}
                   >
@@ -122,7 +121,6 @@ export default function NewsPage() {
                   className="font-[family-name:var(--font-body)] uppercase text-white transition-colors duration-200 ease-out group-hover:text-[#CA2125]"
                   style={{
                     fontSize: 13,
-                    letterSpacing: "0.15em",
                   }}
                 >
                   Read &rarr;
