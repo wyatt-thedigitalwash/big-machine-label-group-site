@@ -93,7 +93,7 @@ export default function ArtistStreamingSocial({ artist }: { artist: Artist }) {
   return (
     <section className="w-full bg-black px-8 py-8 md:px-20 md:py-10" style={{ borderTop: "1px solid #1a1a1a" }}>
       <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-        {streaming.map((link) => (
+        {streaming.filter((link) => link.href).map((link) => (
           <a
             key={link.label}
             href={link.href}
@@ -111,7 +111,7 @@ export default function ArtistStreamingSocial({ artist }: { artist: Artist }) {
           style={{ height: 48, backgroundColor: "#333333" }}
         />
 
-        {social.map((link) => (
+        {social.filter((link) => link.href).map((link) => (
           <a
             key={link.label}
             href={link.href}
