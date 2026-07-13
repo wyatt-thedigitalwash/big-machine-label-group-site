@@ -13,13 +13,10 @@ export const metadata: Metadata = {
   },
 };
 
-const applyUrl = "https://forms.monday.com/forms/d0ba49bd40a182e1289870b16f75604f?r=use1";
-
 const begSemesters = [
   {
     name: "Fall 2026 Semester",
-    accepting: true,
-    text: "Application window closes July 10th, 2026.",
+    text: "This application window is now closed.",
   },
   {
     name: "Spring 2027 Semester",
@@ -69,39 +66,12 @@ export default function CareersPage() {
             >
               {sem.name}
             </h4>
-            {"accepting" in sem && sem.accepting ? (
-              <div>
-                <p
-                  className="font-[family-name:var(--font-body)]"
-                  style={{ fontSize: 15, color: "#C8C7C8" }}
-                >
-                  NOW ACCEPTING APPLICATIONS{" "}
-                  <span style={{ color: "#717171" }}>&mdash;</span>{" "}
-                  <a
-                    href={applyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-[family-name:var(--font-body)] uppercase no-underline transition-opacity duration-200 ease-out hover:opacity-70"
-                    style={{ fontSize: 13, color: "#CA2125", letterSpacing: "0.12em" }}
-                  >
-                    Apply Here
-                  </a>
-                </p>
-                <p
-                  className="font-[family-name:var(--font-body)] mt-1"
-                  style={{ fontSize: 14, color: "#717171" }}
-                >
-                  {sem.text}
-                </p>
-              </div>
-            ) : (
-              <p
-                className="font-[family-name:var(--font-body)]"
-                style={{ fontSize: 15, color: "#C8C7C8" }}
-              >
-                {sem.text}
-              </p>
-            )}
+            <p
+              className="font-[family-name:var(--font-body)]"
+              style={{ fontSize: 15, color: "#C8C7C8" }}
+            >
+              {sem.text}
+            </p>
           </div>
         ))}
 
