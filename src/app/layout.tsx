@@ -6,6 +6,9 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { OrganizationJsonLd } from "@/components/JsonLd";
 import SubscribeBar from "@/components/SubscribeBar";
+import AnchorScroll from "@/components/shared/AnchorScroll";
+import CookieConsent from "@/components/consent/CookieConsent";
+import TermsGate from "@/components/consent/TermsGate";
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-display",
@@ -73,12 +76,19 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-main">
           Skip to main content
         </a>
+        <AnchorScroll />
         <Header />
         <PageTransition>
           <main id="main-content" className="flex-1">{children}</main>
         </PageTransition>
         <SubscribeBar />
         <Footer />
+        {/* Cookie consent banner. Shows once per new visitor, persisted in
+            localStorage; injects nothing before consent is granted. */}
+        <CookieConsent />
+        {/* Arbitration / class-action notice, shown once right after the cookie
+            decision so it is never buried only in the footer. */}
+        <TermsGate />
       </body>
     </html>
   );

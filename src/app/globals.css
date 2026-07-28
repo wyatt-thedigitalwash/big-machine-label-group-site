@@ -8,6 +8,14 @@
   --color-white: #FFFFFF;
   --color-gray-light: #C8C7C8;
   --color-gray-dark: #717171;
+
+  /* Design tokens consumed by the legal / consent components. Mapped to the
+     Big Machine Records palette: black surfaces, white/off-white text, red accent. */
+  --background-primary: #000000;
+  --background-alt: #0D0D0D;
+  --text-header: #FFFFFF;
+  --text-body: #F2EDE8;
+  --text-accent: #FFFFFF;
 }
 
 @theme inline {
@@ -18,6 +26,13 @@
   --color-gray-dark: var(--color-gray-dark);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+
+  /* Aliases so the ported legal/consent components resolve to Big Machine's system */
+  --color-background-primary: var(--background-primary);
+  --color-background-alt: var(--background-alt);
+  --color-text-header: var(--text-header);
+  --color-text-body: var(--text-body);
+  --color-text-accent: var(--text-accent);
 }
 
 body {
@@ -209,4 +224,52 @@ section[data-bg="alt"] + section[data-bg="alt"] {
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ===== Legal / Policy Pages =====
+   Red (#CA2125) is the site's only accent and its link/hover treatment, so
+   hyperlinks inside legal copy are red and underlined against the black page. */
+.legal-prose a {
+  color: #CA2125;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: opacity 200ms ease-out;
+  word-break: break-word;
+}
+.legal-prose a:hover {
+  opacity: 0.7;
+}
+
+/* ===== Cookie Consent / Terms Gate Buttons =====
+   Flat rectangular buttons per SITE.md: red fill / white text primary (matching
+   the site's form submit buttons), transparent / white border ghost. No pills. */
+.cc-btn {
+  display: block;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 200ms ease-out;
+  cursor: pointer;
+}
+.cc-btn-primary {
+  background: #CA2125;
+  color: #FFFFFF;
+  border-color: #CA2125;
+}
+.cc-btn-primary:hover {
+  opacity: 0.85;
+}
+.cc-btn-ghost {
+  background: transparent;
+  color: #FFFFFF;
+}
+.cc-btn-ghost:hover {
+  border-color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
 }

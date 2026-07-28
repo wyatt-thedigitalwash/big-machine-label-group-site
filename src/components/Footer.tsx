@@ -1,6 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { artists } from "@/lib/data/artists";
+import CookieChoicesLink from "@/components/legal/CookieChoicesLink";
+
+const legalLinks = [
+  { label: "Terms", href: "/legal/terms" },
+  { label: "Privacy", href: "/legal/privacy" },
+  { label: "Copyright (DMCA)", href: "/legal/dmca" },
+  { label: "Cybersecurity", href: "/legal/cybersecurity" },
+  { label: "TCPA", href: "/legal/tcpa" },
+  { label: "Do Not Sell My Personal Information", href: "/legal/privacy#s10-2" },
+];
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -274,35 +284,20 @@ export default function Footer() {
         >
           &copy; Borchetta Entertainment Group, LLC d/b/a Big Machine Records.
         </span>
-        <div className="flex items-center gap-6">
-          <Link
-            href="/privacy"
-            className="font-[family-name:var(--font-body)] no-underline transition-opacity duration-200 ease-out hover:opacity-60"
-            style={{ fontSize: 13, color: "#717171" }}
-          >
-            Privacy
-          </Link>
-          <Link
-            href="/terms"
-            className="font-[family-name:var(--font-body)] no-underline transition-opacity duration-200 ease-out hover:opacity-60"
-            style={{ fontSize: 13, color: "#717171" }}
-          >
-            Terms
-          </Link>
-          <Link
-            href="/privacy#cookies"
-            className="font-[family-name:var(--font-body)] no-underline transition-opacity duration-200 ease-out hover:opacity-60"
-            style={{ fontSize: 13, color: "#717171" }}
-          >
-            Cookies
-          </Link>
-          <Link
-            href="/privacy#10.2"
-            className="font-[family-name:var(--font-body)] no-underline transition-opacity duration-200 ease-out hover:opacity-60"
-            style={{ fontSize: 13, color: "#717171" }}
-          >
-            Do Not Sell My Personal Information
-          </Link>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-end">
+          {legalLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="font-[family-name:var(--font-body)] no-underline transition-opacity duration-200 ease-out hover:opacity-60"
+              style={{ fontSize: 13, color: "#717171" }}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <CookieChoicesLink
+            className="font-[family-name:var(--font-body)] cursor-pointer border-none bg-transparent p-0 text-[13px] text-[#717171] no-underline transition-opacity duration-200 ease-out hover:opacity-60"
+          />
         </div>
       </div>
     </footer>
