@@ -10,7 +10,7 @@
 - Google Business Profile: (pending)
 
 ## Roster
-Riley Green, Rascal Flatts, Aaron Lewis, Motley Crue, Mackenzie Carpenter, Greyland James, Cole Goodwin, Caroline Jones, The Jack Wharff Band, Shaylen, Marfa, Savana Santos
+Riley Green, Rascal Flatts, Aaron Lewis, Motley Crue, Mackenzie Carpenter, Greyland James, Cole Goodwin, Caroline Jones, The Jack Wharff Band, Shaylen, Marfa, Naomi Carman
 
 ## Positioning
 A cinematic, dark editorial label site that carries real attitude underneath a premium surface. Not a polished Nashville establishment -- something with speed, power, and edge. The logo is a hot rod with flames. The site should feel like it was art directed by someone who grew up on great music and ignored every label site template that came before it.
@@ -69,7 +69,7 @@ Hot rod with flames. SVG or PNG stored in /public. Wordmark used in footer.
 - jack-wharff-band
 - shaylen
 - marfa
-- savana-santos
+- naomi-carman
 
 ## Navigation
 Fixed header. Big Machine logo (SVG or PNG from public directory) left-aligned. Hamburger right. Full-screen overlay nav on open -- artist names large down the left, standard nav links small beneath. Closes on ESC or click outside.

@@ -53,13 +53,13 @@ export default async function ArtistPage({ params }: PageProps) {
       />
       {/* HERO */}
       <section className="relative flex items-end w-full bg-black" style={{ height: "100dvh" }}>
-        {/* Mobile: roster/grid image */}
+        {/* Mobile: roster/grid image. Also carries desktop when no hero exists. */}
         {artist.rosterImage && (
           <Image
             src={artist.rosterImage}
             alt={artist.name}
             fill
-            className="object-cover md:hidden"
+            className={`object-cover ${artist.heroImage ? "md:hidden" : ""}`}
             style={{ objectPosition: "center top" }}
             sizes="100vw"
             priority

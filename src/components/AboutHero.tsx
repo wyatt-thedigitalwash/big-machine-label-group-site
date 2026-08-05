@@ -13,21 +13,26 @@ const artistPhotos = [
   { src: "/images/grid/big-machine-greyland-james-roster.webp", alt: "Greylan James" },
   { src: "/images/grid/Marfa_AboutBanner_Mobile.jpg", alt: "Marfa" },
   { src: "/images/grid/TheBandsPerryHero_Mobile.jpg", alt: "The Band Perry" },
-  { src: "/images/grid/big-machine-savana-santos-roster.webp", alt: "Savana Santos" },
+  { src: "/images/grid/big-machine-naomi-carman-roster.webp", alt: "Naomi Carman" },
 ];
 
 const CELL_COUNT = 6;
 
 // One cell swaps at a time, cycling through cells 0-5 in order.
-// The "reserve" pool holds the 3 photos not currently displayed.
+// The "reserve" pool holds the photos not currently displayed.
 // When a cell swaps, it puts its old photo back in reserve and takes one out.
 function useGridState() {
-  // Initial: cells 0-5 get photos 0-5, reserve is [6,7,8]
+  // Initial: cells 0-5 get photos 0-5, reserve gets whatever is left over.
   const [cells, setCells] = useState(() =>
     Array.from({ length: CELL_COUNT }, (_, i) => i)
   );
   const [fadingCell, setFadingCell] = useState<number | null>(null);
-  const reserveRef = useRef([6, 7, 8, 9]);
+  const reserveRef = useRef(
+    Array.from(
+      { length: artistPhotos.length - CELL_COUNT },
+      (_, i) => i + CELL_COUNT
+    )
+  );
   const nextCellRef = useRef(0);
 
   useEffect(() => {
