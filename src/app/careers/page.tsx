@@ -52,7 +52,7 @@ export default function CareersPage() {
         <p
           className="font-[family-name:var(--font-body)]"
           style={{
-            fontSize: 16,
+            fontSize: 18,
             color: "#C8C7C8",
             lineHeight: 1.8,
             marginBottom: 40,
@@ -68,7 +68,7 @@ export default function CareersPage() {
           <div key={sem.name} style={{ marginBottom: 32 }}>
             <h4
               className="font-[family-name:var(--font-display)] text-white uppercase"
-              style={{ fontSize: 24, marginBottom: 8 }}
+              style={{ fontSize: 28, marginBottom: 8 }}
             >
               {sem.name}
             </h4>
@@ -76,7 +76,7 @@ export default function CareersPage() {
               <>
                 <p
                   className="font-[family-name:var(--font-body)]"
-                  style={{ fontSize: 15, color: "#C8C7C8" }}
+                  style={{ fontSize: 17, color: "#C8C7C8" }}
                 >
                   NOW ACCEPTING APPLICATIONS:{" "}
                   <a
@@ -92,7 +92,7 @@ export default function CareersPage() {
                 {sem.note && (
                   <p
                     className="font-[family-name:var(--font-body)]"
-                    style={{ fontSize: 13, color: "#717171", marginTop: 6 }}
+                    style={{ fontSize: 15, color: "#717171", marginTop: 6 }}
                   >
                     {sem.note}
                   </p>
@@ -101,7 +101,7 @@ export default function CareersPage() {
             ) : (
               <p
                 className="font-[family-name:var(--font-body)]"
-                style={{ fontSize: 15, color: "#C8C7C8" }}
+                style={{ fontSize: 17, color: "#C8C7C8" }}
               >
                 {sem.text}
               </p>
@@ -111,7 +111,7 @@ export default function CareersPage() {
 
         <p
           className="font-[family-name:var(--font-body)] italic"
-          style={{ fontSize: 13, color: "#717171", marginTop: 8 }}
+          style={{ fontSize: 15, color: "#717171", marginTop: 8 }}
         >
           Please note: Department needs and availability differs from one
           semester to another. The available departments to apply for an
