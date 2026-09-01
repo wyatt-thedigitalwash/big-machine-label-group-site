@@ -13,14 +13,20 @@ export const metadata: Metadata = {
   },
 };
 
-const begSemesters = [
-  {
-    name: "Fall 2026 Semester",
-    text: "This application window is now closed.",
-  },
+type Semester = {
+  name: string;
+  text?: string;
+  apply?: { href: string };
+  note?: string;
+};
+
+const begSemesters: Semester[] = [
   {
     name: "Spring 2027 Semester",
-    text: "Applications open August 18th, 2026.",
+    apply: {
+      href: "https://forms.monday.com/forms/d0ba49bd40a182e1289870b16f75604f?r=use1",
+    },
+    note: "This window will close and the link will be removed on October 30th, 2026.",
   },
   {
     name: "Summer 2027 Semester",
@@ -66,12 +72,40 @@ export default function CareersPage() {
             >
               {sem.name}
             </h4>
-            <p
-              className="font-[family-name:var(--font-body)]"
-              style={{ fontSize: 15, color: "#C8C7C8" }}
-            >
-              {sem.text}
-            </p>
+            {sem.apply ? (
+              <>
+                <p
+                  className="font-[family-name:var(--font-body)]"
+                  style={{ fontSize: 15, color: "#C8C7C8" }}
+                >
+                  NOW ACCEPTING APPLICATIONS:{" "}
+                  <a
+                    href={sem.apply.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold underline underline-offset-4 transition-colors duration-400 ease-out hover:text-white"
+                    style={{ color: "#CA2125" }}
+                  >
+                    APPLY HERE
+                  </a>
+                </p>
+                {sem.note && (
+                  <p
+                    className="font-[family-name:var(--font-body)]"
+                    style={{ fontSize: 13, color: "#717171", marginTop: 6 }}
+                  >
+                    {sem.note}
+                  </p>
+                )}
+              </>
+            ) : (
+              <p
+                className="font-[family-name:var(--font-body)]"
+                style={{ fontSize: 15, color: "#C8C7C8" }}
+              >
+                {sem.text}
+              </p>
+            )}
           </div>
         ))}
 
