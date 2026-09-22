@@ -308,8 +308,8 @@ export const artists: Artist[] = [
     youtubeUrl: "https://www.youtube.com/@marfatheband",
     tiktokUrl: "https://www.tiktok.com/@officialmarfaband",
     xUrl: "",
-    heroImage: "/images/hero/marfa-banner.jpg",
-    rosterImage: "/images/grid/Marfa_AboutBanner_Mobile.jpg",
+    heroImage: "/images/hero/Marfa_WebsiteHero.jpg",
+    rosterImage: "/images/hero/Marfa_WebsiteHero.jpg",
     bio: "Born and raised to a Texas country soundtrack, forged in Colorado from a shared love of rock icons past and present, and ignited by the spirit of California's Laurel Canyon sound, Marfa has arrived with a sound as familiar as your favorite pair of Wranglers while as fresh as the morning Rocky Mountain air. Their debut single '66' was produced by Grammy Award winning producer Nick Waterhouse and recorded at LA's EastWest Studios -- the same four walls that gave life to The Beach Boys' Pet Sounds and The Mamas and the Papas' California Dreamin'. Their follow-up 'Daisy,' produced by Grammy nominated Josh Block, channels CSNY and the Eagles on a harmony-driven acoustic journey.",
     videos: [
       { id: "4JNaoEFPTcM", title: "American Lonely", year: "2025" },
