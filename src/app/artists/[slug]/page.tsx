@@ -109,15 +109,22 @@ export default async function ArtistPage({ params }: PageProps) {
       <ArtistStreamingSocial artist={artist} />
 
       {/* BIO */}
-      <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">
-        <SectionHeader title="About" />
-        <p
-          className="font-[family-name:var(--font-body)] text-[16px]"
-          style={{ color: "#C8C7C8", lineHeight: 1.8 }}
-        >
-          {artist.bio || `Placeholder bio for ${artist.name}. Client to provide.`}
-        </p>
-      </section>
+      {artist.bio && (
+        <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">
+          <SectionHeader title="About" />
+          <div className="flex flex-col gap-6">
+            {artist.bio.split("\n\n").map((paragraph, i) => (
+              <p
+                key={i}
+                className="font-[family-name:var(--font-body)] text-[16px]"
+                style={{ color: "#C8C7C8", lineHeight: 1.8 }}
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* WATCH */}
       <ArtistWatchSection videos={artist.videos} />

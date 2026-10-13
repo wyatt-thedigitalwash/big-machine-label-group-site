@@ -8,7 +8,7 @@ export default async function ArtistTourDates({
 }: {
   artist: Artist;
 }) {
-  const dates = await fetchArtistTourDates(artist.name);
+  const dates = await fetchArtistTourDates(artist);
 
   return (
     <section className="w-full bg-black px-8 py-12 md:px-20 md:py-20">

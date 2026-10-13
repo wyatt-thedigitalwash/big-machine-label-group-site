@@ -10,7 +10,7 @@
 - Google Business Profile: (pending)
 
 ## Roster
-Riley Green, Rascal Flatts, Aaron Lewis, Motley Crue, Mackenzie Carpenter, Greyland James, Cole Goodwin, Caroline Jones, The Jack Wharff Band, Shaylen, Marfa, Naomi Carman
+Riley Green, Rascal Flatts, Aaron Lewis, Motley Crue, Mackenzie Carpenter, Greyland James, Cole Goodwin, Caroline Jones, The Jack Wharff Band, Shaylen, Marfa, Naomi Carman, Hunter Flynn
 
 ## Positioning
 A cinematic, dark editorial label site that carries real attitude underneath a premium surface. Not a polished Nashville establishment -- something with speed, power, and edge. The logo is a hot rod with flames. The site should feel like it was art directed by someone who grew up on great music and ignored every label site template that came before it.

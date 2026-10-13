@@ -14,6 +14,7 @@ const artistPhotos = [
   { src: "/images/grid/Marfa_AboutBanner_Mobile.jpg", alt: "Marfa" },
   { src: "/images/grid/TheBandsPerryHero_Mobile.jpg", alt: "The Band Perry" },
   { src: "/images/grid/big-machine-naomi-carman-roster.webp", alt: "Naomi Carman" },
+  { src: "/images/grid/big-machine-hunter-flynn-roster.webp", alt: "Hunter Flynn" },
 ];
 
 const CELL_COUNT = 6;

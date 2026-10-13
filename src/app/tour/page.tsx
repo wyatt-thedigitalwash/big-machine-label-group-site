@@ -115,9 +115,7 @@ function renderDateRow(
 }
 
 export default async function TourPage() {
-  const flatDates = await fetchAllTourDates(
-    artists.map((a) => ({ name: a.name, slug: a.slug }))
-  );
+  const flatDates = await fetchAllTourDates(artists);
 
   // -- By Month grouping for By Date view --
   const byMonthMap = new Map<string, typeof flatDates>();
