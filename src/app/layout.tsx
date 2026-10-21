@@ -89,10 +89,12 @@ export default function RootLayout({
         </HideOnGiveaways>
         {/* Cookie consent banner. Shows once per new visitor, persisted in
             localStorage; injects nothing before consent is granted. */}
-        <CookieConsent />
-        {/* Arbitration / class-action notice, shown once right after the cookie
-            decision so it is never buried only in the footer. */}
-        <TermsGate />
+        <HideOnGiveaways mode="gate">
+          <CookieConsent />
+          {/* Arbitration / class-action notice, shown once right after the cookie
+              decision so it is never buried only in the footer. */}
+          <TermsGate />
+        </HideOnGiveaways>
       </body>
     </html>
   );

@@ -102,8 +102,9 @@ export default function GiveawayHero() {
           />
         </div>
         <div className="w-full">
-          <h1 className="gv-head gv-rise-3 text-[28px] leading-[1.05] md:text-[48px] max-w-[720px] mx-auto">
-            Win the football signed by both of them.
+          <h1 className="gv-head gv-rise-3 text-[28px] leading-[1.05] md:text-[46px] max-w-[880px] mx-auto">
+            Win a football signed by
+            <br className="hidden md:block" /> Riley Green and Peyton Manning.
           </h1>
           <div className="gv-rise-3 mt-8 flex flex-col items-center gap-4">
             <EnterCta />

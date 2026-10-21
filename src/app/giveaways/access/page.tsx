@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import PasswordGate from "@/components/giveaway/PasswordGate";
 import { CAMPAIGN } from "@/lib/giveaways/alabama-vs-tennessee";
 
@@ -20,13 +21,15 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", images: [CAMPAIGN.images.og] },
 };
 
-// Served in place of any giveaway route when the access cookie is missing
-// (see src/proxy.ts). Also reachable directly at /giveaways/access.
+// The proxy (src/proxy.ts) redirects any giveaway route here when the access
+// cookie is missing, with ?next= pointing back to the requested page.
 export default function GiveawayAccessPage() {
   return (
     <div className="gv">
       <link rel="stylesheet" href="https://use.typekit.net/yoe5szg.css" precedence="default" />
-      <PasswordGate />
+      <Suspense fallback={null}>
+        <PasswordGate />
+      </Suspense>
     </div>
   );
 }

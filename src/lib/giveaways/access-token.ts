@@ -2,6 +2,20 @@
 // (request edge) and the server helpers. Uses Web Crypto so it runs anywhere.
 
 export const ACCESS_COOKIE = "gv_access";
+export const GATE_PATH = "/giveaways/access";
+
+// The gate is on unless GIVEAWAY_GATE is explicitly "off". The password comes
+// from GIVEAWAY_PASSWORD when set, otherwise this fallback, so a deploy that
+// forgets the variable is still locked rather than wide open.
+const FALLBACK_PASSWORD = "OHIOSTATE";
+
+export function gateEnabled(): boolean {
+  return process.env.GIVEAWAY_GATE !== "off";
+}
+
+export function gatePassword(): string {
+  return process.env.GIVEAWAY_PASSWORD || FALLBACK_PASSWORD;
+}
 
 export async function computeAccessToken(password: string): Promise<string> {
   const data = new TextEncoder().encode(`giveaway:${password}`);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CAMPAIGN } from "@/lib/giveaways/alabama-vs-tennessee";
 import { verifyGiveawayPassword, type GateState } from "@/app/giveaways/actions";
 
@@ -10,16 +10,15 @@ const initial: GateState = { ok: false, error: null };
 export default function PasswordGate() {
   const [state, formAction, pending] = useActionState(verifyGiveawayPassword, initial);
   const router = useRouter();
-  const pathname = usePathname();
+  const params = useSearchParams();
 
-  // The action sets the cookie. The proxy served this gate in place of the
-  // requested page, so a refresh re-runs it with the cookie present. If the
-  // fan came to /giveaways/access directly, send them on to the campaign.
+  // The action sets the cookie; then go to the page that was requested. Only
+  // giveaway paths are honoured so the parameter can never redirect off-site.
   useEffect(() => {
     if (!state.ok) return;
-    if (pathname === "/giveaways/access") router.replace(CAMPAIGN.path);
-    else router.refresh();
-  }, [state.ok, router, pathname]);
+    const next = params.get("next") || "";
+    router.replace(next.startsWith("/giveaways/") ? next : CAMPAIGN.path);
+  }, [state.ok, router, params]);
 
   return (
     <section className="min-h-[100svh] flex items-center justify-center px-6 py-20">
