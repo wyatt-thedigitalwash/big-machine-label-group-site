@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { COUNTRIES } from "@/lib/countries";
 import { SMS_COUNTRIES } from "@/lib/subscribe-validation";
 
@@ -29,6 +30,7 @@ const borderClass = (invalid: boolean) =>
   invalid ? "border-[#CA2125]" : "border-[#333333] focus:border-[#CA2125]";
 
 export default function SubscribeBar() {
+  const pathname = usePathname();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -88,6 +90,9 @@ export default function SubscribeBar() {
       setStatus("error");
     }
   }
+
+  // Giveaway pages carry their own entry form; a second signup bar competes with it.
+  if (pathname?.startsWith("/giveaways")) return null;
 
   if (status === "success") {
     return (

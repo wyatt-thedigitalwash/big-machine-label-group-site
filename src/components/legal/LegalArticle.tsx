@@ -137,10 +137,13 @@ export default function LegalArticle({
   title,
   intro,
   blocks,
+  back = { href: "/legal", label: "All Policies" },
 }: {
   title: string;
   intro?: string;
   blocks: Block[];
+  /** Where the top and bottom back links point. Defaults to the policies index. */
+  back?: { href: string; label: string };
 }) {
   // Scroll to the anchor on mount so cross-page #section links land correctly.
   // Content stays visible throughout -- no hide/reveal, which previously caused
@@ -156,8 +159,8 @@ export default function LegalArticle({
     <>
       <section data-bg="primary" className="bg-background-primary px-5 pt-28 pb-4 lg:px-12">
         <div className="mx-auto max-w-[820px]">
-          <Link href="/legal" className="font-body text-sm text-text-accent/70 hover:text-text-header">
-            &larr; All Policies
+          <Link href={back.href} className="font-body text-sm text-text-accent/70 hover:text-text-header">
+            &larr; {back.label}
           </Link>
           <h1 className="mt-6 text-[30px] md:text-[44px]" style={{ color: "var(--text-accent)" }}>
             {title}
@@ -172,6 +175,13 @@ export default function LegalArticle({
             <BlockView key={i} block={b} />
           ))}
         </article>
+        {back.href !== "/legal" && (
+          <div className="mx-auto max-w-[820px] mt-12 pt-8" style={{ borderTop: "1px solid #1a1a1a" }}>
+            <Link href={back.href} className="font-body text-sm text-text-accent/70 hover:text-text-header">
+              &larr; {back.label}
+            </Link>
+          </div>
+        )}
       </section>
     </>
   );

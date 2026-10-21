@@ -9,6 +9,7 @@ import SubscribeBar from "@/components/SubscribeBar";
 import AnchorScroll from "@/components/shared/AnchorScroll";
 import CookieConsent from "@/components/consent/CookieConsent";
 import TermsGate from "@/components/consent/TermsGate";
+import HideOnGiveaways from "@/components/shared/HideOnGiveaways";
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-display",
@@ -30,6 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bigmachinerecords.com"),
   title: {
     default: "Big Machine Records | Independent Nashville Label",
     template: "%s | Big Machine Records",
@@ -82,7 +84,9 @@ export default function RootLayout({
           <main id="main-content" className="flex-1">{children}</main>
         </PageTransition>
         <SubscribeBar />
-        <Footer />
+        <HideOnGiveaways>
+          <Footer />
+        </HideOnGiveaways>
         {/* Cookie consent banner. Shows once per new visitor, persisted in
             localStorage; injects nothing before consent is granted. */}
         <CookieConsent />

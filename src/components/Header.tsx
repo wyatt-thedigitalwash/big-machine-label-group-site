@@ -94,6 +94,9 @@ export default function Header() {
     };
   }, [navOpen, closeNav]);
 
+  // Giveaway campaign pages are standalone landing pages with no site nav.
+  if (pathname?.startsWith("/giveaways")) return null;
+
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50">

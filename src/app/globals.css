@@ -273,3 +273,54 @@ section[data-bg="alt"] + section[data-bg="alt"] {
   border-color: #FFFFFF;
   background: rgba(255, 255, 255, 0.08);
 }
+
+/* ===== Giveaway campaign pages (/giveaways/*) =====
+   Campaign art direction uses its own palette and Adobe Fonts kit, loaded only
+   on those routes. Scoped under .gv so nothing leaks into the rest of the site. */
+.gv {
+  --gv-charcoal: #272727;
+  --gv-red: #BB3638;
+  --gv-orange: #DD742E;
+  --gv-cream: #EFDDD1;
+  --gv-font-head: "superclarendon", "Georgia", serif;
+  --gv-font-sub: "graduate", "Impact", sans-serif;
+  --gv-font-body: "gotham", "Helvetica Neue", Arial, sans-serif;
+  background: var(--gv-charcoal);
+  color: var(--gv-cream);
+  font-family: var(--gv-font-body);
+}
+.gv-head { font-family: var(--gv-font-head); font-weight: 700; }
+.gv-sub { font-family: var(--gv-font-sub); font-weight: 400; letter-spacing: 0.06em; }
+.gv-body { font-family: var(--gv-font-body); font-weight: 400; }
+
+.gv input::placeholder { color: rgba(39, 39, 39, 0.6); }
+.gv input:-webkit-autofill,
+.gv input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--gv-charcoal);
+  transition: background-color 9999s ease-out;
+}
+
+@keyframes gvRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.gv-rise { animation: gvRise 700ms ease-out both; }
+.gv-rise-2 { animation: gvRise 700ms ease-out 200ms both; }
+.gv-rise-3 { animation: gvRise 700ms ease-out 400ms both; }
+
+/* Staggered entrance for the entry panel: each direct child rises in turn. */
+.gv-stagger > * {
+  animation: gvRise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.gv-stagger > *:nth-child(1) { animation-delay: 120ms; }
+.gv-stagger > *:nth-child(2) { animation-delay: 200ms; }
+.gv-stagger > *:nth-child(3) { animation-delay: 280ms; }
+.gv-stagger > *:nth-child(4) { animation-delay: 360ms; }
+.gv-stagger > *:nth-child(5) { animation-delay: 440ms; }
+.gv-stagger > *:nth-child(6) { animation-delay: 520ms; }
+.gv-stagger > *:nth-child(7) { animation-delay: 600ms; }
+.gv-stagger > *:nth-child(n+8) { animation-delay: 680ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gv-rise, .gv-rise-2, .gv-rise-3, .gv-stagger > * { animation: none; }
+}
