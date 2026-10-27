@@ -34,32 +34,108 @@ function buildMergeFields(data: SubscriberInput): Record<string, string> {
 // recently. It clears on its own, so it is a retry, not a bad address.
 const TEMPORARY_BLOCK = /signed up to a lot of lists|too many recent signup/i;
 
+// A Mailchimp account + audience to write to. The default is Big Machine's
+// (MAILCHIMP_*). Others, like Riley Green's own account, are passed in by the
+// caller and only receive the merge fields their audience actually has.
+export interface MailchimpAccount {
+  label: string;
+  apiKey: string;
+  server: string;
+  audienceId: string;
+  siteTag: string | null; // tag every member gets in this audience
+  bigMachineFields: boolean; // MMERGE9/12/14 exist only in Big Machine's audience
+}
+
+function bigMachineAccount(): MailchimpAccount | null {
+  const apiKey = process.env.MAILCHIMP_API_KEY;
+  const server = process.env.MAILCHIMP_SERVER_PREFIX;
+  const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
+  if (!apiKey || !server || !audienceId) return null;
+  return { label: "big-machine", apiKey, server, audienceId, siteTag: TAG_NAME, bigMachineFields: true };
+}
+
+// Riley Green's own Mailchimp. The data center is the suffix of the API key
+// ("...-us21"), so only the key and the audience id need to be set.
+export function rileyMailchimpAccount(): MailchimpAccount | null {
+  const apiKey = process.env.RILEY_MAILCHIMP_API_KEY?.trim();
+  const audienceId = process.env.RILEY_MAILCHIMP_AUDIENCE_ID?.trim();
+  const server = apiKey?.split("-").pop();
+  if (!apiKey || !audienceId || !server || server === apiKey) return null;
+  return { label: "riley", apiKey, server, audienceId, siteTag: null, bigMachineFields: false };
+}
+
+// Merge field tags an audience has, looked up once per server instance.
+// Sending a tag the audience lacks would make Mailchimp reject the member.
+const audienceTags = new Map<string, Promise<Set<string> | null>>();
+
+async function fetchAudienceTags(account: MailchimpAccount, auth: string): Promise<Set<string> | null> {
+  try {
+    const res = await fetch(
+      `https://${account.server}.api.mailchimp.com/3.0/lists/${account.audienceId}/merge-fields?count=100&fields=merge_fields.tag`,
+      { headers: { Authorization: auth }, signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) }
+    );
+    if (!res.ok) {
+      logFailure(`Merge field lookup failed (${account.label})`, res.status, await res.json().catch(() => null));
+      return null;
+    }
+    const body = await res.json();
+    return new Set((body?.merge_fields ?? []).map((f: { tag: string }) => f.tag));
+  } catch {
+    return null;
+  }
+}
+
+async function mergeFieldsFor(
+  account: MailchimpAccount,
+  auth: string,
+  data: SubscriberInput
+): Promise<Record<string, string> | null> {
+  const all = buildMergeFields(data);
+  if (account.bigMachineFields) return all;
+  let pending = audienceTags.get(account.audienceId);
+  if (!pending) {
+    pending = fetchAudienceTags(account, auth);
+    audienceTags.set(account.audienceId, pending);
+  }
+  const tags = await pending;
+  if (!tags) {
+    audienceTags.delete(account.audienceId); // look again next time
+    return null;
+  }
+  const merge: Record<string, string> = {};
+  for (const tag of ["FNAME", "LNAME", "PHONE"]) {
+    if (all[tag] && tags.has(tag)) merge[tag] = all[tag];
+  }
+  return merge;
+}
+
 // Log Mailchimp's error title only: its `detail` often contains the email.
 function logFailure(label: string, status: number, body: { title?: string } | null): void {
   console.error(`[Mailchimp] ${label}`, status, body?.title ?? "");
 }
 
-// opts.tags adds tags beyond the site-wide one. opts.requireTags makes a failed
-// tag call a retryable error instead of a soft success (the giveaway sync uses
-// it so every entrant ends up tagged).
+// opts.tags adds tags beyond the account's site-wide one. opts.requireTags
+// makes a failed tag call a retryable error instead of a soft success (the
+// giveaway sync uses it so every entrant ends up tagged). opts.account picks
+// the Mailchimp account; Big Machine's by default.
 export async function subscribeToMailchimp(
   data: SubscriberInput,
-  opts: { tags?: string[]; requireTags?: boolean } = {}
+  opts: { tags?: string[]; requireTags?: boolean; account?: MailchimpAccount } = {}
 ): Promise<MailchimpResult> {
-  const apiKey = process.env.MAILCHIMP_API_KEY;
-  const server = process.env.MAILCHIMP_SERVER_PREFIX;
-  const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
-
-  if (!apiKey || !server || !audienceId) {
+  const account = opts.account ?? bigMachineAccount();
+  if (!account) {
     console.error("[Mailchimp] Missing environment variables");
     return { ok: false, kind: "error", error: "not_configured" };
   }
 
-  const auth = `Basic ${Buffer.from(`anystring:${apiKey}`).toString("base64")}`;
+  const auth = `Basic ${Buffer.from(`anystring:${account.apiKey}`).toString("base64")}`;
   const hash = subscriberHash(data.email);
-  const base = `https://${server}.api.mailchimp.com/3.0/lists/${audienceId}/members/${hash}`;
+  const base = `https://${account.server}.api.mailchimp.com/3.0/lists/${account.audienceId}/members/${hash}`;
 
   try {
+    const mergeFields = await mergeFieldsFor(account, auth, data);
+    if (!mergeFields) return { ok: false, kind: "error", error: "merge_fields_unavailable" };
+
     // Idempotent upsert. status_if_new only applies to brand-new members, so an
     // existing member is a clean no-op update. We deliberately never send a
     // top-level `status` (that would clobber state / hit compliance blocks).
@@ -71,7 +147,7 @@ export async function subscribeToMailchimp(
       body: JSON.stringify({
         email_address: data.email,
         status_if_new: "subscribed",
-        merge_fields: buildMergeFields(data),
+        merge_fields: mergeFields,
       }),
     });
 
@@ -118,7 +194,7 @@ export async function subscribeToMailchimp(
     }
 
     // Member is captured. The tag is a separate call.
-    const tagNames = [TAG_NAME, ...(opts.tags ?? [])];
+    const tagNames = [...(account.siteTag ? [account.siteTag] : []), ...(opts.tags ?? [])];
     const tagRes = await fetch(`${base}/tags`, {
       method: "POST",
       headers: { Authorization: auth, "Content-Type": "application/json" },

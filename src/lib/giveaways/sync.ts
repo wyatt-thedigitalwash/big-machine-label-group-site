@@ -1,18 +1,20 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import { subscribeToMailchimp, type MailchimpResult } from "@/lib/mailchimp";
+import { rileyMailchimpAccount, subscribeToMailchimp, type MailchimpResult } from "@/lib/mailchimp";
 import { subscribeLayloIdentifier, type LayloIdentifierResult } from "@/lib/laylo";
 import { toUsDisplay, type SubscriberInput } from "@/lib/subscribe-validation";
 
-// Background delivery of opted-in giveaway entries to Mailchimp and Laylo.
+// Background delivery of opted-in giveaway entries to Big Machine's Mailchimp,
+// Riley Green's Mailchimp, and Big Machine's Laylo.
 //
 // The entry API only marks an opt-in as pending, so fans get an instant
 // response no matter how busy the outside services are. This job runs every
 // minute (pg_cron calls /api/giveaway/sync). Each service has its own queue,
 // claim and backoff, so a slow or failing service never holds the other back:
-//   - Mailchimp: a few calls at a time (the account allows 10 simultaneous
-//     connections, shared with the site's signup bar).
+//   - Mailchimp (each account): a few calls at a time (an account allows 10
+//     simultaneous connections; Big Machine's is shared with the signup bar).
+//     Riley's account waits, queued, until RILEY_MAILCHIMP_* is configured.
 //   - Laylo: one call per second by default (LAYLO_MAX_RPS to change), and a
 //     single runner at a time via a database lock so the pace holds globally.
 //     Email and phone are separate Laylo calls and are tracked separately, so a
@@ -33,7 +35,8 @@ const BACKOFF_MINUTES = [1, 2, 5, 10, 15, 30, 60, 120, 240, 360, 480]; // about 
 const OUTAGE_STREAK = 5; // consecutive temporary failures that pause a service
 export const MAILCHIMP_CAMPAIGN_TAG = "Alabama vs. Tennessee Giveaway";
 
-type Service = "mailchimp" | "laylo";
+type Service = "mailchimp" | "riley_mailchimp" | "laylo";
+type MailchimpService = Exclude<Service, "laylo">;
 type Outcome =
   | { kind: "synced"; note?: string }
   | { kind: "retry"; error: string }
@@ -47,6 +50,7 @@ interface QueueRow {
   last_name: string;
   phone_e164: string | null;
   mailchimp_attempts: number;
+  riley_mailchimp_attempts: number;
   laylo_attempts: number;
   laylo_email_result: "ok" | "rejected" | null;
   laylo_phone_result: "ok" | "rejected" | null;
@@ -54,6 +58,7 @@ interface QueueRow {
 
 interface Providers {
   mailchimp(s: SubscriberInput): Promise<MailchimpResult>;
+  riley_mailchimp(s: SubscriberInput): Promise<MailchimpResult>;
   layloIdentifier(v: { email: string } | { phoneNumber: string }): Promise<LayloIdentifierResult>;
 }
 
@@ -62,6 +67,7 @@ export interface SyncSummary {
   reason?: string;
   dryRun: boolean;
   mailchimp: Tally & { claimed: number; paused: boolean };
+  riley_mailchimp: Tally & { claimed: number; paused: boolean; configured: boolean };
   laylo: Tally & { claimed: number; paused: boolean };
   durationMs: number;
 }
@@ -70,6 +76,11 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const realProviders: Providers = {
   mailchimp: (s) => subscribeToMailchimp(s, { tags: [MAILCHIMP_CAMPAIGN_TAG], requireTags: true }),
+  async riley_mailchimp(s) {
+    const account = rileyMailchimpAccount();
+    if (!account) return { ok: false, kind: "error", error: "not_configured" };
+    return subscribeToMailchimp(s, { tags: [MAILCHIMP_CAMPAIGN_TAG], requireTags: true, account });
+  },
   layloIdentifier: subscribeLayloIdentifier,
 };
 
@@ -78,11 +89,13 @@ const realProviders: Providers = {
 // runs only ever claim @loadtest.invalid rows (see giveaway_sync_claim).
 function simulatedProviders(failRate: number): Providers {
   const fails = () => Math.random() < failRate;
+  const mailchimp = async (): Promise<MailchimpResult> => {
+    await sleep(300);
+    return fails() ? { ok: false, kind: "error", error: "simulated_failure" } : { ok: true, memberStatus: "subscribed" };
+  };
   return {
-    async mailchimp() {
-      await sleep(300);
-      return fails() ? { ok: false, kind: "error", error: "simulated_failure" } : { ok: true, memberStatus: "subscribed" };
-    },
+    mailchimp,
+    riley_mailchimp: mailchimp,
     async layloIdentifier() {
       await sleep(250);
       return fails() ? { ok: false, retryable: true, error: "simulated_failure" } : { ok: true };
@@ -162,18 +175,24 @@ async function release(service: Service, ids: string[]) {
   if (error) console.error("[GiveawaySync] Could not release claims", service, error.message);
 }
 
-// Mailchimp: a small pool of parallel workers over this run's claim.
-async function runMailchimp(rows: QueueRow[], providers: Providers, deadline: number, summary: SyncSummary) {
-  const lane = summary.mailchimp;
+// Mailchimp (one account): a small pool of parallel workers over this run's claim.
+async function runMailchimp(
+  service: MailchimpService,
+  rows: QueueRow[],
+  providers: Providers,
+  deadline: number,
+  summary: SyncSummary
+) {
+  const lane = summary[service];
   let next = 0;
   let streak = 0;
   await Promise.all(
     Array.from({ length: MAILCHIMP_CONCURRENCY }, async () => {
       while (next < rows.length && Date.now() < deadline && streak < OUTAGE_STREAK) {
         const row = rows[next++];
-        const outcome = mailchimpOutcome(await providers.mailchimp(toSubscriber(row)));
+        const outcome = mailchimpOutcome(await providers[service](toSubscriber(row)));
         streak = outcome.kind === "retry" ? streak + 1 : 0;
-        lane[await record("mailchimp", row, outcome)]++;
+        lane[await record(service, row, outcome)]++;
       }
     })
   );
@@ -238,7 +257,17 @@ export async function runGiveawaySync(opts: { dryRun?: boolean; failRate?: numbe
   const dryRun = Boolean(opts.dryRun);
   const providers = dryRun ? simulatedProviders(opts.failRate ?? 0) : realProviders;
   const empty = () => ({ claimed: 0, synced: 0, retrying: 0, failed: 0, paused: false });
-  const summary: SyncSummary = { ran: false, dryRun, mailchimp: empty(), laylo: empty(), durationMs: 0 };
+  // Riley's queue is left untouched until his account is configured, so its
+  // entries keep their attempts and go out as soon as the keys are added.
+  const rileyReady = dryRun || rileyMailchimpAccount() !== null;
+  const summary: SyncSummary = {
+    ran: false,
+    dryRun,
+    mailchimp: empty(),
+    riley_mailchimp: { ...empty(), configured: rileyReady },
+    laylo: empty(),
+    durationMs: 0,
+  };
   const db = getSupabaseAdmin();
   const owner = randomUUID();
 
@@ -254,20 +283,24 @@ export async function runGiveawaySync(opts: { dryRun?: boolean; failRate?: numbe
   }
 
   let mailchimpRows: QueueRow[] = [];
+  let rileyRows: QueueRow[] = [];
   let layloRows: QueueRow[] = [];
   try {
     // Claim only what Laylo can work through in this run's budget.
     const layloBatch = Math.max(1, Math.floor(RUN_BUDGET_MS / (2 * layloMsPerCall())));
-    [mailchimpRows, layloRows] = await Promise.all([
+    [mailchimpRows, rileyRows, layloRows] = await Promise.all([
       claim("mailchimp", MAILCHIMP_BATCH, dryRun),
+      rileyReady ? claim("riley_mailchimp", MAILCHIMP_BATCH, dryRun) : Promise.resolve([]),
       claim("laylo", layloBatch, dryRun),
     ]);
     summary.ran = true;
     summary.mailchimp.claimed = mailchimpRows.length;
+    summary.riley_mailchimp.claimed = rileyRows.length;
     summary.laylo.claimed = layloRows.length;
 
     await Promise.all([
-      runMailchimp(mailchimpRows, providers, deadline, summary),
+      runMailchimp("mailchimp", mailchimpRows, providers, deadline, summary),
+      runMailchimp("riley_mailchimp", rileyRows, providers, deadline, summary),
       runLaylo(layloRows, providers, deadline, summary),
     ]);
   } finally {
@@ -275,6 +308,7 @@ export async function runGiveawaySync(opts: { dryRun?: boolean; failRate?: numbe
     // already cleared their own claim), so leftovers go out next minute.
     await Promise.all([
       release("mailchimp", mailchimpRows.map((r) => r.id)),
+      release("riley_mailchimp", rileyRows.map((r) => r.id)),
       release("laylo", layloRows.map((r) => r.id)),
     ]);
     await db.rpc("giveaway_sync_unlock", { p_owner: owner });

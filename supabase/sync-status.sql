@@ -1,9 +1,15 @@
--- Mailchimp and Laylo delivery for opted-in giveaway entries.
+-- Delivery of opted-in giveaway entries to Big Machine's Mailchimp
+-- (mailchimp_*), Riley Green's Mailchimp (riley_mailchimp_*) and Big Machine's
+-- Laylo (laylo_*). Riley's entries stay pending until RILEY_MAILCHIMP_API_KEY
+-- and RILEY_MAILCHIMP_AUDIENCE_ID are set in Vercel, then go out on their own.
 -- Statuses: none (did not opt in), pending (queued or retrying), synced, failed.
 
 -- 1. Overview by service.
 select 'mailchimp' as service, mailchimp_status as status, count(*) as entries
 from public.giveaway_entries where campaign = 'alabama-vs-tennessee' group by mailchimp_status
+union all
+select 'riley_mailchimp', riley_mailchimp_status, count(*)
+from public.giveaway_entries where campaign = 'alabama-vs-tennessee' group by riley_mailchimp_status
 union all
 select 'laylo', laylo_status, count(*)
 from public.giveaway_entries where campaign = 'alabama-vs-tennessee' group by laylo_status
@@ -30,6 +36,9 @@ select 'mailchimp' as service, count(*) as pending, min(created_at) as oldest,
        round(extract(epoch from now() - min(created_at)) / 60) as oldest_minutes
 from public.giveaway_entries where mailchimp_status = 'pending'
 union all
+select 'riley_mailchimp', count(*), min(created_at), round(extract(epoch from now() - min(created_at)) / 60)
+from public.giveaway_entries where riley_mailchimp_status = 'pending'
+union all
 select 'laylo', count(*), min(created_at), round(extract(epoch from now() - min(created_at)) / 60)
 from public.giveaway_entries where laylo_status = 'pending';
 
@@ -47,6 +56,9 @@ limit 10;
 -- update public.giveaway_entries
 --    set mailchimp_status = 'pending', mailchimp_attempts = 0, mailchimp_next_at = now()
 --  where mailchimp_status = 'failed' and mailchimp_error not in ('compliance', 'invalid_email');
+-- update public.giveaway_entries
+--    set riley_mailchimp_status = 'pending', riley_mailchimp_attempts = 0, riley_mailchimp_next_at = now()
+--  where riley_mailchimp_status = 'failed' and riley_mailchimp_error not in ('compliance', 'invalid_email');
 -- update public.giveaway_entries
 --    set laylo_status = 'pending', laylo_attempts = 0, laylo_next_at = now()
 --  where laylo_status = 'failed' and laylo_error <> 'both_rejected';
