@@ -139,7 +139,7 @@ function mailchimpOutcome(r: MailchimpResult): Outcome {
 // lane stops for this run and the claimed rows go back untouched, so a key
 // problem that takes a day to notice does not burn through their retries.
 function isOutage(error: string): boolean {
-  return error === "not_configured" || /(^|_)http_40[13]$/.test(error);
+  return error === "not_configured" || /(^|_)(http_40[13]|auth)$/.test(error);
 }
 
 async function record(service: Service, row: QueueRow, outcome: Outcome, extra: Record<string, unknown> = {}) {

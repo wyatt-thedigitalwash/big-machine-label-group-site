@@ -18,8 +18,11 @@ const MUTATION =
   "mutation($email: String, $phoneNumber: String){ subscribeToUser(email: $email, phoneNumber: $phoneNumber) }";
 const TRANSIENT_MESSAGE = /rate|limit|too many|timeout|timed out|unavailable|internal|try again/i;
 // Auth failures mean the key is wrong or gone, not that this fan's identifier
-// is bad. The sync job pauses the lane instead of spending the entry's retries.
+// is bad. Laylo reports a bad key as HTTP 400 "Context creation failed: The
+// user is not authorized to perform this action", so the message is checked
+// too. The sync job pauses the lane instead of spending the entry's retries.
 const AUTH_STATUSES = new Set([401, 403]);
+const AUTH_MESSAGE = /not authori[sz]ed|unauthori[sz]ed|forbidden|context creation failed|api key|invalid token/i;
 
 function redactIdentifiers(message: string): string {
   return message
@@ -56,12 +59,10 @@ export async function subscribeLayloIdentifier(
       : [];
     console.error("[Laylo] subscribeToUser failed", field, res.status, messages.join(" | ").slice(0, 300));
 
+    const auth = AUTH_STATUSES.has(res.status) || messages.some((m) => AUTH_MESSAGE.test(m));
+    if (auth) return { ok: false, retryable: true, error: `${field}_auth` };
     const retryable =
-      res.status === 429 ||
-      res.status >= 500 ||
-      AUTH_STATUSES.has(res.status) ||
-      json === null ||
-      messages.some((m) => TRANSIENT_MESSAGE.test(m));
+      res.status === 429 || res.status >= 500 || json === null || messages.some((m) => TRANSIENT_MESSAGE.test(m));
     return { ok: false, retryable, error: res.ok ? `${field}_rejected` : `${field}_http_${res.status}` };
   } catch (err) {
     console.error("[Laylo] Network error", field, err instanceof Error ? err.name : "unknown");
