@@ -25,7 +25,7 @@ import {
 // what catch automated entries.
 const isFlooding = createRateLimiter(60, 60 * 1000);
 const NETWORK_WINDOW_MINUTES = 10;
-const NETWORK_MAX_ENTRIES = 120;
+const NETWORK_MAX_ENTRIES = 300;
 
 const GENERIC_ERROR = "Something went wrong. Please try again.";
 
@@ -82,6 +82,9 @@ export async function POST(req: NextRequest) {
     // Honeypot: silently accept bots without touching the database. The field
     // has a name no browser or password manager autofills.
     if (body.hpCompany) {
+      // Counted in the logs so a browser autofill quirk eating real entries
+      // would show up as a stream of these.
+      console.warn("[Giveaway] Honeypot hit");
       return NextResponse.json({ success: true });
     }
 

@@ -17,6 +17,15 @@ const LAYLO_URL = "https://laylo.com/api/graphql";
 const MUTATION =
   "mutation($email: String, $phoneNumber: String){ subscribeToUser(email: $email, phoneNumber: $phoneNumber) }";
 const TRANSIENT_MESSAGE = /rate|limit|too many|timeout|timed out|unavailable|internal|try again/i;
+// Auth failures mean the key is wrong or gone, not that this fan's identifier
+// is bad. The sync job pauses the lane instead of spending the entry's retries.
+const AUTH_STATUSES = new Set([401, 403]);
+
+function redactIdentifiers(message: string): string {
+  return message
+    .replace(/[^\s"'<>()]+@[^\s"'<>()]+/g, "[email]")
+    .replace(/\+?\d[\d\s().-]{6,}\d/g, "[phone]");
+}
 
 export async function subscribeLayloIdentifier(
   variables: { email: string } | { phoneNumber: string }
@@ -39,14 +48,20 @@ export async function subscribeLayloIdentifier(
     const json = await res.json().catch(() => null);
     if (res.ok && !json?.errors && json?.data?.subscribeToUser === true) return { ok: true };
 
-    // Log the status and Laylo's messages only, never the identifier.
+    // Log the status and Laylo's messages only, never the identifier. Laylo
+    // may echo the value back in its message, so anything that looks like an
+    // email or a phone number is redacted first.
     const messages: string[] = Array.isArray(json?.errors)
-      ? json.errors.map((e: { message?: string }) => String(e?.message ?? ""))
+      ? json.errors.map((e: { message?: string }) => redactIdentifiers(String(e?.message ?? "")))
       : [];
     console.error("[Laylo] subscribeToUser failed", field, res.status, messages.join(" | ").slice(0, 300));
 
     const retryable =
-      res.status === 429 || res.status >= 500 || json === null || messages.some((m) => TRANSIENT_MESSAGE.test(m));
+      res.status === 429 ||
+      res.status >= 500 ||
+      AUTH_STATUSES.has(res.status) ||
+      json === null ||
+      messages.some((m) => TRANSIENT_MESSAGE.test(m));
     return { ok: false, retryable, error: res.ok ? `${field}_rejected` : `${field}_http_${res.status}` };
   } catch (err) {
     console.error("[Laylo] Network error", field, err instanceof Error ? err.name : "unknown");

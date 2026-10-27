@@ -197,7 +197,7 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
       {/* Honeypot: hidden from people, filled by bots. */}
       <div className="absolute left-[-9999px] w-px h-px overflow-hidden" aria-hidden="true">
         <label htmlFor="gv-hp">Leave this field empty</label>
-        <input id="gv-hp" name="hp_company_ref" type="text" tabIndex={-1} autoComplete="off"
+        <input id="gv-hp" name="gv_hp_token" type="text" tabIndex={-1} autoComplete="off"
           data-1p-ignore data-lpignore="true" data-form-type="other" value={trap}
           onChange={(e) => setTrap(e.target.value)} />
       </div>

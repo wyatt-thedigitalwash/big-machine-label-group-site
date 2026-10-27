@@ -40,7 +40,8 @@ type MailchimpService = Exclude<Service, "laylo">;
 type Outcome =
   | { kind: "synced"; note?: string }
   | { kind: "retry"; error: string }
-  | { kind: "failed"; error: string };
+  | { kind: "failed"; error: string }
+  | { kind: "outage"; error: string }; // the service, not the entry: no attempt spent
 type Tally = { synced: number; retrying: number; failed: number };
 
 interface QueueRow {
@@ -130,7 +131,15 @@ function mailchimpOutcome(r: MailchimpResult): Outcome {
     return { kind: "synced", note };
   }
   if (r.kind === "compliance" || r.kind === "invalid_email") return { kind: "failed", error: r.kind };
+  if (isOutage(r.error)) return { kind: "outage", error: r.error };
   return { kind: "retry", error: r.error };
+}
+
+// A missing key or an auth rejection is wrong for every entry at once. The
+// lane stops for this run and the claimed rows go back untouched, so a key
+// problem that takes a day to notice does not burn through their retries.
+function isOutage(error: string): boolean {
+  return error === "not_configured" || /(^|_)http_40[13]$/.test(error);
 }
 
 async function record(service: Service, row: QueueRow, outcome: Outcome, extra: Record<string, unknown> = {}) {
@@ -191,6 +200,11 @@ async function runMailchimp(
       while (next < rows.length && Date.now() < deadline && streak < OUTAGE_STREAK) {
         const row = rows[next++];
         const outcome = mailchimpOutcome(await providers[service](toSubscriber(row)));
+        if (outcome.kind === "outage") {
+          console.error("[GiveawaySync] Service unavailable, lane paused", service, outcome.error);
+          streak = OUTAGE_STREAK;
+          break;
+        }
         streak = outcome.kind === "retry" ? streak + 1 : 0;
         lane[await record(service, row, outcome)]++;
       }
@@ -231,6 +245,18 @@ async function runLaylo(rows: QueueRow[], providers: Providers, deadline: number
         retryError = r.error;
         break; // keep the call order email then phone; try again on the next attempt
       }
+    }
+
+    if (retryError && isOutage(retryError)) {
+      // Whatever half already went through is kept on the row; the rest waits
+      // for the next run without an attempt spent.
+      console.error("[GiveawaySync] Service unavailable, lane paused", "laylo", retryError);
+      await getSupabaseAdmin()
+        .from("giveaway_entries")
+        .update({ laylo_email_result: emailResult, laylo_phone_result: row.phone_e164 ? phoneResult : null })
+        .eq("id", row.id);
+      streak = OUTAGE_STREAK;
+      break;
     }
 
     let outcome: Outcome;
