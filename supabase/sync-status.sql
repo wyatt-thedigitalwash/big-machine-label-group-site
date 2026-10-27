@@ -1,7 +1,7 @@
 -- Delivery of opted-in giveaway entries to Big Machine's Mailchimp
--- (mailchimp_*), Riley Green's Mailchimp (riley_mailchimp_*) and Big Machine's
--- Laylo (laylo_*). Riley's entries stay pending until RILEY_MAILCHIMP_API_KEY
--- and RILEY_MAILCHIMP_AUDIENCE_ID are set in Vercel, then go out on their own.
+-- (mailchimp_*) and Big Machine's Laylo (laylo_*). Riley Green has no
+-- Mailchimp, so riley_mailchimp_* stays 'none'; his team gets opt-ins from
+-- supabase/export-opt-ins.sql instead.
 -- Statuses: none (did not opt in), pending (queued or retrying), synced, failed.
 
 -- 1. Overview by service.
