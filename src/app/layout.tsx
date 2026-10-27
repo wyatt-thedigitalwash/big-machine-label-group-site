@@ -89,10 +89,12 @@ export default function RootLayout({
         </HideOnGiveaways>
         {/* Cookie consent banner. Shows once per new visitor, persisted in
             localStorage; injects nothing before consent is granted. */}
-        <HideOnGiveaways mode="gate">
+        <HideOnGiveaways>
           <CookieConsent />
           {/* Arbitration / class-action notice, shown once right after the cookie
-              decision so it is never buried only in the footer. */}
+              decision so it is never buried only in the footer. Neither popup
+              renders on giveaway pages: they load no tracking scripts, and
+              entrants accept the site terms through the Official Rules. */}
           <TermsGate />
         </HideOnGiveaways>
       </body>

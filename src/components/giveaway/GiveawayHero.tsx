@@ -102,16 +102,29 @@ export default function GiveawayHero() {
           />
         </div>
         <div className="w-full">
-          <h1 className="gv-head gv-rise-3 text-[28px] leading-[1.05] md:text-[46px] max-w-[880px] mx-auto">
+          <h1 className="gv-head gv-rise-3 text-[27px] leading-[1.05] md:text-[34px] xl:text-[44px] max-w-[1080px] mx-auto">
             Win a football signed by
             <br className="hidden md:block" /> Riley Green and Peyton Manning.
           </h1>
           <div className="gv-rise-3 mt-8 flex flex-col items-center gap-4">
             <EnterCta />
-            <p className="gv-body text-[11px] md:text-[12px] text-[var(--gv-cream)]/70 max-w-[420px]">
-              No purchase necessary. {CAMPAIGN.eligibility.minimumAge}+, US residents only.
+            <p className="gv-body text-[11px] md:text-[12px] text-[var(--gv-cream)]/70 max-w-[420px] md:max-w-[600px]">
+              No purchase necessary. US residents {CAMPAIGN.eligibility.short}.
               Ends {CAMPAIGN.entryWindowDisplay.split(" through ")[1]}.
             </p>
+            <div className="mt-2 flex items-center justify-center gap-3">
+              <span className="gv-sub uppercase text-[11px] md:text-[12px] text-[var(--gv-cream)]/70">
+                In partnership with
+              </span>
+              <Image
+                src={CAMPAIGN.partner.logo}
+                alt={CAMPAIGN.partner.name}
+                width={CAMPAIGN.partner.logoWidth}
+                height={CAMPAIGN.partner.logoHeight}
+                sizes="130px"
+                className="h-[22px] md:h-[26px] w-auto"
+              />
+            </div>
           </div>
         </div>
       </div>

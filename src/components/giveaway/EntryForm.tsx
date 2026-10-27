@@ -39,14 +39,17 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [birthdate, setBirthdate] = useState("");
   const [agreeRules, setAgreeRules] = useState(false);
   const [marketingOptIn, setMarketingOptIn] = useState(false);
-  const [website, setWebsite] = useState(""); // honeypot
+  const [trap, setTrap] = useState(""); // honeypot
   const [status, setStatus] = useState<Status>("idle");
   const [errorField, setErrorField] = useState<GiveawayField | "">("");
   const [errorMessage, setErrorMessage] = useState("");
   const [copied, setCopied] = useState(false);
   const utm = useRef({ source: "", medium: "", campaign: "", content: "", referrer: "" });
+  // Set synchronously, unlike state, so a fast double tap sends one request.
+  const inFlight = useRef(false);
 
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
@@ -61,7 +64,8 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (status === "loading") return;
+    if (inFlight.current) return;
+    inFlight.current = true;
     setStatus("loading");
     setErrorField("");
     setErrorMessage("");
@@ -69,16 +73,20 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
       const res = await fetch("/api/giveaway", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // Never leave a fan on "Entering..." forever. A retry after a timeout
+        // that did go through is answered with "you're already entered".
+        signal: AbortSignal.timeout(30_000),
         body: JSON.stringify({
           campaign: CAMPAIGN.slug,
           firstName,
           lastName,
           email,
           phone,
+          birthdate,
           teamPick: team,
           agreeRules,
           marketingOptIn,
-          website,
+          hpCompany: trap,
           utmSource: utm.current.source,
           utmMedium: utm.current.medium,
           utmCampaign: utm.current.campaign,
@@ -90,15 +98,16 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
       if (res.ok) {
         setStatus("success");
         onEntered(data?.tally ?? null);
-        return;
+        return; // stays in flight: the form is done
       }
       setErrorField(data?.field || "");
       setErrorMessage(data?.error || "Something went wrong. Please try again.");
       setStatus("error");
     } catch {
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage("We couldn't reach the server. Check your connection and try again.");
       setStatus("error");
     }
+    inFlight.current = false;
   }
 
   async function copyLink() {
@@ -118,8 +127,8 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
     return (
       <div role="status" aria-live="polite" className="text-[var(--gv-cream)] gv-stagger">
         <p className="gv-body text-[15px] leading-relaxed">
-          You are entered for {TEAMS[team].name}. We will email the winner on {CAMPAIGN.drawingOn}.
-          {marketingOptIn && " Check your phone for a text and reply to confirm updates."}
+          You are entered for {TEAMS[team].name}. The winner will be drawn on or about {CAMPAIGN.drawingOn} and notified by email.
+          {marketingOptIn && " If you're new to our texts, watch for one asking you to confirm."}
         </p>
         <p className="gv-body text-[15px] leading-relaxed mt-4">
           Want your side to win the split? Send this to someone who bleeds{" "}
@@ -168,18 +177,29 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
           value={email} onChange={(e) => setEmail(e.target.value)} className={`${inputClass} ${border("email")}`}
           aria-invalid={errorField === "email"} />
       </div>
-      <div className="mt-5">
-        <label htmlFor="gv-phone" className={labelClass}>Mobile number</label>
-        <input id="gv-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel-national" required
-          placeholder="615-555-0100" value={phone} onChange={(e) => setPhone(formatUsPhone(e.target.value))}
-          className={`${inputClass} ${border("phone")}`} aria-invalid={errorField === "phone"} />
+      <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-5">
+        <div>
+          <label htmlFor="gv-phone" className={labelClass}>Mobile number</label>
+          <input id="gv-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel-national" required
+            placeholder="615-555-0100" value={phone} onChange={(e) => setPhone(formatUsPhone(e.target.value))}
+            className={`${inputClass} ${border("phone")}`} aria-invalid={errorField === "phone"} />
+        </div>
+        <div>
+          <label htmlFor="gv-birthdate" className={labelClass}>Date of birth</label>
+          <input id="gv-birthdate" name="birthdate" type="date" autoComplete="bday" required
+            max={new Date().toISOString().slice(0, 10)} value={birthdate}
+            onChange={(e) => setBirthdate(e.target.value)}
+            className={`${inputClass} ${border("birthdate")} min-h-[54px] appearance-none`}
+            aria-invalid={errorField === "birthdate"} />
+        </div>
       </div>
 
       {/* Honeypot: hidden from people, filled by bots. */}
       <div className="absolute left-[-9999px] w-px h-px overflow-hidden" aria-hidden="true">
-        <label htmlFor="gv-website">Website</label>
-        <input id="gv-website" name="website" tabIndex={-1} autoComplete="off" value={website}
-          onChange={(e) => setWebsite(e.target.value)} />
+        <label htmlFor="gv-hp">Leave this field empty</label>
+        <input id="gv-hp" name="hp_company_ref" type="text" tabIndex={-1} autoComplete="off"
+          data-1p-ignore data-lpignore="true" data-form-type="other" value={trap}
+          onChange={(e) => setTrap(e.target.value)} />
       </div>
 
       <div className="mt-7 flex flex-col gap-4">
@@ -187,7 +207,7 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
           <input type="checkbox" required checked={agreeRules} onChange={(e) => setAgreeRules(e.target.checked)}
             className="mt-[3px] h-4 w-4 shrink-0 accent-[var(--gv-charcoal)]" aria-invalid={errorField === "agreeRules"} />
           <span className="gv-body text-[12px] leading-relaxed text-[var(--gv-cream)]">
-            I am {CAMPAIGN.eligibility.minimumAge} or older, a legal resident of the United States, and I agree to the{" "}
+            I am a legal resident of the United States, {CAMPAIGN.eligibility.ageText}, and I agree to the{" "}
             <Link href={CAMPAIGN.rulesPath} target="_blank" rel="noopener" className="underline underline-offset-2">Official Rules</Link> and{" "}
             <Link href="/legal/privacy" target="_blank" rel="noopener" className="underline underline-offset-2">Privacy Policy</Link>.
           </span>
@@ -217,6 +237,7 @@ export default function EntryForm({ team, entriesOpen, onEntered }: Props) {
       </button>
       <p className="gv-body mt-4 text-[11px] leading-relaxed text-[var(--gv-cream)]/70">
         No purchase necessary. One entry per person. Void where prohibited. Sponsored by {CAMPAIGN.sponsor.name}.
+        Questions? <a href={`mailto:${CAMPAIGN.contactEmail}`} className="underline underline-offset-2">{CAMPAIGN.contactEmail}</a>
       </p>
     </form>
   );

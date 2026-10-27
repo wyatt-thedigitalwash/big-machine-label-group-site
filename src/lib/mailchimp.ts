@@ -4,10 +4,12 @@ import type { SubscriberInput } from "./subscribe-validation";
 // Result of a Mailchimp subscribe attempt. These functions NEVER throw so the
 // Laylo path can run fully independently.
 export type MailchimpResult =
-  | { ok: true; note?: string }
+  | { ok: true; note?: string; memberStatus?: string }
   | { ok: false; kind: "compliance" | "invalid_email" | "error"; error: string };
 
 const TAG_NAME = "Big Machine Records";
+// A hung request must never hold a caller (or the giveaway sync job) open.
+const REQUEST_TIMEOUT_MS = 10_000;
 const ACQUISITION_CHANNEL = "bigmachinerecords.com";
 
 function subscriberHash(email: string): string {
@@ -28,7 +30,22 @@ function buildMergeFields(data: SubscriberInput): Record<string, string> {
   return merge;
 }
 
-export async function subscribeToMailchimp(data: SubscriberInput): Promise<MailchimpResult> {
+// Mailchimp's temporary anti-abuse block for an address that joined many lists
+// recently. It clears on its own, so it is a retry, not a bad address.
+const TEMPORARY_BLOCK = /signed up to a lot of lists|too many recent signup/i;
+
+// Log Mailchimp's error title only: its `detail` often contains the email.
+function logFailure(label: string, status: number, body: { title?: string } | null): void {
+  console.error(`[Mailchimp] ${label}`, status, body?.title ?? "");
+}
+
+// opts.tags adds tags beyond the site-wide one. opts.requireTags makes a failed
+// tag call a retryable error instead of a soft success (the giveaway sync uses
+// it so every entrant ends up tagged).
+export async function subscribeToMailchimp(
+  data: SubscriberInput,
+  opts: { tags?: string[]; requireTags?: boolean } = {}
+): Promise<MailchimpResult> {
   const apiKey = process.env.MAILCHIMP_API_KEY;
   const server = process.env.MAILCHIMP_SERVER_PREFIX;
   const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
@@ -50,6 +67,7 @@ export async function subscribeToMailchimp(data: SubscriberInput): Promise<Mailc
     const res = await fetch(`${base}?skip_merge_validation=true`, {
       method: "PUT",
       headers: { Authorization: auth, "Content-Type": "application/json" },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       body: JSON.stringify({
         email_address: data.email,
         status_if_new: "subscribed",
@@ -61,7 +79,7 @@ export async function subscribeToMailchimp(data: SubscriberInput): Promise<Mailc
       const body = await res.json().catch(() => null);
       const title: string = body?.title || "";
       const detail: string = body?.detail || "";
-      console.error("[Mailchimp] Upsert failed", res.status, JSON.stringify(body));
+      logFailure("Upsert failed", res.status, body);
 
       // Previously unsubscribed / cleaned. Mailchimp forbids API re-subscribe.
       // This is an expected, non-fatal outcome for a real person.
@@ -72,29 +90,52 @@ export async function subscribeToMailchimp(data: SubscriberInput): Promise<Mailc
       // skip merge validation and always send a present email_address, the only
       // realistic cause is Mailchimp flagging the email address as fake/invalid
       // (Omnivore) -- so ask the user to fix their email rather than 502.
+      if (res.status === 400 && TEMPORARY_BLOCK.test(`${title} ${detail}`)) {
+        return { ok: false, kind: "error", error: "temporary_block" };
+      }
       if (res.status === 400) {
         return { ok: false, kind: "invalid_email", error: "invalid_email" };
       }
       return { ok: false, kind: "error", error: `http_${res.status}` };
     }
 
-    // Member is captured. The tag is a separate, non-fatal call.
+    // An existing member keeps their status (status_if_new only applies to new
+    // members). Transactional-only and archived contacts are re-subscribed,
+    // since they just opted in here; Mailchimp itself refuses this for anyone
+    // who unsubscribed (that comes back as an error and is left alone).
+    // Unsubscribed and cleaned members are never touched.
+    const member = await res.json().catch(() => null);
+    let memberStatus: string | undefined = member?.status;
+    if (memberStatus === "transactional" || memberStatus === "archived") {
+      const upgrade = await fetch(base, {
+        method: "PATCH",
+        headers: { Authorization: auth, "Content-Type": "application/json" },
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        body: JSON.stringify({ status: "subscribed" }),
+      });
+      if (upgrade.ok) memberStatus = "subscribed";
+      else logFailure("Status upgrade failed", upgrade.status, await upgrade.json().catch(() => null));
+    }
+
+    // Member is captured. The tag is a separate call.
+    const tagNames = [TAG_NAME, ...(opts.tags ?? [])];
     const tagRes = await fetch(`${base}/tags`, {
       method: "POST",
       headers: { Authorization: auth, "Content-Type": "application/json" },
-      body: JSON.stringify({ tags: [{ name: TAG_NAME, status: "active" }] }),
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      body: JSON.stringify({ tags: tagNames.map((name) => ({ name, status: "active" })) }),
     });
 
     if (!tagRes.ok) {
-      const tagBody = await tagRes.json().catch(() => null);
-      console.error("[Mailchimp] Tag failed", tagRes.status, JSON.stringify(tagBody));
+      logFailure("Tag failed", tagRes.status, await tagRes.json().catch(() => null));
+      if (opts.requireTags) return { ok: false, kind: "error", error: "tag_failed" };
       // Member is still subscribed; do not fail the whole request over a tag.
-      return { ok: true, note: "tag_failed" };
+      return { ok: true, note: "tag_failed", memberStatus };
     }
 
-    return { ok: true };
+    return { ok: true, memberStatus };
   } catch (err) {
-    console.error("[Mailchimp] Network/unexpected error", err);
+    console.error("[Mailchimp] Network/unexpected error", err instanceof Error ? err.name : "unknown");
     return { ok: false, kind: "error", error: "network" };
   }
 }
