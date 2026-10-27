@@ -21,7 +21,7 @@
 
 with params as (
   select
-    'REPLACE-WITH-LAUNCH-TIME, e.g. 2026-11-03 09:00 America/Chicago'::timestamptz as launched_at,
+    '2026-10-27 17:16 America/New_York'::timestamptz as launched_at,  -- password gate came off
     'REPLACE-WITH-SEED'::text as seed
 ),
 disqualified (id) as (
