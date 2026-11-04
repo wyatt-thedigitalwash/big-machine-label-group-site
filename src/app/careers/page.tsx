@@ -23,10 +23,7 @@ type Semester = {
 const begSemesters: Semester[] = [
   {
     name: "Spring 2027 Semester",
-    apply: {
-      href: "https://forms.monday.com/forms/d0ba49bd40a182e1289870b16f75604f?r=use1",
-    },
-    note: "This window will close and the link will be removed on October 30th, 2026.",
+    text: "This application period is now CLOSED.",
   },
   {
     name: "Summer 2027 Semester",
