@@ -19,7 +19,7 @@ export default function RulesSummary() {
           notified by email. Odds of winning depend on the number of eligible entries received. Prize
           approximate retail value: {CAMPAIGN.prize.arv}. A free alternative method of entry by mail is
           described in the Official Rules. Void where prohibited. Sponsor: {CAMPAIGN.sponsor.name},{" "}
-          {CAMPAIGN.sponsor.address}. Promotional partner: Audacy, Inc. This sweepstakes is not
+          {CAMPAIGN.sponsor.address}. This sweepstakes is not
           sponsored, endorsed, administered by, or associated with Meta, Instagram, TikTok, X, the
           University of Alabama, the University of Tennessee, the Southeastern Conference, or the
           National Football League.

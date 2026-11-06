@@ -3,6 +3,9 @@ import type { Block } from "@/components/legal/LegalArticle";
 // GENERATED from the client's "Big Machine Contest Rules -- 102326 DRAFT.docx".
 // Text, punctuation, bold and underline are copied verbatim from that file.
 // Do not hand-edit the wording; regenerate from an updated document instead.
+// Exceptions made by hand at the client's request: all Audacy references were
+// removed, and the end and drawing dates moved to November 20, 2026. If
+// regenerating from that draft, confirm the source document has both changes.
 
 export const RULES_TITLE = "Official Rules";
 
@@ -30,13 +33,6 @@ export const RULES_BLOCKS: Block[] = [
   {
     type: "p",
     runs: [
-      { t: "Promotional Partner.", b: true },
-      " Audacy, Inc. and its participating radio stations may promote the Sweepstakes.",
-    ],
-  },
-  {
-    type: "p",
-    runs: [
       { t: "Eligibility", b: true },
       ":  To be eligible for this Sweepstakes, at the time of entry you must be: [1] a person legally residing in, and physically located within the fifty (50) United States or the District of Columbia (collectively, \"Territory\");  [2] eighteen (18) years of age or older (nineteen (19) in Nebraska and Alabama; twenty-one (21) in Mississippi), or in all cases, the age of majority in your state of residence, whichever is older; and [3] not an employee of Sponsor, the recording artist or artists featured in the Sweepstakes as identified on the Website (individually and collectively, “Artist”), or their respective parent, subsidiary, affiliated or successor companies; the advertising, promotional or fulfillment agencies of any of them (individually and collectively, \"Entities”); nor members of their households or immediate families. \"Household members\" shall mean people who share the same residence at least three (3) months a year. \"Immediate family members\" shall mean parents, step-parents, children, stepchildren, siblings, step-siblings, or spouses. Eligibility is subject to all applicable federal and state and local laws and regulations. This Sweepstakes is intended for participation only by persons who meet all of the eligibility requirements set forth herein. Minors are not permitted to participate in or enter this Sweepstakes. If you do not meet any of the eligibility requirements set forth herein, or if you are a minor in your state of residence, you are not permitted to participate in the Sweepstakes and must not enter, play any game on the Website (as defined below) (if applicable), or",
       { t: " ", b: true },
@@ -47,7 +43,7 @@ export const RULES_BLOCKS: Block[] = [
     type: "p",
     runs: [
       { t: "Sweepstakes Entry Period: ", b: true },
-      "The Sweepstakes begins as of October 27, 2026 and ends November 13, 2026 at 12:00 p.m. Eastern Time (“Entry Period”). All entries must be received before the end of the Entry Period. The Entry Period, including all applicable start and end dates and times, will be identified on the Website and is stated in Central Time unless otherwise noted.",
+      "The Sweepstakes begins as of October 27, 2026 and ends November 20, 2026 at 12:00 p.m. Eastern Time (“Entry Period”). All entries must be received before the end of the Entry Period. The Entry Period, including all applicable start and end dates and times, will be identified on the Website and is stated in Central Time unless otherwise noted.",
     ],
   },
   {
@@ -79,7 +75,7 @@ export const RULES_BLOCKS: Block[] = [
       { t: " ", b: true },
       "In event of a dispute regarding the identity of the person submitting an entry, the entry will be deemed to be submitted by the person in whose name the account is registered. Entries by any method other than set forth herein are void. Any use of automated or programmed methods of effecting entry are prohibited. ",
       { t: "Sponsor reserves the right in its absolute discretion to disqualify entries which it considers to not comply with these Rules. ", b: true },
-      "Neither the Sponsor, the Artist, Audacy Inc., Peyton Manning, nor any of their respective parent, subsidiary, or affiliated companies, officers, directors, shareholders, employees, agents, artists or representatives (individually and collectively, \"Releasees\") are responsible for Entries from persons residing, or physically located, outside the Territory; or Entries that are altered, delayed, deleted, destroyed, forged, fraudulent, improperly accessed, inaccurate, incomplete, interrupted, irregular in any way, late, lost, misrouted, multiple, non-delivered, stolen, tampered with, unauthorized, unintelligible or otherwise not in compliance with these Rules; or any printing, production, technical, electronic or other errors; or for lost, interrupted or unavailable network, server or other connections; miscommunications; failed phone; computer hardware or software or telephone transmissions; technical failures; unauthorized human intervention; traffic congestion; garbled or jumbled transmissions; undeliverable emails resulting from any form of active or passive email filtering; insufficient space in entrant's email account to receive email; or other errors of any kind, whether due to electronic, mechanical or human error or other causes; even if caused by the negligence of any of the Releasees. ENTRANTS  HEREBY WAIVE ANY RIGHTS OR CLAIMS TO ATTORNEY’S FEES, INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL DAMAGES OF ENTRANT, WHETHER FORESEEABLE OR NOT AND WHETHER BASED ON NEGLIGENCE OR OTHERWISE.",
+      "Neither the Sponsor, the Artist, Peyton Manning, nor any of their respective parent, subsidiary, or affiliated companies, officers, directors, shareholders, employees, agents, artists or representatives (individually and collectively, \"Releasees\") are responsible for Entries from persons residing, or physically located, outside the Territory; or Entries that are altered, delayed, deleted, destroyed, forged, fraudulent, improperly accessed, inaccurate, incomplete, interrupted, irregular in any way, late, lost, misrouted, multiple, non-delivered, stolen, tampered with, unauthorized, unintelligible or otherwise not in compliance with these Rules; or any printing, production, technical, electronic or other errors; or for lost, interrupted or unavailable network, server or other connections; miscommunications; failed phone; computer hardware or software or telephone transmissions; technical failures; unauthorized human intervention; traffic congestion; garbled or jumbled transmissions; undeliverable emails resulting from any form of active or passive email filtering; insufficient space in entrant's email account to receive email; or other errors of any kind, whether due to electronic, mechanical or human error or other causes; even if caused by the negligence of any of the Releasees. ENTRANTS  HEREBY WAIVE ANY RIGHTS OR CLAIMS TO ATTORNEY’S FEES, INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL DAMAGES OF ENTRANT, WHETHER FORESEEABLE OR NOT AND WHETHER BASED ON NEGLIGENCE OR OTHERWISE.",
     ],
   },
   {
@@ -132,7 +128,7 @@ export const RULES_BLOCKS: Block[] = [
     type: "p",
     runs: [
       { t: "Selection of Winners: ", b: true },
-      "On or about November 13, 2026, Sponsor will select one (1) potential winner in a random drawing from among all eligible entries received during the Entry Period.",
+      "On or about November 20, 2026, Sponsor will select one (1) potential winner in a random drawing from among all eligible entries received during the Entry Period.",
     ],
   },
   {

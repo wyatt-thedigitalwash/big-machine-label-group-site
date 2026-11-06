@@ -1,5 +1,5 @@
 -- Draw the winner. Run in the Supabase SQL editor after the entry period
--- closes (November 13, 2026 at 12:00 p.m. ET) and all mail-in entries are loaded
+-- closes (November 20, 2026 at 12:00 p.m. ET) and all mail-in entries are loaded
 -- (supabase/add-mail-in-entry.sql).
 --
 -- The draw is random but reproducible: entries are ordered by a hash of their
@@ -32,7 +32,7 @@ eligible as (
   from public.giveaway_entries e, params p
   where e.campaign = 'alabama-vs-tennessee'
     and e.created_at >= p.launched_at
-    and e.created_at <= '2026-11-13 12:00:00 America/New_York'::timestamptz
+    and e.created_at <= '2026-11-20 12:00:00 America/New_York'::timestamptz
     and e.birthdate is not null
     and e.birthdate <= (e.created_at at time zone 'America/Chicago')::date - interval '18 years'
     and e.id not in (select id from disqualified)

@@ -20,11 +20,11 @@ export const CAMPAIGN = {
 
   // Entry window. ISO strings with the offset so the server check is
   // unambiguous regardless of where it runs. Opens at midnight Eastern on
-  // October 27 (EDT) and closes at noon Eastern on November 13 (EST).
+  // October 27 (EDT) and closes at noon Eastern on November 20 (EST).
   opensAt: "2026-10-27T00:00:00-04:00",
-  closesAt: "2026-11-13T12:00:00-05:00",
-  drawingOn: "November 13, 2026",
-  entryWindowDisplay: "October 27, 2026 through November 13, 2026 at 12:00 p.m. ET",
+  closesAt: "2026-11-20T12:00:00-05:00",
+  drawingOn: "November 20, 2026",
+  entryWindowDisplay: "October 27, 2026 through November 20, 2026 at 12:00 p.m. ET",
 
   prize: {
     name: "One official football signed by Riley Green and Peyton Manning",
@@ -59,14 +59,6 @@ export const CAMPAIGN = {
   // Set once a photo of the signed football exists. Null falls back to the
   // Riley and Peyton still.
   prizeImageSrc: null as string | null,
-
-  // Promotional partner credited on the page.
-  partner: {
-    name: "Audacy",
-    logo: "/images/giveaways/partners/audacy-logo-cream.png",
-    logoWidth: 325,
-    logoHeight: 67,
-  },
 
   images: {
     still: "/images/giveaways/alabama-vs-tennessee-riley-green-peyton-manning.webp",

@@ -112,19 +112,6 @@ export default function GiveawayHero() {
               No purchase necessary. US residents {CAMPAIGN.eligibility.short}.
               Ends {CAMPAIGN.entryWindowDisplay.split(" through ")[1]}.
             </p>
-            <div className="mt-2 flex items-center justify-center gap-3">
-              <span className="gv-sub uppercase text-[11px] md:text-[12px] text-[var(--gv-cream)]/70">
-                In partnership with
-              </span>
-              <Image
-                src={CAMPAIGN.partner.logo}
-                alt={CAMPAIGN.partner.name}
-                width={CAMPAIGN.partner.logoWidth}
-                height={CAMPAIGN.partner.logoHeight}
-                sizes="130px"
-                className="h-[22px] md:h-[26px] w-auto"
-              />
-            </div>
           </div>
         </div>
       </div>
