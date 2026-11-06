@@ -4,8 +4,9 @@ import type { Block } from "@/components/legal/LegalArticle";
 // Text, punctuation, bold and underline are copied verbatim from that file.
 // Do not hand-edit the wording; regenerate from an updated document instead.
 // Exceptions made by hand at the client's request: all Audacy references were
-// removed, and the end and drawing dates moved to November 20, 2026. If
-// regenerating from that draft, confirm the source document has both changes.
+// removed, the start date moved to November 6, 2026, and the end and drawing
+// dates moved to November 20, 2026. If regenerating from that draft, confirm
+// the source document has these changes.
 
 export const RULES_TITLE = "Official Rules";
 
@@ -43,7 +44,7 @@ export const RULES_BLOCKS: Block[] = [
     type: "p",
     runs: [
       { t: "Sweepstakes Entry Period: ", b: true },
-      "The Sweepstakes begins as of October 27, 2026 and ends November 20, 2026 at 12:00 p.m. Eastern Time (“Entry Period”). All entries must be received before the end of the Entry Period. The Entry Period, including all applicable start and end dates and times, will be identified on the Website and is stated in Central Time unless otherwise noted.",
+      "The Sweepstakes begins as of November 6, 2026 and ends November 20, 2026 at 12:00 p.m. Eastern Time (“Entry Period”). All entries must be received before the end of the Entry Period. The Entry Period, including all applicable start and end dates and times, will be identified on the Website and is stated in Central Time unless otherwise noted.",
     ],
   },
   {

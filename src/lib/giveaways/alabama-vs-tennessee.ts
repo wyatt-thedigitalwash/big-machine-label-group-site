@@ -20,11 +20,11 @@ export const CAMPAIGN = {
 
   // Entry window. ISO strings with the offset so the server check is
   // unambiguous regardless of where it runs. Opens at midnight Eastern on
-  // October 27 (EDT) and closes at noon Eastern on November 20 (EST).
-  opensAt: "2026-10-27T00:00:00-04:00",
+  // November 6 and closes at noon Eastern on November 20 (both EST).
+  opensAt: "2026-11-06T00:00:00-05:00",
   closesAt: "2026-11-20T12:00:00-05:00",
   drawingOn: "November 20, 2026",
-  entryWindowDisplay: "October 27, 2026 through November 20, 2026 at 12:00 p.m. ET",
+  entryWindowDisplay: "November 6, 2026 through November 20, 2026 at 12:00 p.m. ET",
 
   prize: {
     name: "One official football signed by Riley Green and Peyton Manning",

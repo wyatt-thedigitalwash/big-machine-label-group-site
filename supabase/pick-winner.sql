@@ -11,9 +11,9 @@
 --
 -- 1. Run supabase/screen-entries.sql and review anything with a risk score
 --    above 0. Put the ids of entries you disqualify in `disqualified` below.
--- 2. Set `launched_at` to the moment the page went public (the password gate
---    came off) so pre-launch test entries can never be drawn, and set `seed`.
---    The query fails until both placeholders are replaced.
+-- 2. `launched_at` stays at October 27 even though the published Entry Period
+--    now starts November 6: the 6 people who entered before the start date moved
+--    keep their entry, at the client's request. Set `seed` before running.
 -- 3. Run it. Rank 1 is the winner; ranks 2 and 3 are the alternates if the
 --    winner is ineligible or does not reply within 48 hours (Official Rules).
 --    Each entrant's age on their entry date and state of residence are still
@@ -21,7 +21,7 @@
 
 with params as (
   select
-    '2026-10-27 17:16 America/New_York'::timestamptz as launched_at,  -- password gate came off
+    '2026-10-27 00:00 America/New_York'::timestamptz as launched_at,  -- keeps the 6 earlier entries
     'REPLACE-WITH-SEED'::text as seed
 ),
 disqualified (id) as (

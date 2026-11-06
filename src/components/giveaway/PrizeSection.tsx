@@ -30,10 +30,6 @@ export default function PrizeSection() {
           </p>
           <dl className="gv-body mt-8 grid grid-cols-2 gap-6 text-[13px]">
             <div>
-              <dt className="gv-sub uppercase text-[12px] md:text-[13px] text-[var(--gv-cream)]">Approximate retail value</dt>
-              <dd className="mt-1 text-[15px]">{CAMPAIGN.prize.arv}</dd>
-            </div>
-            <div>
               <dt className="gv-sub uppercase text-[12px] md:text-[13px] text-[var(--gv-cream)]">Drawing</dt>
               <dd className="mt-1 text-[15px]">{CAMPAIGN.drawingOn}</dd>
             </div>
