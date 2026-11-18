@@ -68,7 +68,7 @@ export function readConsent(): Consent | null {
     return {
       necessary: true,
       analytics: !!parsed.analytics,
-      advertising: !!parsed.advertising,
+      advertising: !!parsed.advertising && !gpcEnabled(),
       functional: !!parsed.functional,
       social: !!parsed.social,
       decidedAt: parsed.decidedAt,
@@ -84,4 +84,19 @@ export function writeConsent(consent: Consent): void {
   } catch {
     /* storage unavailable -- consent simply won't persist */
   }
+}
+
+/**
+ * True when the browser sends a Global Privacy Control signal. GPC is a legally
+ * binding opt-out of the sale/sharing of personal information (CCPA/CPRA and
+ * other state privacy laws), and advertising tags count as sharing.
+ */
+export function gpcEnabled(): boolean {
+  if (typeof navigator === "undefined") return false;
+  return (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true;
+}
+
+/** Apply GPC to a consent choice: Advertising is always off while the signal is on. */
+export function enforceGpc(consent: Consent): Consent {
+  return gpcEnabled() ? { ...consent, advertising: false } : consent;
 }
