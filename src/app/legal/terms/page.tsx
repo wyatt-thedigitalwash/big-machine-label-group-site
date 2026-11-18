@@ -397,7 +397,7 @@ const blocks: Block[] = [
   {
     type: "ul",
     items: [
-      ["Our users / members, including via our websites, the my.bmg.com platform, mobile applications, telephone, text message, postal mail, social media, forums, message boards, chatbot, or other means;"],
+      ["Our users / members, including via our websites, mobile applications, telephone, text message, postal mail, social media, forums, message boards, chatbot, or other means;"],
       ["Our affiliates;"],
       ["Our service providers, which includes customer relationship management providers, analytics providers, website hosting providers, systems administrators, and communications delivery services;"],
       ["Our third party business partners (“Company Partners”); and"],
@@ -409,7 +409,7 @@ const blocks: Block[] = [
     runs: ["d. ", { t: "Who We Share Information With", u: true }, ": We do not sell personal information, or otherwise provide personal information to third parties, other than service providers receiving information to perform services for us on our behalf."],
   },
   { type: "p", runs: ["We may share your personal information with the following categories of third parties:"] },
-  { type: "ul", items: [["Affiliates"], ["Service providers"], ["BMG Partners"]] },
+  { type: "ul", items: [["Affiliates"], ["Service providers"]] },
   {
     type: "p",
     runs: ["e. ", { t: "Your Privacy Rights", u: true }, ": If you are a California resident, subject to applicable law, you have the following rights under California law with respect to your personal information:"],
