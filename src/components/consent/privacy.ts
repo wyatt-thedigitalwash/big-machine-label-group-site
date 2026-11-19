@@ -13,13 +13,21 @@
 import type { Consent } from "./consent";
 
 // Prefix matches: "_ga" covers "_ga_<id>", "_gcl_" covers every Google Ads cookie.
+// A trailing "$" means an exact name ("_s$" is the cookie "_s" only).
+// Analytics also covers the Shopify Buy Button's storefront analytics cookies.
+// Advertising also covers Audigent (_au_*), Klaviyo (__kla_id) and the Bing,
+// Pinterest, Snap and Reddit pixels a label tag container can add.
 export const CATEGORY_COOKIES = {
-  analytics: ["_ga", "_gid", "_gat"],
-  advertising: ["_gcl_", "_gac_", "_fbp", "_fbc", "_ttp", "_tt_enable_cookie", "ttcsid"],
+  analytics: ["_ga", "_gid", "_gat", "_shopify_y", "_shopify_s", "_shopify_sa_", "_y$", "_s$"],
+  advertising: [
+    "_gcl_", "_gac_", "_fbp", "_fbc", "_ttp", "_tt_enable_cookie", "ttcsid",
+    "_au_", "__kla_id", "_uetsid", "_uetvid", "_pin_unauth", "_scid", "_rdt_uuid",
+  ],
 } as const;
 
 /**
- * Expire first-party cookies whose names start with any of the given prefixes.
+ * Expire first-party cookies whose names start with any of the given prefixes
+ * (or, for a pattern ending in "$", match it exactly).
  * Tags usually set them on the registrable domain (".example.com"), so each
  * parent domain of the current host is tried as well as the bare host.
  */
@@ -28,7 +36,7 @@ export function clearCookies(prefixes: readonly string[]): void {
   const names = document.cookie
     .split(";")
     .map((c) => c.split("=")[0].trim())
-    .filter((name) => name && prefixes.some((p) => name.startsWith(p)));
+    .filter((name) => name && prefixes.some((p) => (p.endsWith("$") ? name === p.slice(0, -1) : name.startsWith(p))));
   if (names.length === 0) return;
 
   const parts = window.location.hostname.split(".");
